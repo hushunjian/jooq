@@ -1,0 +1,13 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: jooq
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jooq
+    username: root
+    password: 950420HSJ
+    name: jooq
+logging:
+  config: classpath:logback.xml
