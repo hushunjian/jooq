@@ -8,7 +8,6 @@ import com.hushunjian.jooq.req.EditUserReq;
 import com.hushunjian.jooq.res.User;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
-import org.jooq.impl.UpdatableRecordImpl;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

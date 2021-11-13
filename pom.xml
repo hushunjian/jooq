@@ -122,18 +122,17 @@
                 <configuration>
 
                    <jdbc>
-                        <!--<driver>com.mysql.cj.jdbc.Driver</driver>-->
-                        <driver>${spring.datasource.driver-class-name}</driver>
-                        <url>${spring.datasource.url}</url>
-                        <user>${spring.datasource.username}</user>
-                        <password>${spring.datasource.password}</password>
-                    </jdbc>-
+                        <driver>com.mysql.cj.jdbc.Driver</driver>
+                        <url>jdbc:mysql://localhost:3306/jooq</url>
+                        <user>root</user>
+                        <password>950420HSJ</password>
+                    </jdbc>
 
                     <generator>
                         <database>
                             <name>org.jooq.meta.mysql.MySQLDatabase</name>
                             <includes>.*</includes>
-                            <inputSchema>${spring.datasource.name}</inputSchema>
+                            <inputSchema>jooq</inputSchema>
                         </database>
                         <target>
                             <packageName>com.hushunjian.jooq.generator</packageName>
