@@ -80,4 +80,11 @@ public class UserController {
         return Res.success(userService.findByNameLike(name));
     }
 
+    @ApiOperation("查询用户信息")
+    @GetMapping(value = "getUserByView")
+    @ApiImplicitParam(value = "用户主键ID", name = "id", paramType = "query")
+    public Res<User> getUserByView(@RequestParam String id) {
+        return Res.success(userService.getUserByView(id));
+    }
+
 }

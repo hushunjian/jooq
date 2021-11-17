@@ -17,6 +17,14 @@ public interface UserService {
      */
     User getById(String id);
 
+    /**
+     * 根据ID通过视图查找用户
+     *
+     * @param id ID
+     * @return   用户实体
+     */
+    User getUserByView(String id);
+
 
     /**
      * 批量插入

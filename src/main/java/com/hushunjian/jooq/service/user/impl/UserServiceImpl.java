@@ -62,4 +62,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findByNameLike(String name) {
         return userDao.findByNameLike(name);
     }
+
+    @Override
+    public User getUserByView(String id) {
+        return userDao.getUserByView(id);
+    }
 }

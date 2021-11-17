@@ -5,9 +5,9 @@ spring:
     name: jooq
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jooq
+    url: jdbc:mysql://192.168.1.77:3310/jooq
     username: root
-    password: 950420HSJ
+    password: 123456
     name: jooq
 logging:
   config: classpath:logback.xml
