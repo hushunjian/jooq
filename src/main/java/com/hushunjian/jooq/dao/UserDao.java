@@ -59,8 +59,6 @@ public class UserDao {
             } else {
                 user.setAge(i);
             }
-            user.setJsonInfo(JSON.valueOf(JSONObject.toJSONString(USER_MAPPING.toUser(user))));
-
             users.add(user);
             // 创建视图
             dslContext.createView("user" + user.getId()).as(DSL.selectFrom(userTable).where(userTable.ID.eq(user.getId()))).execute();
