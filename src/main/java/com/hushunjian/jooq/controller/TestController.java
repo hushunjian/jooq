@@ -8,12 +8,16 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.hushunjian.jooq.helper.ExcelData;
+import com.hushunjian.jooq.helper.ExcelDataHelper;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.SpreadsheetVersion;
@@ -30,6 +34,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.nio.file.Paths;
@@ -118,7 +124,7 @@ public class TestController {
         V4_V5_REPLACE_PART_VALUE_MAP.put("v5", V5_REPLACE_PART_VALUE_MAP);
     }
 
-    @ApiOperation("test")
+    @ApiOperation("本地化修改nacos配置")
     @GetMapping(value = "test")
     public void test() {
         Map<String, List<String>> v4v5ServicesMap = Maps.newLinkedHashMap();
@@ -140,7 +146,7 @@ public class TestController {
         System.out.println();
     }
 
-    @ApiOperation("test3")
+    @ApiOperation("导出线上数据到本地,传入搜索条件")
     @PostMapping(value = "test3")
     public void test3(@RequestBody QueryDBReq req) {
         initCellMaxTextLength();
@@ -149,6 +155,28 @@ public class TestController {
         exportExcel(res.getData(), req.getFileName());
     }
 
+    @ApiOperation("导出线上数据到本地,写代码")
+    @PostMapping(value = "exportData")
+    public void exportData(@RequestBody QueryDBReq req) {
+        // 导出最大
+        req.setLimitNum("0");
+        // 需要导出的库和表
+        Map<String, List<String>> dbTablesMap = Maps.newHashMap();
+        dbTablesMap.put("esafety5_e2b", Lists.newArrayList("e2b_r3_estri_item_config", "e2b_r3_m2estri_config"));
+        dbTablesMap.put("pvs_middle_data", Lists.newArrayList("items", "item_class"));
+        dbTablesMap.forEach((db, tables) -> tables.forEach(table -> {
+            // 设置库
+            req.setDbName(db);
+            // 设置查询条件
+            req.setSqlContent(String.format("select * from %s", table));
+            // 设置文件名
+            req.setFileName(table);
+            test3(req);
+        }));
+    }
+
+
+    @Deprecated
     @ApiOperation("test4")
     @PostMapping(value = "test4")
     public void test4(@RequestBody QueryDBReq req) {
@@ -250,21 +278,9 @@ public class TestController {
             "signature_log_detail"
     );
 
-    @ApiOperation("导出线上表结构和数据")
-    @PostMapping(value = "exportProdTable")
-    public void exportProdTable(@RequestBody QueryDBReq req) {
-        // 放到最大
-        initCellMaxTextLength();
-        // 需要处理的数据库
-        Map<String, List<String>> dbMap = Maps.newHashMap();
-        // 默认的
-        dbMap.putAll(dbMap());
-        // dbMap.put("prod-mysql-pvscommon-ro", Lists.newArrayList("pvs_common"));
-        // dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("esafety5_e2b"));
-        // 所有导出的数据
+    private void exportDbTables(QueryDBReq req, Map<String, Map<String, List<String>>> instanceDbTablesMap) {
         List<DbTable> all = Lists.newArrayList();
-        // 循环实例,处理实例下所有的数据库
-        dbMap.forEach((instanceName, dbs) -> dbs.forEach(db -> {
+        instanceDbTablesMap.forEach((instanceName, dbs) -> dbs.forEach((db, tables) -> {
             // 设置实例
             req.setInstanceName(instanceName);
             log.info("导出数据库[{}]表结构和数据开始==================================", db);
@@ -272,27 +288,31 @@ public class TestController {
             req.setDbName(db);
             // 设置limit,设置成最大,0现在就是默认的最大
             req.setLimitNum("0");
-            // 获取数据库下所有的表
-            List<String> dbTables = showAllTables(req);
-            // 循环所有的表,输出建表语句和表里面的初始化数据
-            dbTables.forEach(table -> {
-                log.info("处理表:[{}]", table);
-                // 库表信息
-                DbTable.DbTableBuilder builder = DbTable.builder().instanceName(instanceName).db(db).tableName(table);
-                // 建表语句
-                String createTableSql = showCreateTableSql(req, table);
-                builder.createTableSql(createTableSql);
-                // 判断是否需要导出数据
-                if (needExportData(req, table, createTableSql)) {
-                    // 查询数据
-                    Pair<List<List<String>>, List<List<String>>> pair = findSystemData(req, table, createTableSql);
-                    // 导出数据
-                    builder.tableExcelData(pair);
-                }
-                all.add(builder.build());
-            });
+            tables.forEach(table -> exportDbTable(table, instanceName, db, req, all));
             log.info("导出数据库[{}]表结构和数据结束==================================", db);
         }));
+        // 导出
+        exportFile(all);
+    }
+
+    private void exportDbTable(String table, String instanceName, String db, QueryDBReq req, List<DbTable> all) {
+        log.info("处理表:[{}]", table);
+        // 库表信息
+        DbTable.DbTableBuilder builder = DbTable.builder().instanceName(instanceName).db(db).tableName(table);
+        // 建表语句
+        String createTableSql = showCreateTableSql(req, table);
+        builder.createTableSql(createTableSql);
+        // 判断是否需要导出数据
+        if (needExportData(req, table, createTableSql)) {
+            // 查询数据
+            Pair<List<List<String>>, List<List<String>>> pair = findSystemData(req, table, createTableSql);
+            // 导出数据
+            builder.tableExcelData(pair);
+        }
+        all.add(builder.build());
+    }
+
+    private void exportFile(List<DbTable> all) {
         String path = "C:\\Users\\shunjian.hu\\Desktop\\" + (new Date()).getTime();
         // 创建一个临时文件夹
         mkdir(path);
@@ -326,6 +346,51 @@ public class TestController {
                 exportExcel(exportDataMap, dbPath, db);
             });
         });
+    }
+
+    @ApiOperation("导出线上表结构和数据,自己写的")
+    @PostMapping(value = "exportProdTableAndData")
+    public void exportProdTableAndData(@RequestBody QueryDBReq req) {
+        // 配置数据
+        Map<String, Map<String, List<String>>> instanceDbTablesMap = Maps.newHashMap();
+        //
+        instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("esafety5_e2b", v -> Lists.newArrayList()).add("e2b_r3_estri_item_config");
+        instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("esafety5_e2b", v -> Lists.newArrayList()).add("e2b_r3_m2estri_config");
+        instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_middle_data", v -> Lists.newArrayList()).add("items");
+        instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_middle_data", v -> Lists.newArrayList()).add("item_class");
+        exportDbTables(req, instanceDbTablesMap);
+    }
+
+    @ApiOperation("导出线上表结构和数据,所有的")
+    @PostMapping(value = "exportProdTable")
+    public void exportProdTable(@RequestBody QueryDBReq req) {
+        // 放到最大
+        initCellMaxTextLength();
+        // 需要处理的数据库
+        Map<String, List<String>> dbMap = Maps.newHashMap();
+        // 默认的
+        dbMap.putAll(dbMap());
+        // dbMap.put("prod-mysql-pvscommon-ro", Lists.newArrayList("pvs_common"));
+        // dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("esafety5_e2b"));
+        // 所有导出的数据
+        List<DbTable> all = Lists.newArrayList();
+        // 循环实例,处理实例下所有的数据库
+        dbMap.forEach((instanceName, dbs) -> dbs.forEach(db -> {
+            // 设置实例
+            req.setInstanceName(instanceName);
+            log.info("导出数据库[{}]表结构和数据开始==================================", db);
+            // 设置当前数据库
+            req.setDbName(db);
+            // 设置limit,设置成最大,0现在就是默认的最大
+            req.setLimitNum("0");
+            // 获取数据库下所有的表
+            List<String> dbTables = showAllTables(req);
+            // 循环所有的表,输出建表语句和表里面的初始化数据
+            dbTables.forEach(table -> exportDbTable(table, instanceName, db, req, all));
+            log.info("导出数据库[{}]表结构和数据结束==================================", db);
+        }));
+        // 导出文件
+        exportFile(all);
         System.out.println();
         log.info("处理完成");
     }
@@ -710,4 +775,106 @@ public class TestController {
         private String content;
     }
 
+    @SneakyThrows
+    @ApiOperation("修复时间里有uk的")
+    @PostMapping(value = "fixDateUkSql")
+    public void fixSql(@RequestBody List<String> fileNames) {
+        // 输出的更新语句
+        List<String> result = Lists.newArrayList();
+        List<String> files = Lists.newArrayList("", "", "", "");
+        files.add("实验室检查");
+        files.add("相关病史");
+        files.add("相关药物史");
+        files.add("剂量信息");
+        if (CollectionUtils.isNotEmpty(fileNames)) {
+            files.addAll(fileNames);
+        }
+        Set<String> dates = Sets.newHashSet();
+        for (String fileName : files) {
+            String filePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\%s.xlsx", fileName);
+            ExcelData excelData = null;
+            try {
+                excelData = ExcelDataHelper.readExcelData(new FileInputStream(filePath));
+            } catch (FileNotFoundException exception) {
+                log.info("文件:[{}]不存在,结束", fileName);
+                continue;
+            }
+            // 获取内容
+            List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+            switch (fileName) {
+                case "实验室检查":
+                    rows.forEach(row -> {
+                        // 调整内容
+                        String labDate = handleDateStr(row.get("实验室检查时间"));
+                        dates.add(labDate);
+                        result.add(String.format("UPDATE patient_lab_data SET lab_date = '%s' WHERE id = '%s';", labDate, row.get("实验室检查id")));
+                    });
+                    break;
+                case "相关病史":
+                    rows.forEach(row -> {
+                        // 调整内容
+                        String startDate = handleDateStr(row.get("开始时间"));
+                        dates.add(startDate);
+                        String stopDate = handleDateStr(row.get("结束时间"));
+                        dates.add(stopDate);
+                        result.add(String.format("UPDATE patient_medical_history SET start_date = '%s', stop_date = '%s' WHERE id = '%s';", startDate, stopDate, row.get("病史id")));
+                    });
+                    break;
+                case "相关药物史":
+                    rows.forEach(row -> {
+                        // 调整内容
+                        String startDate = handleDateStr(row.get("开始时间"));
+                        dates.add(startDate);
+                        String stopDate = handleDateStr(row.get("结束时间"));
+                        dates.add(stopDate);
+                        result.add(String.format("UPDATE patient_drug_history SET start_date = '%s', stop_date = '%s' WHERE id = '%s';", startDate, stopDate, row.get("相关药物史id")));
+                    });
+                    break;
+                case "剂量信息":
+                    rows.forEach(row -> {
+                        // 调整内容
+                        String startDate = handleDateStr(row.get("开始时间"));
+                        dates.add(startDate);
+                        String stopDate = handleDateStr(row.get("结束时间"));
+                        dates.add(stopDate);
+                        result.add(String.format("UPDATE drug_dose SET start_date = '%s', stop_date = '%s' WHERE id = '%s';", startDate, stopDate, row.get("剂量id")));
+                    });
+                    break;
+                default:
+            }
+        }
+        System.out.println(dates.size());
+        System.out.println(result.size());
+        System.out.println("================更新SQL");
+        for (String updateSql : result) {
+            System.out.println(updateSql);
+        }
+        System.out.println("================更新SQL");
+    }
+
+    /**
+     * 时间字段replace搜索项
+     */
+    public static final String[] DATE_REPLACE_SEARCH_ITEMS = new String[]{"年", "月", "日", "时", "分", "秒", "/"};
+
+    /**
+     * 时间字段replace替换项
+     */
+    public static final String[] DATE_REPLACE_REPLACE_ITEMS = new String[]{"-", "-", "", ":", ":", "", "-"};
+
+    private String handleDateStr(String date) {
+        log.info("处理时间:[{}]", date);
+        // 空 || 已u开头
+        if (StringUtils.isBlank(date) || date.startsWith("u")) {
+            return "";
+        }
+        // 替换年,月,日,时,分,秒,/
+        date = StringUtils.replaceEach(date, DATE_REPLACE_SEARCH_ITEMS, DATE_REPLACE_REPLACE_ITEMS);
+        // 不包含unkw uk 简单用u判断
+        int index = date.indexOf('u');
+        // 包含
+        String result = index < 0 ? date : date.substring(0, index - 1);
+        log.info("时间[{}]处理后结果[{}]", date, result);
+        return result;
+    }
 }

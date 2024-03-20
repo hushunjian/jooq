@@ -1,10 +1,13 @@
 package com.hushunjian.jooq.service.dynamic.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hushunjian.jooq.helper.RpaBotActuator;
+import com.hushunjian.jooq.helper.RpaBotActuatorHelper;
 import com.hushunjian.jooq.service.dynamic.DynamicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.tools.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,10 +19,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 
 @Slf4j
 @Service
 public class DynamicServiceImpl implements DynamicService {
+
+    @Resource
+    private RpaBotActuatorHelper rpaBotActuatorHelper;
 
     @Override
     public void test() {
@@ -34,6 +41,27 @@ public class DynamicServiceImpl implements DynamicService {
                 "}\n";
         rpaBotActuator.setClassDetailInfo(sourceCode);
         rpaBotActuator.setMethod("main");
+        rpaBotActuator.setMethodArguments("sss", 123, true, new Date());
+
+        System.out.println(JSONObject.toJSONString(rpaBotActuator));
+        //rpaBotActuatorHelper.executeActuator(rpaBotActuator);
+    }
+
+    public static void main(String[] args) {
+        RpaBotActuator rpaBotActuator = new RpaBotActuator();
+        rpaBotActuator.setId("33333333333");
+        rpaBotActuator.setVersion(0);
+        rpaBotActuator.setClassName("HelloWorld");
+        String sourceCode = "public class HelloWorld {\n" +
+                "    public static void main() {\n" +
+                "        System.out.println(\"Hello, World from version: \" + 1);\n" +
+                "    }\n" +
+                "}\n";
+        rpaBotActuator.setClassDetailInfo(sourceCode);
+        rpaBotActuator.setMethod("main");
+        rpaBotActuator.setMethodArguments("sss", 123, true, new Date());
+        Object[] methodArguments = rpaBotActuator.getMethodArguments();
+        System.out.println(JSONObject.toJSONString(rpaBotActuator));
     }
 
     private void test(String dd) {
