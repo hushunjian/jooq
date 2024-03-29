@@ -1,17 +1,17 @@
 package com.hushunjian.jooq.controller;
 
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.handler.WriteHandler;
-import com.alibaba.excel.write.metadata.WriteSheet;
-import com.alibaba.excel.write.metadata.style.WriteCellStyle;
-import com.alibaba.excel.write.metadata.style.WriteFont;
-import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hushunjian.jooq.dao.XianShenReportNoDao;
 import com.hushunjian.jooq.helper.ExcelData;
 import com.hushunjian.jooq.helper.ExcelDataHelper;
-import io.swagger.annotations.ApiModelProperty;
+import com.hushunjian.jooq.helper.QueryDBHelper;
+import com.hushunjian.jooq.req.QueryDBReq;
+import com.hushunjian.jooq.res.D;
+import com.hushunjian.jooq.res.DData;
+import com.hushunjian.jooq.res.XianShenReportNo;
+import com.hushunjian.jooq.service.fix.XianShenBase;
 import io.swagger.annotations.ApiOperation;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +21,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.SpreadsheetVersion;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -38,19 +34,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.net.URI;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import static com.alibaba.excel.EasyExcelFactory.write;
-import static com.alibaba.excel.EasyExcelFactory.writerSheet;
 
 @Slf4j
 @RequestMapping("test")
 @RestController(value = "test")
 public class TestController {
 
+    @Resource
+    private List<XianShenBase> xianShenBases;
+
+    @Resource
+    private XianShenReportNoDao xianShenReportNoDao;
 
     @Resource
     private RestTemplate restTemplate;
@@ -124,6 +121,75 @@ public class TestController {
         V4_V5_REPLACE_PART_VALUE_MAP.put("v5", V5_REPLACE_PART_VALUE_MAP);
     }
 
+    @ApiOperation("修复先声数据")
+    @PostMapping(value = "fixXianShen")
+    public void fixXianShen(@RequestBody QueryDBReq req) {
+        Map<String, ExcelData> excelDataMap = readExcelData(Lists.newArrayList("8a8d88478e7b4fe6018e82fabda339b1.xls", "8a8d88478e7b4fe6018e82fac1e139c5.xls"));
+        // 去重的
+        Map<String, Set<String>> distinctErrorReportsMap = Maps.newHashMap();
+        // 所有的
+        Map<String, List<String>> errorReportMap = Maps.newHashMap();
+        // 模块下错误信息的字段分类
+        Map<String, Map<String, Set<String>>> moduleErrorFieldsMap = Maps.newHashMap();
+        // 循环处理数据
+        excelDataMap.forEach((fileName, excelData) -> {
+            List<Map<String, String>> rows = excelData.getSheetRowsMap().get("E2B R3校验");
+            // 取提示信息,取报告
+            rows.forEach(row -> {
+                String key = String.format("%s|%s|%s", row.get("提示信息"), row.get("页面名称"), row.get("字段"));
+                // 所有的
+                errorReportMap.computeIfAbsent(key, v -> Lists.newArrayList()).add(row.get("报告编号"));
+                // 去重的
+                distinctErrorReportsMap.computeIfAbsent(key, v -> Sets.newHashSet()).add(row.get("报告编号"));
+                // 模块字段错误信息
+                moduleErrorFieldsMap.computeIfAbsent(row.get("页面名称"), v -> Maps.newHashMap()).computeIfAbsent(row.get("提示信息"), v -> Sets.newHashSet()).add(row.get("字段"));
+            });
+        });
+        Map<String, Set<String>> distinctSortMap = distinctErrorReportsMap.entrySet().stream()
+                .sorted(Comparator.comparingInt(entry -> entry.getValue().size()))
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new));
+        System.out.println("");
+        // 读取解决方案excel
+        ExcelData excelData = readExcelData("处理方式.xlsx");
+        if (excelData == null) {
+            return;
+        }
+        // 有解决方法的错误
+        List<String> errorHandleMethods = excelData.getSheetRowsMap().get("Sheet1").stream().map(row -> String.format("%s|%s|%s", row.get("错误"), row.get("模块"), row.get("字段"))).collect(Collectors.toList());
+        // 处理结果
+        Map<Boolean, Map<String, Set<String>>> handleMap = Maps.newHashMap();
+        // 判断问题是否有处理方式了
+        distinctSortMap.forEach((error, errorReports) -> handleMap.computeIfAbsent(errorHandleMethods.contains(error), v -> Maps.newHashMap()).put(error, errorReports));
+        if (!handleMap.containsKey(true)) {
+            log.info("没有可以处理的");
+            return;
+        }
+        List<String> fixSql = Lists.newArrayList();
+        // 排序
+        xianShenBases.sort(Comparator.comparing(XianShenBase::getOrder));
+        // 从第9个开始
+        xianShenBases.removeIf(base -> base.getOrder() < 9);
+        // 循环处理
+        xianShenBases.forEach(fix -> {
+            // 需要修复的报告
+            Set<String> reportNos = handleMap.get(true).get(fix.fixField());
+            // 过滤报告数据
+            List<XianShenReportNo> handleReportNos = xianShenReportNoDao.findByReportNos(reportNos);
+            if (CollectionUtils.isEmpty(handleReportNos)) {
+                log.info("[{}]没有需要修复的报告", fix.fixField());
+            } else {
+                log.info("[{}]修复开始", fix.fixField());
+                fixSql.addAll(fix.fixData(req, handleReportNos, restTemplate));
+                log.info("[{}]修复完成", fix.fixField());
+            }
+        });
+        System.out.println();
+    }
+
     @ApiOperation("本地化修改nacos配置")
     @GetMapping(value = "test")
     public void test() {
@@ -150,9 +216,38 @@ public class TestController {
     @PostMapping(value = "test3")
     public void test3(@RequestBody QueryDBReq req) {
         initCellMaxTextLength();
-        D res = getRes(req);
+        D res = QueryDBHelper.getRes(req, restTemplate);
         System.out.println();
-        exportExcel(res.getData(), req.getFileName());
+        QueryDBHelper.exportExcel(res.getData(), req.getFileName());
+    }
+
+    @ApiOperation("导出先声报告数据")
+    @PostMapping(value = "exportXianShenReport")
+    public void exportXianShenReport(@RequestBody QueryDBReq req) {
+        req.setLimitNum("0");
+        initCellMaxTextLength();
+        // count
+        String countSql = "select count(1) from report_value where tenant_id = 'af632df0-3999-4a35-9c2d-7269b4ecc6a0' and newest_version = 1 and id not in (select ReportId from foreigntaskdtl where tenant_id = 'af632df0-3999-4a35-9c2d-7269b4ecc6a0') and is_deleted = 0";
+        req.setSqlContent(countSql);
+        D res = QueryDBHelper.getRes(req, restTemplate);
+        // 查询总数
+        Integer count = Integer.valueOf(res.getData().getRows().get(0).get(0));
+        // 头
+        List<String> column_list = Lists.newArrayList();
+        // 数据
+        List<List<String>> rows = Lists.newArrayList();
+        // 总页数
+        int totalPage = count / 5000;
+        // 分页查询
+        for (int i = 0; i <= totalPage; i++) {
+            // 导出当前页数据
+            String querySql = String.format("select id, IF(versions is null or versions = '', Safetyreportid, CONCAT(Safetyreportid, '-', versions)) as report_no,classify_of_report,ReceivedFromId as received_from_id, reportnullificationamendment as invalid_fix, createnewversionreason as 'invalid_fix_reason', fulfillexpeditecriteria as 'accelerate_report',SourceInfoId as 'source_info_id', worldwideuniquenumber as 'world_unique_num', mah_id, firstreceivedreportdate as 'first_received_date', Report_Receive_Date as 'report_receive_date'   from report_value where tenant_id = 'af632df0-3999-4a35-9c2d-7269b4ecc6a0' and newest_version = 1 and id not in (select ReportId from foreigntaskdtl where tenant_id = 'af632df0-3999-4a35-9c2d-7269b4ecc6a0') and is_deleted = 0 limit %d, %d;", i * 5000, 5000);
+            req.setSqlContent(querySql);
+            D queryRes = QueryDBHelper.getRes(req, restTemplate);
+            column_list = queryRes.getData().getColumn_list();
+            rows.addAll(queryRes.getData().getRows());
+        }
+        QueryDBHelper.exportExcel(new DData(column_list, rows), req.getFileName());
     }
 
     @ApiOperation("导出线上数据到本地,写代码")
@@ -204,7 +299,7 @@ public class TestController {
                 String showTablesSql = "show tables";
                 req.setSqlContent(showTablesSql);
                 // 查询
-                D res = getRes(req);
+                D res = QueryDBHelper.getRes(req, restTemplate);;
                 // 输出所有的表
                 List<List<String>> allTables = res.getData().getRows();
                 // 然后循环每一个表,输出建表语句
@@ -214,7 +309,7 @@ public class TestController {
                     String showCreateTableSql = "SHOW CREATE TABLE " + table;
                     req.setSqlContent(showCreateTableSql);
                     // 查询
-                    D res1 = getRes(req);
+                    D res1 = QueryDBHelper.getRes(req, restTemplate);
                     List<List<String>> createTables = res1.getData().getRows();
                     System.out.println(createTables.get(0).get(1));
                     instanceDBCreateTableSqlMap.computeIfAbsent(instanceDb, v -> Lists.newArrayList()).add(createTables.get(0).get(1));
@@ -223,7 +318,7 @@ public class TestController {
                         // 输出这个表所有的列
                         String showColumnSql = String.format("SELECT column_name FROM information_schema.columns WHERE table_name = '%s'", table);
                         req.setSqlContent(showColumnSql);
-                        D res2 = getRes(req);
+                        D res2 = QueryDBHelper.getRes(req, restTemplate);
                         // 列
                         List<String> columns = Lists.newArrayList();
                         res2.getData().getRows().forEach(resColumns -> columns.add(resColumns.get(0)));
@@ -232,7 +327,7 @@ public class TestController {
                         String configSql = String.format("SELECT %s FROM %s WHERE tenant_id IN ('default', 'system')", sql, table);
                         // 查询数据
                         req.setSqlContent(configSql);
-                        D res3 = getRes(req);
+                        D res3 = QueryDBHelper.getRes(req, restTemplate);
                         List<String> configTableInsertSql = Lists.newArrayList();
                         res3.getData().getRows().forEach(row -> configTableInsertSql.add(row.get(1)));
                         configTableInsertSqlMap.put(table, configTableInsertSql);
@@ -343,7 +438,7 @@ public class TestController {
                 // Sheet1为SQL语句
                 exportDataMap.put("Sheet1", createTableSql(createTableSqlMap));
                 // 导出文件
-                exportExcel(exportDataMap, dbPath, db);
+                QueryDBHelper.exportExcel(exportDataMap, dbPath, db);
             });
         });
     }
@@ -458,7 +553,7 @@ public class TestController {
         req.setLimitNum("5000");
         req.setSqlContent(findSql);
         // 查询
-        return getRes(req);
+        return QueryDBHelper.getRes(req, restTemplate);
     }
 
     private Integer countSystemData(QueryDBReq req, String tableName, String tenantColumn) {
@@ -470,7 +565,7 @@ public class TestController {
         }
         req.setSqlContent(countSql);
         // 查询
-        D res = getRes(req);
+        D res = QueryDBHelper.getRes(req, restTemplate);
         // 获取总数
         return Integer.valueOf(res.getData().getRows().get(0).get(0));
     }
@@ -511,7 +606,7 @@ public class TestController {
         String showCreateTableSql = "SHOW CREATE TABLE " + tableName;
         req.setSqlContent(showCreateTableSql);
         // 查询
-        D res = getRes(req);
+        D res = QueryDBHelper.getRes(req, restTemplate);
         return res.getData().getRows().get(0).get(1);
     }
 
@@ -520,122 +615,13 @@ public class TestController {
         // 输出所有的表
         String showTablesSql = "show tables";
         req.setSqlContent(showTablesSql);
-        D res = getRes(req);
+        D res = QueryDBHelper.getRes(req, restTemplate);
         List<String> allTables = Lists.newArrayList();
         res.getData().getRows().forEach(tables -> allTables.add(tables.get(0)));
         return allTables;
     }
 
-    private void exportExcel(DData resData, String fileName) {
-        List<List<String>> headers = resData.getColumn_list().stream().map(Lists::newArrayList).collect(Collectors.toList());
-        // 生成临时文件
-        File tempFile = genTempFile(fileName);
-        List<List<String>> table = resData.getRows().stream().map(Lists::newArrayList).collect(Collectors.toList());
-        // 创建构建器
-        ExcelWriter writer = write(tempFile).build();
-        // 创建sheet
-        WriteSheet sheet = createSheet(headers);
-        // 写入表格
-        writer.write(table, sheet);
-        // 完成
-        writer.finish();
-        System.out.println(tempFile.getAbsolutePath());
-        System.out.println(tempFile.getName());
-    }
 
-    private void exportExcel(Map<String, Pair<List<List<String>>, List<List<String>>>> exportDataMap,
-                             String path,
-                             String db) {
-        // 生成临时文件
-        File tempFile = genTempFile(path, db + ".xlsx");
-        // 创建构建器
-        ExcelWriter writer = write(tempFile).build();
-        // 循环配置
-        AtomicInteger sheetNo = new AtomicInteger(0);
-        exportDataMap.forEach((sheetName, sheetPair) -> {
-            // 表头创建sheet
-            WriteSheet sheet = createSheet(sheetPair.getKey().stream().map(Lists::newArrayList).collect(Collectors.toList()), sheetName, sheetNo.getAndIncrement());
-            // 写入表格内容
-            writer.write(sheetPair.getValue(), sheet);
-        });
-        // 完成
-        writer.finish();
-    }
-
-    private WriteSheet createSheet(List<List<String>> headers, String sheetName, Integer sheetNo) {
-        // 创建sheet,并设置表头样式
-        WriteSheet sheet = writerSheet().registerWriteHandler(getHandler()).build();
-        // 设置表头
-        sheet.setHead(headers);
-        // 设置名称
-        sheet.setSheetName(sheetName);
-        // 设置位置
-        sheet.setSheetNo(sheetNo);
-        // 设置列宽
-        Map<Integer, Integer> columnWidthMap = Maps.newHashMap();
-        for (int i = 0; i < headers.size(); i++) {
-            columnWidthMap.put(i, 10000);
-        }
-        sheet.setColumnWidthMap(columnWidthMap);
-        return sheet;
-    }
-
-
-    private WriteSheet createSheet(List<List<String>> headers) {
-        return createSheet("Sheet1", headers);
-    }
-
-    private WriteSheet createSheet(String sheetName, List<List<String>> headers) {
-        // 创建sheet,并设置表头样式
-        WriteSheet sheet = writerSheet(sheetName).registerWriteHandler(getHandler()).build();
-        // 设置表头
-        sheet.setHead(headers);
-        // 设置限制
-        return sheet;
-    }
-
-    private WriteHandler getHandler() {
-        // 字体
-        WriteFont font = new WriteFont();
-        // 设置字号
-        font.setFontHeightInPoints((short) 11);
-        // 表头样式
-        WriteCellStyle cellStyle = new WriteCellStyle();
-        // 背景色
-        cellStyle.setFillBackgroundColor(IndexedColors.WHITE.index);
-        // 关闭自动换行
-        cellStyle.setWrapped(false);
-        // 设置字体配置
-        cellStyle.setWriteFont(font);
-        return new HorizontalCellStyleStrategy(cellStyle, cellStyle);
-    }
-
-    private File genTempFile(String fileName) {
-        return genTempFile("C:\\Users\\shunjian.hu\\Desktop", genName(fileName));
-    }
-
-    private File genTempFile(String path, String fileName) {
-        return Paths.get(path, fileName).toFile();
-    }
-
-    private String genName(String fileName) {
-        return String.format("%s.xlsx", StringUtils.isBlank(fileName) ? UUID.randomUUID().toString() : fileName);
-    }
-
-    @Data
-    static class D {
-        private String msg;
-
-        private DData data;
-    }
-
-    @Data
-    static class DData {
-
-        private List<String> column_list;
-
-        private List<List<String>> rows;
-    }
 
     @Data
     @Builder
@@ -653,68 +639,8 @@ public class TestController {
     }
 
 
-    @SneakyThrows
-    private D getRes(QueryDBReq req) {
-        String url = "http://db.platform.taimeicloud.cn/query/";
-        HttpHeaders headers = new HttpHeaders();
-
-        LinkedMultiValueMap<String, Object> bodyParams = new LinkedMultiValueMap<>();
-
-        bodyParams.put("instance_name", Lists.newArrayList(req.getInstanceName()));
-        bodyParams.put("db_name", Lists.newArrayList(req.getDbName()));
-        bodyParams.put("sql_content", Lists.newArrayList(req.getSqlContent()));
-        bodyParams.put("limit_num", Lists.newArrayList(req.getLimitNum()));
-        headers.add("Cookie", req.getCookie());
-        headers.add("X-Csrftoken", req.getCsrfToken());
-        headers.add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-//        headers.add("Accept", "application/json, text/javascript, */*; q=0.01");
-//        headers.add("Accept-Encoding", "gzip, deflate");
-//        headers.add("Accept-Language", "zh-CN,zh;q=0.9");
-//        headers.add("Connection", "keep-alive");
-//        headers.add("Content-Length", "110");
-//        headers.add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-//        headers.add("Host", "db.platform.taimeicloud.cn");
-//        headers.add("Origin", "http://db.platform.taimeicloud.cn");
-//        headers.add("Referer", "http://db.platform.taimeicloud.cn/sqlquery/");
-//        headers.add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-//        headers.add("X-Requested-With", "XMLHttpRequest");
-        HttpEntity<Object> requestEntity = new HttpEntity<>(bodyParams, headers);
-        Thread.sleep(200);
-        long start = System.currentTimeMillis();
-        ResponseEntity<D> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, D.class);
-        D body = responseEntity.getBody();
-        log.info("查询耗时:[{}],查询语句:[{}]", System.currentTimeMillis() - start, req.getSqlContent());
-        if (body == null) {
-            throw new RuntimeException("查询出错!");
-        }
-        return body;
-    }
 
 
-    @Data
-    static class QueryDBReq {
-
-        @ApiModelProperty(value = "cookie")
-        private String cookie;
-
-        @ApiModelProperty(value = "csrfToken")
-        private String csrfToken;
-
-        @ApiModelProperty(value = "实例名")
-        private String instanceName;
-
-        @ApiModelProperty(value = "数据库名")
-        private String dbName;
-
-        @ApiModelProperty(value = "查询数据库返回条数")
-        private String limitNum;
-
-        @ApiModelProperty(value = "SQL语句")
-        private String sqlContent;
-
-        @ApiModelProperty(value = "文件名称")
-        private String fileName;
-    }
 
     public void initCellMaxTextLength() {
         SpreadsheetVersion[] values = SpreadsheetVersion.values();
@@ -770,6 +696,22 @@ public class TestController {
         return forEntity.getBody().getContent();
     }
 
+    private Map<String, ExcelData> readExcelData(List<String> fileNames) {
+        Map<String, ExcelData> result = Maps.newHashMap();
+        fileNames.forEach(fileName -> result.put(fileName, readExcelData(fileName)));
+        return result;
+    }
+
+    private ExcelData readExcelData(String fileName) {
+        String filePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\%s", fileName);
+        try {
+            return ExcelDataHelper.readExcelData(new FileInputStream(filePath));
+        } catch (FileNotFoundException exception) {
+            log.info("文件:[{}]不存在,结束", fileName);
+            return null;
+        }
+    }
+
     @Data
     static class A {
         private String content;
@@ -782,21 +724,17 @@ public class TestController {
         // 输出的更新语句
         List<String> result = Lists.newArrayList();
         List<String> files = Lists.newArrayList("", "", "", "");
-        files.add("实验室检查");
-        files.add("相关病史");
-        files.add("相关药物史");
-        files.add("剂量信息");
+        files.add("实验室检查.xlsx");
+        files.add("相关病史.xlsx");
+        files.add("相关药物史.xlsx");
+        files.add("剂量信息.xlsx");
         if (CollectionUtils.isNotEmpty(fileNames)) {
             files.addAll(fileNames);
         }
         Set<String> dates = Sets.newHashSet();
         for (String fileName : files) {
-            String filePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\%s.xlsx", fileName);
-            ExcelData excelData = null;
-            try {
-                excelData = ExcelDataHelper.readExcelData(new FileInputStream(filePath));
-            } catch (FileNotFoundException exception) {
-                log.info("文件:[{}]不存在,结束", fileName);
+            ExcelData excelData = readExcelData(fileName);
+            if (excelData == null) {
                 continue;
             }
             // 获取内容

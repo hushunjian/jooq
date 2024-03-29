@@ -1,17 +1,13 @@
 package com.hushunjian.jooq.dao;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.hushunjian.jooq.generator.tables.UserTable;
 import com.hushunjian.jooq.generator.tables.records.UserRecord;
 import com.hushunjian.jooq.req.EditUserReq;
 import com.hushunjian.jooq.res.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.core.util.JsonUtils;
 import org.jooq.DSLContext;
-import org.jooq.JSON;
-import org.jooq.Name;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +15,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import static com.hushunjian.jooq.mapping.UserMapping.USER_MAPPING;
 
 @Slf4j
 @Repository
