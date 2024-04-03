@@ -38,7 +38,7 @@ public class Field9Fix implements XianShenBase {
             ReporterRecord reporterRecord = reporterRecordMap.get(handleReportNo.getId());
             if (reporterRecord != null) {
                 // 有报告者信息,插入一条UNK的nullFlavor
-                fixSql.add(String.format("INSERT INTO `null_flavor_info`(`id`, `item_id`, `value`, `report_id`, `field_name`, `tenant_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_deleted`, `version`) VALUES ('%s', '%s', 'UNK', '%s', 'ReporterOccupation', 'af632df0-3999-4a35-9c2d-7269b4ecc6a0', 'system', '2024-03-29 10:35:06.000000', NULL, NULL, 0, 0);", UUID.randomUUID(), reporterRecord.getId(), handleReportNo.getId()));
+                fixSql.add(String.format("INSERT INTO `null_flavor_info`(`id`, `item_id`, `value`, `report_id`, `field_name`, `tenant_id`, `create_by`, `create_time`, `update_by`, `update_time`, `is_deleted`, `version`) VALUES ('%s', '%s', 'UNK', '%s', 'reporteroccupation', 'af632df0-3999-4a35-9c2d-7269b4ecc6a0', 'system', '2024-03-29 10:35:06.000000', NULL, NULL, 0, 0);", UUID.randomUUID(), reporterRecord.getId(), handleReportNo.getId()));
             }
         });
         return fixSql;

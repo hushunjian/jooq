@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hushunjian.jooq.dao.XianShenReportNoDao;
+import com.hushunjian.jooq.generator.tables.records.XianShenReportNoRecord;
 import com.hushunjian.jooq.helper.ExcelData;
 import com.hushunjian.jooq.helper.ExcelDataHelper;
 import com.hushunjian.jooq.helper.QueryDBHelper;
 import com.hushunjian.jooq.req.QueryDBReq;
-import com.hushunjian.jooq.res.D;
-import com.hushunjian.jooq.res.DData;
-import com.hushunjian.jooq.res.XianShenReportNo;
+import com.hushunjian.jooq.res.*;
 import com.hushunjian.jooq.service.fix.XianShenBase;
 import io.swagger.annotations.ApiOperation;
 import lombok.Builder;
@@ -121,19 +120,160 @@ public class TestController {
         V4_V5_REPLACE_PART_VALUE_MAP.put("v5", V5_REPLACE_PART_VALUE_MAP);
     }
 
+    private void fillExportInfo(QueryDBReq req, RestTemplate restTemplate) {
+        List<XianShenReportNoRecord> all = xianShenReportNoDao.findAll();
+        // 分批查询
+        Lists.partition(all, 100).forEach(partReportNos -> {
+            // 报告id
+            List<String> reportIds = partReportNos.stream().map(XianShenReportNoRecord::getId).collect(Collectors.toList());
+            // 查询产品
+            List<Drug> drugs = queryDrug(req, reportIds, restTemplate);
+            // 按照报告分组
+            Map<String, List<Drug>> reportDrugsMap = drugs.stream().collect(Collectors.groupingBy(Drug::getReportId));
+            // 循环处理
+            partReportNos.forEach(xianShenReportNoRecord -> {
+                // 获取药品信息
+                List<Drug> reportDrugs = reportDrugsMap.get(xianShenReportNoRecord.getId());
+                if (CollectionUtils.isEmpty(reportDrugs)) {
+                    log.info("报告:[{}]没有产品", xianShenReportNoRecord.getId());
+                } else {
+                    // 产品排序
+                    List<Drug> sortDrugs = sortTmDrugs(reportDrugs, Lists.newArrayList(new Items("aaa14e3d-053a-4bee-9c91-9da75b20b9e4"), new Items("e073d9c1-c4a9-4af1-a5c3-0675b40ddea6"), new Items("f68a6421-9dab-4e7e-aa75-1d0948acc025")));
+                    Drug firstDrug = sortDrugs.get(0);
+                    if (!StringUtils.equals(firstDrug.getDrugType(), "aaa14e3d-053a-4bee-9c91-9da75b20b9e4")) {
+                        log.info("报告:[{}]第一个药品[{}]不是怀疑产品", xianShenReportNoRecord.getId(), firstDrug.getId());
+                    }
+                    // 取第一个
+                    xianShenReportNoRecord.setFirstDrugGenericName(firstDrug.getGenericName());
+                }
+            });
+        });
+        xianShenReportNoDao.update(all);
+    }
+
+    public List<Drug> getOurCompanyDrugs(List<Drug> items) {
+        if (CollectionUtils.isEmpty(items)) {
+            return new ArrayList<>();
+        }
+        // 本公司药物
+        return items.stream().filter(tmDrugDto -> StringUtils.isNotBlank(tmDrugDto.getManufacture()))
+                .filter(tmDrugDto -> StringUtils.isNotBlank(tmDrugDto.getPsurDrugId())).collect(Collectors.toList());
+    }
+
+    public List<Drug> sortTmDrugs(List<Drug> tmDrugListDto, List<Items> items) {
+        tmDrugListDto = tmDrugListDto == null ? Lists.newArrayList() : tmDrugListDto;
+        // 本公司药物
+        List<Drug> ourCompanyDrugs = getOurCompanyDrugs(tmDrugListDto);
+        Sets.SetView<Drug> otherCompanyDrugs = Sets.difference(Sets.newHashSet(tmDrugListDto), Sets.newHashSet(ourCompanyDrugs));
+        List<Drug> drugDtos = new ArrayList<>();
+        List<Drug> collect;
+        //根据药物类型排序
+        for (Items item : items) {
+            if (CollectionUtils.isNotEmpty(ourCompanyDrugs)) {
+                collect = ourCompanyDrugs.stream().filter(c -> item.getUniqueCode().equalsIgnoreCase(c.getDrugType())).collect(Collectors.toList());
+                sortDrugs(drugDtos, collect);
+            }
+            if (CollectionUtils.isNotEmpty(otherCompanyDrugs)) {
+                collect = otherCompanyDrugs.stream().filter(c -> item.getUniqueCode().equalsIgnoreCase(c.getDrugType())).collect(Collectors.toList());
+                sortDrugs(drugDtos, collect);
+            }
+        }
+        //TODO: Drugtype 可能出现非空非正确数据丢失
+        sortDrugs(drugDtos, ourCompanyDrugs.stream().filter(c -> StringUtils.isBlank(c.getDrugType())).collect(Collectors.toList()));
+        sortDrugs(drugDtos, otherCompanyDrugs.stream().filter(c -> StringUtils.isBlank(c.getDrugType())).collect(Collectors.toList()));
+        // 盲态的药品排在第一位
+        if (CollectionUtils.isNotEmpty(drugDtos)) {
+            Collections.sort(drugDtos, new Comparator<Drug>() {
+                public int compare(Drug o1, Drug o2) {
+                    if (null != o1.getUnblindingType() && TmDrugUnblindingTypeEnum.unblinding.getType() == o1.getUnblindingType()) {
+                        return -1;
+                    }
+                    if (null != o2.getUnblindingType() && TmDrugUnblindingTypeEnum.unblinding.getType() == o2.getUnblindingType()) {
+                        return 1;
+                    }
+                    return 0;
+                }
+            });
+        }
+        return drugDtos;
+    }
+
+    private void sortDrugs(List<Drug> drugDtos, List<Drug> collect) {
+        if (CollectionUtils.isNotEmpty(collect)) {
+            Collections.sort(collect, (Object o1, Object o2) -> {
+                if (o1 == null || o2 == null) {
+                    return 0;
+                }
+                Drug drug1 = (Drug) o1;
+                Drug drug2 = (Drug) o2;
+
+                if (drug1.getCreateTime() == null) {
+                    return 1;
+                }
+                if (drug2.getCreateTime() == null) {
+                    return -1;
+                }
+
+                int compare = drug1.getCreateTime().compareTo(drug2.getCreateTime());
+                if (compare == 0) {
+                    return StringUtils.defaultString(drug1.getGenericName()).compareTo(StringUtils.defaultString(drug2.getGenericName())); //避免导入药物创建时间一直的第二排序字段
+                }
+                return compare;
+            });
+            drugDtos.addAll(collect);
+        }
+    }
+
+    private List<Drug> queryDrug(QueryDBReq req, List<String> reportIds, RestTemplate restTemplate) {
+        // 查询报告下的药品数据
+        String querySql = String.format("select id, BrandName, GenericName, ReportId, Manufacture, psur_drug_id, DrugType, create_time, unblinding_type from tm_drug where ReportId in ('%s') and is_deleted = 0", String.join("','", reportIds));
+        // 按照报告分组
+        req.setSqlContent(querySql);
+        List<Drug> drugs = Lists.newArrayList();
+        D res = QueryDBHelper.getRes(req, restTemplate);
+        System.out.println("");
+        for (List<String> row : res.getData().getRows()) {
+            Drug drug = new Drug();
+            drug.setId(row.get(0));
+            drug.setBrandName(row.get(1));
+            drug.setGenericName(row.get(2));
+            drug.setReportId(row.get(3));
+            drug.setManufacture(row.get(4));
+            drug.setPsurDrugId(row.get(5));
+            drug.setDrugType(row.get(6));
+            drug.setCreateTime(row.get(7));
+            drug.setUnblindingType(row.get(8) == null ? null :Integer.valueOf(row.get(8)));
+            drugs.add(drug);
+        }
+        return drugs;
+    }
+
     @ApiOperation("修复先声数据")
     @PostMapping(value = "fixXianShen")
     public void fixXianShen(@RequestBody QueryDBReq req) {
-        Map<String, ExcelData> excelDataMap = readExcelData(Lists.newArrayList("8a8d88478e7b4fe6018e82fabda339b1.xls", "8a8d88478e7b4fe6018e82fac1e139c5.xls"));
+        // 补充导出数据
+        // fillExportInfo(req, restTemplate);
+        // 查询所有的报告编号
+        List<String> allReportNos = xianShenReportNoDao.findAllReportNos();
+        Map<String, ExcelData> excelDataMap = readExcelData(Lists.newArrayList("新校验文件.xls"));
         // 去重的
         Map<String, Set<String>> distinctErrorReportsMap = Maps.newHashMap();
         // 所有的
         Map<String, List<String>> errorReportMap = Maps.newHashMap();
         // 模块下错误信息的字段分类
         Map<String, Map<String, Set<String>>> moduleErrorFieldsMap = Maps.newHashMap();
-        // 循环处理数据
-        excelDataMap.forEach((fileName, excelData) -> {
+        // 表头
+        List<List<String>> headers = Lists.newArrayList();
+        // 表格
+        List<List<String>> table = Lists.newArrayList();
+        for (Entry<String, ExcelData> entry : excelDataMap.entrySet()) {
+            // excel数据
+            ExcelData excelData = entry.getValue();
+            headers = excelData.getSheetHeadValues().get("E2B R3校验").stream().map(header -> Lists.newArrayList(header)).collect(Collectors.toList());
+            // 行数据
             List<Map<String, String>> rows = excelData.getSheetRowsMap().get("E2B R3校验");
+            // 移除掉不需要处理的
+            rows.removeIf(row -> !allReportNos.contains(row.get("报告编号")));
             // 取提示信息,取报告
             rows.forEach(row -> {
                 String key = String.format("%s|%s|%s", row.get("提示信息"), row.get("页面名称"), row.get("字段"));
@@ -143,8 +283,12 @@ public class TestController {
                 distinctErrorReportsMap.computeIfAbsent(key, v -> Sets.newHashSet()).add(row.get("报告编号"));
                 // 模块字段错误信息
                 moduleErrorFieldsMap.computeIfAbsent(row.get("页面名称"), v -> Maps.newHashMap()).computeIfAbsent(row.get("提示信息"), v -> Sets.newHashSet()).add(row.get("字段"));
+                // 表格追加
+                table.add(Lists.newArrayList(row.values()));
             });
-        });
+        }
+        // 导出还需要处理的excel
+        QueryDBHelper.exportExcel(headers, table, "还需要处理的校验");
         Map<String, Set<String>> distinctSortMap = distinctErrorReportsMap.entrySet().stream()
                 .sorted(Comparator.comparingInt(entry -> entry.getValue().size()))
                 .collect(Collectors.toMap(
@@ -171,19 +315,16 @@ public class TestController {
         List<String> fixSql = Lists.newArrayList();
         // 排序
         xianShenBases.sort(Comparator.comparing(XianShenBase::getOrder));
-        // 从第9个开始
-        xianShenBases.removeIf(base -> base.getOrder() < 9);
         // 循环处理
         xianShenBases.forEach(fix -> {
             // 需要修复的报告
             Set<String> reportNos = handleMap.get(true).get(fix.fixField());
-            // 过滤报告数据
-            List<XianShenReportNo> handleReportNos = xianShenReportNoDao.findByReportNos(reportNos);
-            if (CollectionUtils.isEmpty(handleReportNos)) {
+            if (CollectionUtils.isEmpty(reportNos)) {
                 log.info("[{}]没有需要修复的报告", fix.fixField());
             } else {
                 log.info("[{}]修复开始", fix.fixField());
-                fixSql.addAll(fix.fixData(req, handleReportNos, restTemplate));
+                List<String> errorFixSql = fix.fixData(req, xianShenReportNoDao.findByReportNos(reportNos), restTemplate);
+                fixSql.addAll(errorFixSql);
                 log.info("[{}]修复完成", fix.fixField());
             }
         });

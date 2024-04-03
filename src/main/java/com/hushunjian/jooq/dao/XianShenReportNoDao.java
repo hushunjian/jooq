@@ -2,6 +2,7 @@ package com.hushunjian.jooq.dao;
 
 
 import com.hushunjian.jooq.generator.tables.XianShenReportNoTable;
+import com.hushunjian.jooq.generator.tables.records.XianShenReportNoRecord;
 import com.hushunjian.jooq.res.XianShenReportNo;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
@@ -24,5 +25,18 @@ public class XianShenReportNoDao {
 
     public List<XianShenReportNo> findByReportNos(Collection<String> reportNos) {
         return dslContext.selectFrom(xianShenReportNoTable).where(xianShenReportNoTable.REPORT_NO.in(reportNos)).fetchInto(XianShenReportNo.class);
+    }
+
+    public List<String> findAllReportNos() {
+        return dslContext.select(xianShenReportNoTable.REPORT_NO).from(xianShenReportNoTable).fetch(xianShenReportNoTable.REPORT_NO);
+    }
+
+    public List<XianShenReportNoRecord> findAll() {
+        return dslContext.selectFrom(xianShenReportNoTable).fetchInto(XianShenReportNoRecord.class);
+    }
+
+
+    public void update(List<XianShenReportNoRecord> xianShenReportNoRecords) {
+        dslContext.batchUpdate(xianShenReportNoRecords).execute();
     }
 }

@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.hushunjian.jooq.req.QueryDBReq;
@@ -73,12 +74,14 @@ public class QueryDBHelper {
         if (body == null) {
             throw new RuntimeException("查询出错!");
         }
+        // 查询结果
+        log.info("查询结果:[{}],数据条数:[{}]", JSON.toJSONString(body), body.getData().getRows().size());
         return body;
     }
 
     public static void exportExcel(Map<String, Pair<List<List<String>>, List<List<String>>>> exportDataMap,
-                             String path,
-                             String db) {
+                                   String path,
+                                   String db) {
         // 生成临时文件
         File tempFile = genTempFile(path, db + ".xlsx");
         // 创建构建器
@@ -95,11 +98,9 @@ public class QueryDBHelper {
         writer.finish();
     }
 
-    public static void exportExcel(DData resData, String fileName) {
-        List<List<String>> headers = resData.getColumn_list().stream().map(Lists::newArrayList).collect(Collectors.toList());
+    public static void exportExcel(List<List<String>> headers, List<List<String>> table, String fileName) {
         // 生成临时文件
         File tempFile = genTempFile(fileName);
-        List<List<String>> table = resData.getRows().stream().map(Lists::newArrayList).collect(Collectors.toList());
         // 创建构建器
         ExcelWriter writer = write(tempFile).build();
         // 创建sheet
@@ -110,6 +111,16 @@ public class QueryDBHelper {
         writer.finish();
         System.out.println(tempFile.getAbsolutePath());
         System.out.println(tempFile.getName());
+    }
+
+
+    public static void exportExcel(DData resData, String fileName) {
+        // 表头
+        List<List<String>> headers = resData.getColumn_list().stream().map(Lists::newArrayList).collect(Collectors.toList());
+        // table
+        List<List<String>> table = resData.getRows().stream().map(Lists::newArrayList).collect(Collectors.toList());
+        // 导出
+        exportExcel(headers, table, fileName);
     }
 
     private static File genTempFile(String fileName) {
