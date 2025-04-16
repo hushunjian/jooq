@@ -3,6 +3,9 @@ package com.hushunjian.jooq.req;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 public class QueryDBReq {
     @ApiModelProperty(value = "cookie")
@@ -25,4 +28,25 @@ public class QueryDBReq {
 
     @ApiModelProperty(value = "文件名称")
     private String fileName;
+
+    @ApiModelProperty(value = "租户id")
+    private String tenantId;
+
+    @ApiModelProperty(value = "统计SQL")
+    private String countSql;
+
+    @ApiModelProperty(value = "导出所有")
+    private Boolean exportAll;
+
+    @ApiModelProperty(value = "文件下载cookie")
+    private String downloadFileCookie;
+
+    @ApiModelProperty(value = "下载错误的SQL信息")
+    private List<String> queryErrorSqlInfos;
+
+    @ApiModelProperty(value = "文件信息")
+    private Map<String, String> fileInfoMap;
+
+    @ApiModelProperty(value = "esafety5调用的Cookie")
+    private String esafety5Cookie;
 }

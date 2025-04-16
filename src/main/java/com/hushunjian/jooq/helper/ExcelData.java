@@ -29,6 +29,20 @@ public class ExcelData {
         return result;
     }
 
+    public List<List<String>> getTable(String sheetName) {
+        // 表头
+        List<String> headers = getSheetHeadValues().get(sheetName);
+        // 表数据
+        List<List<String>> table = Lists.newArrayList();
+        // 循环行
+        sheetRowsMap.get(sheetName).forEach(row -> {
+            List<String> rowInfos = Lists.newArrayList();
+            headers.forEach(header -> rowInfos.add(row.get(header)));
+            table.add(rowInfos);
+        });
+        return table;
+    }
+
     public Integer getRowSize(String sheetName) {
         if (StringUtils.isBlank(sheetName)) {
             // 取所有sheet

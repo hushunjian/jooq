@@ -27,6 +27,10 @@ public class ExcelDataHelper {
         return readExcel(inputStream, ExcelAnalysisModel.COLUMN_NAME).getExcelData();
     }
 
+    public static ExcelData readExcelData(InputStream inputStream, ExcelAnalysisModel analysisModel) {
+        return readExcel(inputStream, analysisModel).getExcelData();
+    }
+
     private static ExcelDataListener readExcel(InputStream inputStream, ExcelAnalysisModel analysisModel) {
         ExcelDataListener listener = new ExcelDataListener();
         // 设置解析模式
