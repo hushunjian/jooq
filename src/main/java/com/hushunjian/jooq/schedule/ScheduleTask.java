@@ -19,7 +19,7 @@ public class ScheduleTask {
     @Resource
     private RestTemplate restTemplate;
 
-    @Scheduled(fixedRate = 900000)
+    //@Scheduled(fixedRate = 15 * 60 * 1000)
     public void fixProdTaskData() {
         QueryDBReq req = new QueryDBReq();
         req.setCookie(QueryDBHelper.DB_COOKIE);
@@ -28,6 +28,13 @@ public class ScheduleTask {
         req.setEsafety5Cookie(QueryDBHelper.ESAFETY_5_COOKIE);
         QueryDBHelper.fixHomePageTaskData(req, restTemplate);
         log.info("fixProdTaskData执行完成");
+    }
+
+    //@Scheduled(fixedRate = 5 * 60 * 1000)
+    public void refreshReportEs() {
+        log.info("刷新租户报告ES数据--开始");
+        QueryDBHelper.refreshReportEs(restTemplate);
+        log.info("刷新租户报告ES数据--结束");
     }
 
     //@Scheduled(fixedRate = 120000)

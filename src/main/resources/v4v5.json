@@ -1,0 +1,5033 @@
+[
+  {
+    "v4FieldName": "不良事件",
+    "v4FieldPath": "tmMedWatchDto.medWatchAdverseEvent",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "不良事件",
+    "v5FieldPath": "medWatch.adverseEvent",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "产品问题",
+    "v4FieldPath": "tmMedWatchDto.medWatchProductProblem",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "产品问题",
+    "v5FieldPath": "medWatch.productProblem",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "报告来源",
+    "v4FieldPath": "tmMedWatchDto.medWatchReportSource",
+    "v4ItemClassId": "42fd9933-629f-4a49-8d00-908bb091a1d9",
+    "v5FieldName": "报告来源",
+    "v5FieldPath": "medWatch.reportSource",
+    "v5ItemClassId": "42fd9933-629f-4a49-8d00-908bb091a1d9",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "发送FDA",
+    "v4FieldPath": "tmMedWatchDto.medWatchSentFda",
+    "v4ItemClassId": "582c7a1a-27a3-44e2-b952-e87e86b9b454",
+    "v5FieldName": "发送FDA",
+    "v5FieldPath": "medWatch.sendFda",
+    "v5ItemClassId": "582c7a1a-27a3-44e2-b952-e87e86b9b454",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "制造商",
+    "v4FieldPath": "tmMedWatchDto.medWatchManufacturer",
+    "v4ItemClassId": "-",
+    "v5FieldName": "制造商",
+    "v5FieldPath": "medWatch.manufacturer",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "制造商邮件",
+    "v4FieldPath": "tmMedWatchDto.medWatchManufacturerMail",
+    "v4ItemClassId": "-",
+    "v5FieldName": "制造商邮件",
+    "v5FieldPath": "medWatch.manufacturerMail",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "制造商地址",
+    "v4FieldPath": "tmMedWatchDto.medWatchManufacturerAddress",
+    "v4ItemClassId": "-",
+    "v5FieldName": "制造商地址",
+    "v5FieldPath": "medWatch.manufacturerAddress",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "制造商注册503b",
+    "v4FieldPath": "tmMedWatchDto.medWatchManufacturerRegistered503b",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "制造商注册503b",
+    "v5FieldPath": "medWatch.manufacturerRegistered503b",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "制造商电话",
+    "v4FieldPath": "tmMedWatchDto.medWatchManufacturerTel",
+    "v4ItemClassId": "-",
+    "v5FieldName": "制造商电话",
+    "v5FieldPath": "medWatch.manufacturerTel",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "类似新药申请号ANDA",
+    "v4FieldPath": "tmMedWatchDto.medWatchSimilarNewDrugApplicationNumberAnda",
+    "v4ItemClassId": "-",
+    "v5FieldName": "类似新药申请号ANDA",
+    "v5FieldPath": "medWatch.similarNewDrugApplyNum",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "新药申请号NDA",
+    "v4FieldPath": "tmMedWatchDto.medWatchNewDrugApplicationNumberNda",
+    "v4ItemClassId": "-",
+    "v5FieldName": "新药申请号NDA",
+    "v5FieldPath": "medWatch.newDrugApplyNum",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "生物制品申请号",
+    "v4FieldPath": "tmMedWatchDto.medWatchBiologicalProductApplicationNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "生物制品申请号",
+    "v5FieldPath": "medWatch.biologicalProductApplyNum",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "研究新药申请号",
+    "v4FieldPath": "tmMedWatchDto.medWatchResearchNewDrugApplicationNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究新药申请号",
+    "v5FieldPath": "medWatch.researchNewDrugApplyNum",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "组合产品",
+    "v4FieldPath": "tmMedWatchDto.medWatchCombinationProduct",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "组合产品",
+    "v5FieldPath": "medWatch.combinationProduct",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "PMA",
+    "v4FieldPath": "tmMedWatchDto.medWatchPma",
+    "v4ItemClassId": "-",
+    "v5FieldName": "PMA",
+    "v5FieldPath": "medWatch.pma",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "非处方药",
+    "v4FieldPath": "tmMedWatchDto.medWatchNonPrescriptionDrugs",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "非处方药",
+    "v5FieldPath": "medWatch.nonPrescriptionDrugs",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "1938年前产品",
+    "v4FieldPath": "tmMedWatchDto.medWatchPre1938",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "1938年前产品",
+    "v5FieldPath": "medWatch.pre1938",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmMedWatchDto.medWatchReportId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "medWatch.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "外包设施",
+    "v4FieldPath": "tmMedWatchDto.outsourcingFacility",
+    "v4ItemClassId": "-",
+    "v5FieldName": "外包设施",
+    "v5FieldPath": "medWatch.outsourcingFacility",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "预ANDA",
+    "v4FieldPath": "tmMedWatchDto.preAnda",
+    "v4ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5FieldName": "预ANDA",
+    "v5FieldPath": "medWatch.preAnda",
+    "v5ItemClassId": "c3a7e1af-1632-4081-9911-272ea3b8b76e",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "复合产品",
+    "v4FieldPath": "tmMedWatchDto.compoundedProduct",
+    "v4ItemClassId": "-",
+    "v5FieldName": "复合产品",
+    "v5FieldPath": "medWatch.compoundedProduct",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "MedWatch"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmAdverseeventDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "adverseEventList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmAdverseeventDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "adverseEventList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmAdverseeventDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "adverseEventList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmAdverseeventDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "adverseEventList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件名称",
+    "v4FieldPath": "tmAdverseeventDtoList.eventterm",
+    "v4ItemClassId": "-",
+    "v5FieldName": "事件名称",
+    "v5FieldPath": "adverseEventList.eventName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件名称本地语言",
+    "v4FieldPath": "tmAdverseeventDtoList.eventnamenativelanguage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "事件名称本地语言",
+    "v5FieldPath": "adverseEventList.eventNameNativeLanguage",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "本地语言代码",
+    "v4FieldPath": "tmAdverseeventDtoList.nativelanguagecode",
+    "v4ItemClassId": "fbda3b45-c48e-45d8-8d6a-3f2a301c187b",
+    "v5FieldName": "本地语言代码",
+    "v5FieldPath": "adverseEventList.nativeLanguageCode",
+    "v5ItemClassId": "fbda3b45-c48e-45d8-8d6a-3f2a301c187b",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "初始报告",
+    "v4FieldPath": "tmAdverseeventDtoList.initialreport",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "初始报告",
+    "v5FieldPath": "adverseEventList.initialReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "与研究过程相关",
+    "v4FieldPath": "tmAdverseeventDtoList.relatedtotheresearchprocess",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "与研究过程相关",
+    "v5FieldPath": "adverseEventList.relatedResearchProcess",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "报告者强调",
+    "v4FieldPath": "tmAdverseeventDtoList.reportertermhighlighted",
+    "v4ItemClassId": "3bba964c-6252-11e8-9882-000c29399d7c",
+    "v5FieldName": "报告者强调",
+    "v5FieldPath": "adverseEventList.reporterEmphasized",
+    "v5ItemClassId": "3bba964c-6252-11e8-9882-000c29399d7c",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "严重性标准",
+    "v4FieldPath": "tmAdverseeventDtoList.standardofseriousness",
+    "v4ItemClassId": "fa0daa19-247c-4cd4-93a7-f16ade76728f",
+    "v5FieldName": "严重性标准",
+    "v5FieldPath": "adverseEventList.seriousnessStandard",
+    "v5ItemClassId": "fa0daa19-247c-4cd4-93a7-f16ade76728f",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "发生日期",
+    "v4FieldPath": "tmAdverseeventDtoList.dateofonset",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发生日期",
+    "v5FieldPath": "adverseEventList.dateOfOnset",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "解决日期",
+    "v4FieldPath": "tmAdverseeventDtoList.dateofresolution",
+    "v4ItemClassId": "-",
+    "v5FieldName": "解决日期",
+    "v5FieldPath": "adverseEventList.dateOfResolution",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件持续时间",
+    "v4FieldPath": "tmAdverseeventDtoList.eventduration",
+    "v4ItemClassId": "-",
+    "v5FieldName": "事件持续时间",
+    "v5FieldPath": "adverseEventList.eventDuration",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件持续时间单位",
+    "v4FieldPath": "tmAdverseeventDtoList.eventdurationunit",
+    "v4ItemClassId": "b77f1e5a-1e08-4f64-9c9c-b7d745665014",
+    "v5FieldName": "事件持续时间单位",
+    "v5FieldPath": "adverseEventList.eventDurationUnit",
+    "v5ItemClassId": "b77f1e5a-1e08-4f64-9c9c-b7d745665014",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件结果",
+    "v4FieldPath": "tmAdverseeventDtoList.eventoutcome",
+    "v4ItemClassId": "4ee1a3e9-e4bb-48ad-a65f-5e51daf2277c",
+    "v5FieldName": "事件结果",
+    "v5FieldPath": "adverseEventList.eventOutcome",
+    "v5ItemClassId": "4ee1a3e9-e4bb-48ad-a65f-5e51daf2277c",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "医学确认",
+    "v4FieldPath": "tmAdverseeventDtoList.aemedicalconfirmed",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "医学确认",
+    "v5FieldPath": "adverseEventList.medicalConfirmed",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "事件国家",
+    "v4FieldPath": "tmAdverseeventDtoList.eventcountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "事件国家",
+    "v5FieldPath": "adverseEventList.eventCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "CTCAE分类",
+    "v4FieldPath": "tmAdverseeventDtoList.ctcaeclassification",
+    "v4ItemClassId": "7d068af0-13f0-4471-88d8-7b6c22480e69",
+    "v5FieldName": "CTCAE分类",
+    "v5FieldPath": "adverseEventList.ctcAeClassification",
+    "v5ItemClassId": "7d068af0-13f0-4471-88d8-7b6c22480e69",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "DAIDSAE分类",
+    "v4FieldPath": "tmAdverseeventDtoList.daidsaeclassification",
+    "v4ItemClassId": "010a420b-af4b-11e8-b5b6-000c29399d7c",
+    "v5FieldName": "DAIDSAE分类",
+    "v5FieldPath": "adverseEventList.daidsAeClassification",
+    "v5ItemClassId": "010a420b-af4b-11e8-b5b6-000c29399d7c",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "DMIDAE分类",
+    "v4FieldPath": "tmAdverseeventDtoList.dmidaeclassification",
+    "v4ItemClassId": "0aea99e0-d7c1-551d-9c7d-9a18b6373aa1",
+    "v5FieldName": "DMIDAE分类",
+    "v5FieldPath": "adverseEventList.dmidAeClassification",
+    "v5ItemClassId": "0aea99e0-d7c1-551d-9c7d-9a18b6373aa1",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "疾病进展",
+    "v4FieldPath": "tmAdverseeventDtoList.diseaseprogression",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "疾病进展",
+    "v5FieldPath": "adverseEventList.diseaseProgression",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "是否为IME",
+    "v4FieldPath": "tmAdverseeventDtoList.isime",
+    "v4ItemClassId": "daf56b27-72c0-43b4-9649-161fe1c6463b",
+    "v5FieldName": "是否为IME",
+    "v5FieldPath": "adverseEventList.isIme",
+    "v5ItemClassId": "daf56b27-72c0-43b4-9649-161fe1c6463b",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "是否接受处理",
+    "v4FieldPath": "tmAdverseeventDtoList.whetheracceptdisposal",
+    "v4ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5FieldName": "是否接受处理",
+    "v5FieldPath": "adverseEventList.acceptDisposal",
+    "v5ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "临床目的事件",
+    "v4FieldPath": "tmAdverseeventDtoList.clinicalpurposeevent",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "临床目的事件",
+    "v5FieldPath": "adverseEventList.clinicalPurposeEvent",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "临床结束事件",
+    "v4FieldPath": "tmAdverseeventDtoList.clinicalendevent",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "临床结束事件",
+    "v5FieldPath": "adverseEventList.clinicalEndEvent",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "医学事件",
+    "v4FieldPath": "tmAdverseeventDtoList.focusontheevent",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "医学事件",
+    "v5FieldPath": "adverseEventList.medicalEvent",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "特别关注事件",
+    "v4FieldPath": "tmAdverseeventDtoList.specialevent",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "特别关注事件",
+    "v5FieldPath": "adverseEventList.specialAttentionEvent",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "是否导入",
+    "v4FieldPath": "tmAdverseeventDtoList.importstatus",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否导入",
+    "v5FieldPath": "adverseEventList.isImport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "SAE国内报告",
+    "v4FieldPath": "tmAdverseeventDtoList.saereporteddocestic",
+    "v4ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5FieldName": "SAE国内报告",
+    "v5FieldPath": "adverseEventList.saeReportedDocestic",
+    "v5ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "SAE国外报告",
+    "v4FieldPath": "tmAdverseeventDtoList.saereportedabroad",
+    "v4ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5FieldName": "SAE国外报告",
+    "v5FieldPath": "adverseEventList.saeReportedAbroad",
+    "v5ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "处理措施",
+    "v4FieldPath": "tmAdverseeventDtoList.process",
+    "v4ItemClassId": "-",
+    "v5FieldName": "处理措施",
+    "v5FieldPath": "adverseEventList.processMeasures",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "特别关注事件类别",
+    "v4FieldPath": "tmAdverseeventDtoList.specialeventcategory",
+    "v4ItemClassId": "-",
+    "v5FieldName": "特别关注事件类别",
+    "v5FieldPath": "adverseEventList.specialAttentionEventCategory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "研究过程详情",
+    "v4FieldPath": "tmAdverseeventDtoList.researchprocessdetail",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究过程详情",
+    "v5FieldPath": "adverseEventList.researchProcessDetail",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "SAE发生时间",
+    "v4FieldPath": "tmAdverseeventDtoList.saehappentime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "SAE发生时间",
+    "v5FieldPath": "adverseEventList.saeHappenTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "后遗症表现",
+    "v4FieldPath": "tmAdverseeventDtoList.manifestationofsequelae",
+    "v4ItemClassId": "-",
+    "v5FieldName": "后遗症表现",
+    "v5FieldPath": "adverseEventList.manifestationOfSequelae",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "对原发病的影响",
+    "v4FieldPath": "tmAdverseeventDtoList.impactonprimarydisease",
+    "v4ItemClassId": "70b89142-8c15-40a5-97be-57236119440e",
+    "v5FieldName": "对原发病的影响",
+    "v5FieldPath": "adverseEventList.impactPrimaryDisease",
+    "v5ItemClassId": "70b89142-8c15-40a5-97be-57236119440e",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "CTCAE版本",
+    "v4FieldPath": "tmAdverseeventDtoList.ctcaeversions",
+    "v4ItemClassId": "-",
+    "v5FieldName": "CTCAE版本",
+    "v5FieldPath": "adverseEventList.ctcAeVersions",
+    "v5ItemClassId": "0985d7bd1ee211edb62a0050568efab6",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "是否增加",
+    "v4FieldPath": "tmAdverseeventDtoList.whetherincreasing",
+    "v4ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5FieldName": "是否增加",
+    "v5FieldPath": "adverseEventList.whetherIncreasing",
+    "v5ItemClassId": "682e9166-85ca-4b1e-b630-515723562265",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "入院时间",
+    "v4FieldPath": "tmAdverseeventDtoList.admitteddate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "入院时间",
+    "v5FieldPath": "adverseEventList.hospitalStartTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "出院时间",
+    "v4FieldPath": "tmAdverseeventDtoList.datefordischarge",
+    "v4ItemClassId": "-",
+    "v5FieldName": "出院时间",
+    "v5FieldPath": "adverseEventList.hospitalEndTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "住院天数",
+    "v4FieldPath": "tmAdverseeventDtoList.hospitalstay",
+    "v4ItemClassId": "-",
+    "v5FieldName": "住院天数",
+    "v5FieldPath": "adverseEventList.hospitalDay",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "住院详情",
+    "v4FieldPath": "tmAdverseeventDtoList.hospitaldetail",
+    "v4ItemClassId": "1933c6bb-9a33-456c-81d8-7492efa0aef2",
+    "v5FieldName": "住院详情",
+    "v5FieldPath": "adverseEventList.hospitalDetail",
+    "v5ItemClassId": "1933c6bb-9a33-456c-81d8-7492efa0aef2",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "致残详情",
+    "v4FieldPath": "tmAdverseeventDtoList.disablingdetail",
+    "v4ItemClassId": "B2D61E50-7843-460A-A508-D9E930BA8A6D",
+    "v5FieldName": "致残详情",
+    "v5FieldPath": "adverseEventList.disabling",
+    "v5ItemClassId": "B2D61E50-7843-460A-A508-D9E930BA8A6D",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "严重性",
+    "v4FieldPath": "tmAdverseeventDtoList.seriousness",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "严重性",
+    "v5FieldPath": "adverseEventList.seriousness",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "严重程度",
+    "v4FieldPath": "tmAdverseeventDtoList.severity",
+    "v4ItemClassId": "e4096fd2-d184-4c66-9c66-d04a95db9304",
+    "v5FieldName": "严重程度",
+    "v5FieldPath": "adverseEventList.severity",
+    "v5ItemClassId": "e4096fd2-d184-4c66-9c66-d04a95db9304",
+    "v5ModuleName": "不良事件模块"
+  },
+  {
+    "v4FieldName": "病例叙述",
+    "v4FieldPath": "reportValueDto.casenarrative",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告描述",
+    "v5FieldPath": "reportDescription.reportDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "事件描述"
+  },
+  {
+    "v4FieldName": "公司评论",
+    "v4FieldPath": "reportValueDto.companyreview",
+    "v4ItemClassId": "-",
+    "v5FieldName": "公司评论",
+    "v5FieldPath": "reportDescription.companyComment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "事件描述"
+  },
+  {
+    "v4FieldName": "报告者评论",
+    "v4FieldPath": "reportValueDto.reportercomments",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者评论",
+    "v5FieldPath": "reportDescription.reporterComment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "事件描述"
+  },
+  {
+    "v4FieldName": "类似事件评估",
+    "v4FieldPath": "reportValueDto.aose",
+    "v4ItemClassId": "-",
+    "v5FieldName": "类似事件评估",
+    "v5FieldPath": "reportDescription.similarIncidentsEvaluation",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "事件描述"
+  },
+  {
+    "v4FieldName": "ADR备注",
+    "v4FieldPath": "reportValueDto.mark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "ADR备注",
+    "v5FieldPath": "reportDescription.adrRemark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "事件描述"
+  },
+  {
+    "v4FieldName": "类型项ID",
+    "v4FieldPath": "tmRelatedtocodeDtoList.typeitemid",
+    "v4ItemClassId": "3f677371-037c-4d24-935e-6ac474802e28",
+    "v5FieldName": "类型项ID",
+    "v5FieldPath": "relatedToCodeList.typeItemId",
+    "v5ItemClassId": "3f677371-037c-4d24-935e-6ac474802e28",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "关联代码",
+    "v4FieldPath": "tmRelatedtocodeDtoList.code",
+    "v4ItemClassId": "-",
+    "v5FieldName": "关联代码",
+    "v5FieldPath": "relatedToCodeList.code",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmRelatedtocodeDtoList.remark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "relatedToCodeList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "是否自动关联",
+    "v4FieldPath": "tmRelatedtocodeDtoList.isautorelateed",
+    "v4ItemClassId": "-",
+    "v5FieldName": "是否自动关联",
+    "v5FieldPath": "relatedToCodeList.isAutoRelated",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "关联报告ID",
+    "v4FieldPath": "tmRelatedtocodeDtoList.relatedreportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "关联报告ID",
+    "v5FieldPath": "relatedToCodeList.relatedReportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmRelatedtocodeDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "relatedToCodeList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "关联报告"
+  },
+  {
+    "v4FieldName": "发送者类型",
+    "v4FieldPath": "e2bR2ImportSenderList.senderType",
+    "v4ItemClassId": "426321ce-6865-11e8-a602-000c29399d7c",
+    "v5FieldName": "发送者类型",
+    "v5FieldPath": "sender.senderType",
+    "v5ItemClassId": "426321ce-6865-11e8-a602-000c29399d7c",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者所在机构",
+    "v4FieldPath": "e2bR2ImportSenderList.senderOrganization",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者所在机构",
+    "v5FieldPath": "sender.senderOrganization",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者所在部门",
+    "v4FieldPath": "e2bR2ImportSenderList.senderDepartment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者所在部门",
+    "v5FieldPath": "sender.senderDepartment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的称谓",
+    "v4FieldPath": "e2bR2ImportSenderList.senderTitle",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的称谓",
+    "v5FieldPath": "sender.senderTitle",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的名字",
+    "v4FieldPath": "e2bR2ImportSenderList.senderGiveName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的名字",
+    "v5FieldPath": "sender.senderGiveName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的中间名字",
+    "v4FieldPath": "e2bR2ImportSenderList.senderMiddleName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的中间名字",
+    "v5FieldPath": "sender.senderMiddleName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的姓氏",
+    "v4FieldPath": "e2bR2ImportSenderList.senderFamilyName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的姓氏",
+    "v5FieldPath": "sender.senderFamilyName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的街道地址",
+    "v4FieldPath": "e2bR2ImportSenderList.senderStreetAddress",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的街道地址",
+    "v5FieldPath": "sender.senderStreetAddress",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者所在城市",
+    "v4FieldPath": "e2bR2ImportSenderList.senderCity",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者所在城市",
+    "v5FieldPath": "sender.senderCity",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者所在州或省",
+    "v4FieldPath": "e2bR2ImportSenderList.senderState",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者所在州或省",
+    "v5FieldPath": "sender.senderState",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者所在地区的邮政编码",
+    "v4FieldPath": "e2bR2ImportSenderList.senderPostCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者所在地区的邮政编码",
+    "v5FieldPath": "sender.senderPostCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的国家代码",
+    "v4FieldPath": "e2bR2ImportSenderList.senderCountryCode",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "发送者的国家代码",
+    "v5FieldPath": "sender.senderCountryCode",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "联系电话",
+    "v4FieldPath": "e2bR2ImportSenderList.senderTel",
+    "v4ItemClassId": "-",
+    "v5FieldName": "联系电话",
+    "v5FieldPath": "sender.senderTel",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "联系电话分机",
+    "v4FieldPath": "e2bR2ImportSenderList.senderTelExtension",
+    "v4ItemClassId": "-",
+    "v5FieldName": "联系电话分机",
+    "v5FieldPath": "sender.senderTelExtension",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "联系电话国家代码",
+    "v4FieldPath": "e2bR2ImportSenderList.senderTelCountryCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "联系电话国家代码",
+    "v5FieldPath": "sender.senderTelCountryCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的传真号码",
+    "v4FieldPath": "e2bR2ImportSenderList.senderFax",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的传真号码",
+    "v5FieldPath": "sender.senderFax",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的传真分机",
+    "v4FieldPath": "e2bR2ImportSenderList.senderFaxExtension",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的传真分机",
+    "v5FieldPath": "sender.senderFaxExtension",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的传真国家代码",
+    "v4FieldPath": "e2bR2ImportSenderList.senderFaxCountryCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的传真国家代码",
+    "v5FieldPath": "sender.senderFaxCountryCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "发送者的邮箱地址",
+    "v4FieldPath": "e2bR2ImportSenderList.senderEmailAddress",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发送者的邮箱地址",
+    "v5FieldPath": "sender.senderEmailAddress",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "reportSenderDiagnosisList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者诊断信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "reportSenderDiagnosisList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者诊断信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "reportSenderDiagnosisList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者诊断信息"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmCauseOfDeathDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "reportSenderDiagnosisList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者诊断信息"
+  },
+  {
+    "v4FieldName": "诊断值",
+    "v4FieldPath": "tmCauseOfDeathDtoList.causeofdeath",
+    "v4ItemClassId": "-",
+    "v5FieldName": "诊断值",
+    "v5FieldPath": "reportSenderDiagnosisList.diagnosisValue",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "发送者诊断信息"
+  },
+  {
+    "v4FieldName": "患者名",
+    "v4FieldPath": "reportValueDto.patientsFirstName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "名",
+    "v5FieldPath": "patient.namePartOne",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者中间名",
+    "v4FieldPath": "reportValueDto.patientsMiddleName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "中间名",
+    "v5FieldPath": "patient.namePartMiddle",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者姓",
+    "v4FieldPath": "reportValueDto.patientsLastName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "姓",
+    "v5FieldPath": "patient.surname",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者姓名",
+    "v4FieldPath": "reportValueDto.patientname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "患者姓名",
+    "v5FieldPath": "patient.patientName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者首字母",
+    "v4FieldPath": "reportValueDto.patientinitial",
+    "v4ItemClassId": "-",
+    "v5FieldName": "首字母",
+    "v5FieldPath": "patient.patientInitial",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者编号",
+    "v4FieldPath": "reportValueDto.patientnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "患者编号",
+    "v5FieldPath": "patient.patientCount",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "全科医生编号",
+    "v4FieldPath": "reportValueDto.gbnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "全科医生编号",
+    "v5FieldPath": "patient.gpNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "专科医生记录号",
+    "v4FieldPath": "reportValueDto.specialistrecordnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "专科医生记录号",
+    "v5FieldPath": "patient.specialistRecordNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "全科医生病历号",
+    "v4FieldPath": "reportValueDto.gpmedicalrecordnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病历号",
+    "v5FieldPath": "patient.medicalRecordNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "受试者编号",
+    "v4FieldPath": "reportValueDto.subjectnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "受试者编号",
+    "v5FieldPath": "patient.patientNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "身高",
+    "v4FieldPath": "reportValueDto.heightofparent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "身高",
+    "v5FieldPath": "patient.height",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "体重",
+    "v4FieldPath": "reportValueDto.bodyweight",
+    "v4ItemClassId": "-",
+    "v5FieldName": "体重",
+    "v5FieldPath": "patient.bodyWeight",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "末次月经时间",
+    "v4FieldPath": "reportValueDto.lmp",
+    "v4ItemClassId": "-",
+    "v5FieldName": "末次月经时间",
+    "v5FieldPath": "patient.lastMenstrualTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "相关病史",
+    "v4FieldPath": "reportValueDto.relevantmedicalhistory",
+    "v4ItemClassId": "-",
+    "v5FieldName": "相关病史",
+    "v5FieldPath": "patient.relatedMedicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "伴随治疗",
+    "v4FieldPath": "reportValueDto.concomitanttherapiesnew",
+    "v4ItemClassId": "58417009-75cb-11e8-a602-000c29399d7c",
+    "v5FieldName": "伴随治疗",
+    "v5FieldPath": "patient.concomitantTherapies",
+    "v5ItemClassId": "58417009-75cb-11e8-a602-000c29399d7c",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "死亡日期",
+    "v4FieldPath": "reportValueDto.dateofdeath",
+    "v4ItemClassId": "-",
+    "v5FieldName": "死亡日期",
+    "v5FieldPath": "patient.deathDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者国籍",
+    "v4FieldPath": "reportValueDto.patientnationality",
+    "v4ItemClassId": "bfa5349e-e05c-437a-a3f2-62b341280656",
+    "v5FieldName": "民族",
+    "v5FieldPath": "patient.clan",
+    "v5ItemClassId": "bfa5349e-e05c-437a-a3f2-62b341280656",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "医院名称",
+    "v4FieldPath": "reportValueDto.hospitalname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "医院名称",
+    "v5FieldPath": "patient.hospitalName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者公民身份",
+    "v4FieldPath": "reportValueDto.patientcitizenship",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "国家",
+    "v5FieldPath": "patient.country",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "患者联系方式",
+    "v4FieldPath": "reportValueDto.patientcontactinformation",
+    "v4ItemClassId": "-",
+    "v5FieldName": "联系方式",
+    "v5FieldPath": "patient.contactInformation",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "中心编号",
+    "v4FieldPath": "reportValueDto.centernumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "中心编号",
+    "v5FieldPath": "patient.centerNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "是否盲法",
+    "v4FieldPath": "reportValueDto.blindedornot",
+    "v4ItemClassId": "718db8d2-4196-4b0c-8962-ad208bff3e08",
+    "v5FieldName": "盲法",
+    "v5FieldPath": "patient.blind",
+    "v5ItemClassId": "718db8d2-4196-4b0c-8962-ad208bff3e08",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "隐私",
+    "v4FieldPath": "reportValueDto.piiprivacy",
+    "v4ItemClassId": "ef9fe8a3-d785-43b5-a097-a3184ec87b00",
+    "v5FieldName": "隐私",
+    "v5FieldPath": "patient.privacy",
+    "v5ItemClassId": "ef9fe8a3-d785-43b5-a097-a3184ec87b00",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "治疗日期",
+    "v4FieldPath": "reportValueDto.treatmentdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "治疗日期",
+    "v5FieldPath": "patient.treatmentDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "儿童报告",
+    "v4FieldPath": "reportValueDto.childrenreport",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "儿童报告",
+    "v5FieldPath": "patient.childrenReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "出生日期",
+    "v4FieldPath": "reportValueDto.dateofbirth",
+    "v4ItemClassId": "-",
+    "v5FieldName": "出生日期",
+    "v5FieldPath": "patient.dateOfBirth",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "发病周数",
+    "v4FieldPath": "reportValueDto.weeksatonset",
+    "v4ItemClassId": "-",
+    "v5FieldName": "妊娠期事件",
+    "v5FieldPath": "patient.gestationalPeriodEvent",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "妊娠期单位",
+    "v4FieldPath": "reportValueDto.gestationperiodunit",
+    "v4ItemClassId": "040dd74e-5ba6-42da-833b-f009ce480fd0",
+    "v5FieldName": "妊娠期单位",
+    "v5FieldPath": "patient.gestationalPeriodUnitEvent",
+    "v5ItemClassId": "040dd74e-5ba6-42da-833b-f009ce480fd0",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "年龄组",
+    "v4FieldPath": "reportValueDto.agegroup",
+    "v4ItemClassId": "d31324fd-069a-4d55-bf27-3ae4783d7c58",
+    "v5FieldName": "年龄组",
+    "v5FieldPath": "patient.ageGroup",
+    "v5ItemClassId": "d31324fd-069a-4d55-bf27-3ae4783d7c58",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "年龄",
+    "v4FieldPath": "reportValueDto.age",
+    "v4ItemClassId": "-",
+    "v5FieldName": "年龄",
+    "v5FieldPath": "patient.age",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "发病时年龄单位",
+    "v4FieldPath": "reportValueDto.ageattimeofonsetunit",
+    "v4ItemClassId": "d3c888ff-1b57-4fd2-ac3c-50e682f110e9",
+    "v5FieldName": "年龄单位",
+    "v5FieldPath": "patient.ageUnit",
+    "v5ItemClassId": "d3c888ff-1b57-4fd2-ac3c-50e682f110e9",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "是否存在经验",
+    "v4FieldPath": "reportValueDto.existExp",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "经验",
+    "v5FieldPath": "patient.existExp",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "经验原因",
+    "v4FieldPath": "reportValueDto.existExpReason",
+    "v4ItemClassId": "-",
+    "v5FieldName": "经验原因",
+    "v5FieldPath": "patient.existExpReason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "尸检报告",
+    "v4FieldPath": "reportValueDto.autopsyreport",
+    "v4ItemClassId": "7b8c7427-b276-4da2-b1a6-5c3c4c59a642",
+    "v5FieldName": "尸检报告",
+    "v5FieldPath": "patient.autopsyReport",
+    "v5ItemClassId": "7b8c7427-b276-4da2-b1a6-5c3c4c59a642",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "尸检",
+    "v4FieldPath": "reportValueDto.autopsy",
+    "v4ItemClassId": "682951b5-fb46-4661-9e7f-0a57e0061a31",
+    "v5FieldName": "尸检",
+    "v5FieldPath": "patient.autopsy",
+    "v5ItemClassId": "682951b5-fb46-4661-9e7f-0a57e0061a31",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "性别",
+    "v4FieldPath": "reportValueDto.sex",
+    "v4ItemClassId": "69f360f6-9940-4c61-a195-c7d1d842b17b",
+    "v5FieldName": "性别",
+    "v5FieldPath": "patient.sex",
+    "v5ItemClassId": "69f360f6-9940-4c61-a195-c7d1d842b17b",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "种族",
+    "v4FieldPath": "reportValueDto.racial",
+    "v4ItemClassId": "ff506add-acf2-11e8-b5b6-000c29399d7c",
+    "v5FieldName": "种族",
+    "v5FieldPath": "patient.racial",
+    "v5ItemClassId": "ff506add-acf2-11e8-b5b6-000c29399d7c",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "人种",
+    "v4FieldPath": "reportValueDto.race",
+    "v4ItemClassId": "deeff600-acf8-11e8-b5b6-000c29399d7c",
+    "v5FieldName": "人种",
+    "v5FieldPath": "patient.race",
+    "v5ItemClassId": "deeff600-acf8-11e8-b5b6-000c29399d7c",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "行政办公室",
+    "v4FieldPath": "reportValueDto.administrativeOffice",
+    "v4ItemClassId": "-",
+    "v5FieldName": "行政办公室",
+    "v5FieldPath": "patient.administrativeOffice",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "地址",
+    "v4FieldPath": "reportValueDto.address",
+    "v4ItemClassId": "-",
+    "v5FieldName": "地址",
+    "v5FieldPath": "patient.address",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "职业",
+    "v4FieldPath": "patientInformationDto.profession",
+    "v4ItemClassId": "77d4cdfb-d145-11e8-a962-000c29399d7c",
+    "v5FieldName": "职业",
+    "v5FieldPath": "patient.profession",
+    "v5ItemClassId": "77d4cdfb-d145-11e8-a962-000c29399d7c",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "监护人",
+    "v4FieldPath": "patientInformationDto.guardian",
+    "v4ItemClassId": "-",
+    "v5FieldName": "监护人",
+    "v5FieldPath": "patient.guardian",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "揭盲日期",
+    "v4FieldPath": "reportValueDto.dateforunblinding",
+    "v4ItemClassId": "-",
+    "v5FieldName": "揭盲日期",
+    "v5FieldPath": "patient.unblindDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "揭盲原因",
+    "v4FieldPath": "reportValueDto.unblindreason",
+    "v4ItemClassId": "-",
+    "v5FieldName": "揭盲原因",
+    "v5FieldPath": "patient.unblindReason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientMedicalHistoryList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientMedicalHistoryList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "NullFlavor映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "NullFlavor映射",
+    "v5FieldPath": "patient.patientMedicalHistoryList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "patient.patientMedicalHistoryList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistory",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病史",
+    "v5FieldPath": "patient.patientMedicalHistoryList.medicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史开始日期",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystartdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始日期",
+    "v5FieldPath": "patient.patientMedicalHistoryList.startDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史是否继续",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystillcontinue",
+    "v4ItemClassId": "64ba15a6-bd1a-4c60-9039-1788750fe8c5",
+    "v5FieldName": "是否继续",
+    "v5FieldPath": "patient.patientMedicalHistoryList.stillContinue",
+    "v5ItemClassId": "64ba15a6-bd1a-4c60-9039-1788750fe8c5",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史结束日期",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystopdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束日期",
+    "v5FieldPath": "patient.patientMedicalHistoryList.stopDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhmark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "patient.patientMedicalHistoryList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "家族病史",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.familyhistory",
+    "v4ItemClassId": "4f792381-8ebb-45c7-9f63-4e3d4d50beb4",
+    "v5FieldName": "家族病史",
+    "v5FieldPath": "patient.patientMedicalHistoryList.familyHistory",
+    "v5ItemClassId": "4f792381-8ebb-45c7-9f63-4e3d4d50beb4",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "药物品牌名",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medhistorydrugbrandname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物品牌名",
+    "v5FieldPath": "patient.patientMedicalHistoryList.drugBrandName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史时长",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.historylong",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病史时长",
+    "v5FieldPath": "patient.patientMedicalHistoryList.historyDuration",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史时长单位",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.historyunit",
+    "v4ItemClassId": "4DDD2433-1D08-46AC-A714-79647E77B18C",
+    "v5FieldName": "病史时长单位",
+    "v5FieldPath": "patient.patientMedicalHistoryList.historyUnit",
+    "v5ItemClassId": "4DDD2433-1D08-46AC-A714-79647E77B18C",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史类型",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorytype",
+    "v4ItemClassId": "e0dd102f-3460-4287-bf43-97add3ea497c",
+    "v5FieldName": "病史类型",
+    "v5FieldPath": "patient.patientMedicalHistoryList.medicalHistoryType",
+    "v5ItemClassId": "e0dd102f-3460-4287-bf43-97add3ea497c",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "治疗药物",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.treatmentdrug",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物通用名",
+    "v5FieldPath": "patient.patientMedicalHistoryList.drugGenericName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "给药途径和剂量",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.routeanddosage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "给药途径和剂量",
+    "v5FieldPath": "patient.patientMedicalHistoryList.routeAndDosage",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者病史"
+  },
+  {
+    "v4FieldName": "病史类型",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorytype",
+    "v4ItemClassId": "e0dd102f-3460-4287-bf43-97add3ea497c",
+    "v5FieldName": "病史类型",
+    "v5FieldPath": "patient.patientDrugHistoryList.medicalHistoryType",
+    "v5ItemClassId": "e0dd102f-3460-4287-bf43-97add3ea497c",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistory",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病史",
+    "v5FieldPath": "patient.patientDrugHistoryList.medicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史开始日期",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystartdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始日期",
+    "v5FieldPath": "patient.patientDrugHistoryList.startDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史是否继续",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystillcontinue",
+    "v4ItemClassId": "64ba15a6-bd1a-4c60-9039-1788750fe8c5",
+    "v5FieldName": "是否继续",
+    "v5FieldPath": "patient.patientDrugHistoryList.stillContinue",
+    "v5ItemClassId": "64ba15a6-bd1a-4c60-9039-1788750fe8c5",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史结束日期",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medicalhistorystopdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束日期",
+    "v5FieldPath": "patient.patientDrugHistoryList.stopDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhmark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "patient.patientDrugHistoryList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "家族病史",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.familyhistory",
+    "v4ItemClassId": "4f792381-8ebb-45c7-9f63-4e3d4d50beb4",
+    "v5FieldName": "家族病史",
+    "v5FieldPath": "patient.patientDrugHistoryList.familyHistory",
+    "v5ItemClassId": "4f792381-8ebb-45c7-9f63-4e3d4d50beb4",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "药物品牌名",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medhistorydrugbrandname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物品牌名",
+    "v5FieldPath": "patient.patientDrugHistoryList.drugBrandName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史时长",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.historylong",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病史时长",
+    "v5FieldPath": "patient.patientDrugHistoryList.historyDuration",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "病史时长单位",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.historyunit",
+    "v4ItemClassId": "4DDD2433-1D08-46AC-A714-79647E77B18C",
+    "v5FieldName": "病史时长单位",
+    "v5FieldPath": "patient.patientDrugHistoryList.historyUnit",
+    "v5ItemClassId": "4DDD2433-1D08-46AC-A714-79647E77B18C",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "治疗药物",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.treatmentdrug",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物通用名",
+    "v5FieldPath": "patient.patientDrugHistoryList.drugGenericName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "给药途径和剂量",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.routeanddosage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "给药途径和剂量",
+    "v5FieldPath": "patient.patientDrugHistoryList.routeAndDosage",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "适应症",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhindications",
+    "v4ItemClassId": "-",
+    "v5FieldName": "适应症",
+    "v5FieldPath": "patient.patientDrugHistoryList.indications",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "不良反应",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhadverseevent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "不良反应",
+    "v5FieldPath": "patient.patientDrugHistoryList.adverseEvent",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "既往药品不良反应/事件",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.previousdrugadversereactionevent",
+    "v4ItemClassId": "a81dce81-2404-46a0-bc42-187efd3b7906",
+    "v5FieldName": "既往药品不良反应/事件",
+    "v5FieldPath": "patient.patientDrugHistoryList.previousDrugAdverseReactionEvent",
+    "v5ItemClassId": "a81dce81-2404-46a0-bc42-187efd3b7906",
+    "v5ModuleName": "患者药物史"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "药物品牌名",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.medhistorydrugbrandname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物品牌名",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.drugBrandName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "给药途径和剂量",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.routeanddosage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "给药途径和剂量",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.routeAndDosage",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "与患者关系",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.relationshipwithpatient",
+    "v4ItemClassId": "2057a71f-ee0a-426e-81c9-8c3169cfdc83",
+    "v5FieldName": "与患者关系",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.relationshipWithPatient",
+    "v5ItemClassId": "2057a71f-ee0a-426e-81c9-8c3169cfdc83",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "治疗药物",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.treatmentdrug",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物通用名",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.drugGenericName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "适应症",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhindications",
+    "v4ItemClassId": "-",
+    "v5FieldName": "适应症",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.indications",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "不良事件",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhadverseevent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "不良事件",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.adverseEvent",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.omhmark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "家族药物反应事件史",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.familydrugreactioneventhistory",
+    "v4ItemClassId": "682951b5-fb46-4661-9e7f-0a57e0061a31",
+    "v5FieldName": "家族药物不良反应事件",
+    "v5FieldPath": "patient.patientFamilyDrugHistoryList.familyDrugAdverseReactionEvent",
+    "v5ItemClassId": "682951b5-fb46-4661-9e7f-0a57e0061a31",
+    "v5ModuleName": "家族药物史"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientMedicalOther.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientMedicalOther.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientMedicalOther.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "饮酒史描述",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.drinkinghistorydescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "饮酒史描述",
+    "v5FieldPath": "patient.patientMedicalOther.drinkingHistoryDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "吸烟史描述",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.smokinghistorydescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "吸烟史描述",
+    "v5FieldPath": "patient.patientMedicalOther.smokingHistoryDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "过敏史描述",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.allergichistorydescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "过敏史描述",
+    "v5FieldPath": "patient.patientMedicalOther.allergicHistoryDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "家族史描述",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.familyHistoryDescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "家族史描述",
+    "v5FieldPath": "patient.patientMedicalOther.familyHistoryDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "其他病史描述",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.othermedicalhistorydescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "其他病史",
+    "v5FieldPath": "patient.patientMedicalOther.otherMedicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "饮酒史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "饮酒史状态",
+    "v5FieldPath": "patient.patientMedicalOther.drinkingHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "吸烟史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "吸烟史状态",
+    "v5FieldPath": "patient.patientMedicalOther.smokingHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "过敏史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "过敏史状态",
+    "v5FieldPath": "patient.patientMedicalOther.allergicHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "家族史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "家族史状态",
+    "v5FieldPath": "patient.patientMedicalOther.familyHistory",
+    "v5ItemClassId": "4f792381-8ebb-45c7-9f63-4e3d4d50beb4",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "肾脏病史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "肾脏病史状态",
+    "v5FieldPath": "patient.patientMedicalOther.kidneyHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "肝病史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "肝病史状态",
+    "v5FieldPath": "patient.patientMedicalOther.liverDiseaseHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "妊娠史状态",
+    "v4FieldPath": "tmOthermedicalhistoryDtoList.importantmedicalstatus",
+    "v4ItemClassId": "7f3b1fc0-0cdd-4d11-92b5-d37b8f6d4a11",
+    "v5FieldName": "妊娠史状态",
+    "v5FieldPath": "patient.patientMedicalOther.pregnancyHistory",
+    "v5ItemClassId": "25e69ceb-477c-11ec-ad65-0050568ea815",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientDeathList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientDeathList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientDeathList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "死亡原因",
+    "v4FieldPath": "tmCauseOfDeathDtoList.causeofdeath",
+    "v4ItemClassId": "-",
+    "v5FieldName": "死亡原因",
+    "v5FieldPath": "patient.patientDeathList.causeOfDeath",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "相关重要信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientAutopsyList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "尸检结果信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientAutopsyList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "尸检结果信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmCauseOfDeathDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientAutopsyList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "尸检结果信息"
+  },
+  {
+    "v4FieldName": "死亡原因",
+    "v4FieldPath": "tmCauseOfDeathDtoList.causeofdeath",
+    "v4ItemClassId": "-",
+    "v5FieldName": "尸检结果",
+    "v5FieldPath": "patient.patientAutopsyList.autopsyResult",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "尸检结果信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmLabdataDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientLabDataList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmLabdataDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientLabDataList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmLabdataDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientLabDataList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "检查日期",
+    "v4FieldPath": "tmLabdataDtoList.startdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "检查日期",
+    "v5FieldPath": "patient.patientLabDataList.labDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "实验室检查",
+    "v4FieldPath": "tmLabdataDtoList.labtest",
+    "v4ItemClassId": "-",
+    "v5FieldName": "实验室检查",
+    "v5FieldPath": "patient.patientLabDataList.labTest",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "结果判定",
+    "v4FieldPath": "tmLabdataDtoList.labtestassessment",
+    "v4ItemClassId": "febeaa76-42fe-4fa5-99f9-42ce08ffb91b",
+    "v5FieldName": "结果判定",
+    "v5FieldPath": "patient.patientLabDataList.labTestAssessment",
+    "v5ItemClassId": "febeaa76-42fe-4fa5-99f9-42ce08ffb91b",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "正常范围",
+    "v4FieldPath": "tmLabdataDtoList.labnormalrange",
+    "v4ItemClassId": "-",
+    "v5FieldName": "正常范围",
+    "v5FieldPath": "patient.patientLabDataList.labNormalRange",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmLabdataDtoList.notes",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "patient.patientLabDataList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "更多信息",
+    "v4FieldPath": "tmLabdataDtoList.moreinformation",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "更多信息",
+    "v5FieldPath": "patient.patientLabDataList.moreInformation",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "非结构化结果",
+    "v4FieldPath": "tmLabdataDtoList.resultunstructureddata",
+    "v4ItemClassId": "-",
+    "v5FieldName": "非结构化结果",
+    "v5FieldPath": "patient.patientLabDataList.resultUnstructuredData",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "正常低值",
+    "v4FieldPath": "tmLabdataDtoList.normalLowValue",
+    "v4ItemClassId": "-",
+    "v5FieldName": "正常低值",
+    "v5FieldPath": "patient.patientLabDataList.normalLowValue",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "正常高值",
+    "v4FieldPath": "tmLabdataDtoList.normalHighValue",
+    "v4ItemClassId": "-",
+    "v5FieldName": "正常高值",
+    "v5FieldPath": "patient.patientLabDataList.normalHighValue",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "正常低值单位",
+    "v4FieldPath": "tmLabdataDtoList.normalLowValueUnit",
+    "v4ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5FieldName": "正常低值单位",
+    "v5FieldPath": "patient.patientLabDataList.normalLowValueUnit",
+    "v5ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "正常高值单位",
+    "v4FieldPath": "tmLabdataDtoList.normalHighValueUnit",
+    "v4ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5FieldName": "正常高值单位",
+    "v5FieldPath": "patient.patientLabDataList.normalHighValueUnit",
+    "v5ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "检查结果",
+    "v4FieldPath": "tmLabdataDtoList.labdataresults",
+    "v4ItemClassId": "-",
+    "v5FieldName": "检查结果",
+    "v5FieldPath": "patient.patientLabDataList.labDataResults",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "单位",
+    "v4FieldPath": "tmLabdataDtoList.units",
+    "v4ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5FieldName": "单位",
+    "v5FieldPath": "patient.patientLabDataList.units",
+    "v5ItemClassId": "a3e8ad89-5a4c-449a-a5a9-21d4146b90ba",
+    "v5ModuleName": "实验室检查信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "reportValueDto.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientParentBase.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "reportValueDto.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientParentBase.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "reportValueDto.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientParentBase.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母出生日期",
+    "v4FieldPath": "reportValueDto.dateofbirthofparent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母出生日期",
+    "v5FieldPath": "ppatient.patientParentBase.arentBirthDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母年龄",
+    "v4FieldPath": "reportValueDto.ageofparent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母年龄",
+    "v5FieldPath": "patient.patientParentBase.parentAge",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母年龄单位",
+    "v4FieldPath": "reportValueDto.parentageunit",
+    "v4ItemClassId": "925f0d8b-6251-11e8-9882-000c29399d7c",
+    "v5FieldName": "父母年龄单位",
+    "v5FieldPath": "patient.patientParentBase.parentAgeUnit",
+    "v5ItemClassId": "925f0d8b-6251-11e8-9882-000c29399d7c",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母体重",
+    "v4FieldPath": "reportValueDto.bodyweightofparent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母体重",
+    "v5FieldPath": "patient.patientParentBase.parentBodyWeight",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母身高",
+    "v4FieldPath": "reportValueDto.parentheight",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母身高",
+    "v5FieldPath": "patient.patientParentBase.parentHeight",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "末次月经日期",
+    "v4FieldPath": "reportValueDto.lastmenstrualperioddate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "末次月经日期",
+    "v5FieldPath": "patient.patientParentBase.lastMenstrualDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母相关病史",
+    "v4FieldPath": "reportValueDto.parentrelevantmedicalhistory",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母相关病史",
+    "v5FieldPath": "patient.patientParentBase.parentRelatedMedicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母性别",
+    "v4FieldPath": "reportValueDto.parentsex",
+    "v4ItemClassId": "fb6df7e0-6251-11e8-9882-000c29399d7c",
+    "v5FieldName": "父母性别",
+    "v5FieldPath": "patient.patientParentBase.parentSex",
+    "v5ItemClassId": "fb6df7e0-6251-11e8-9882-000c29399d7c",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "父母身份标识",
+    "v4FieldPath": "reportValueDto.parentidentification",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父母身份标识",
+    "v5FieldPath": "patient.patientParentBase.parentIdentification",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母基本信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "父母相关病史",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.parentRelatedMh",
+    "v4ItemClassId": "-",
+    "v5FieldName": "病史",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.medicalHistory",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "病史开始日期",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.parentRelatedMhStartDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始日期",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.startDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "病史结束日期",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.parentRelatedMhEndDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束日期",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.stopDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "病史备注",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.parentRelatedMhRemark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "病史是否继续",
+    "v4FieldPath": "tmParentRelatedMedicalHistoryDtoList.parentRelatedMhContinue",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否继续",
+    "v5FieldPath": "patient.patientParentMedicalHistoryList.stillContinue",
+    "v5ItemClassId": "64ba15a6-bd1a-4c60-9039-1788750fe8c5",
+    "v5ModuleName": "父母相关病史"
+  },
+  {
+    "v4FieldName": "父母相关药物史",
+    "v4FieldPath": "tmParentPreviousMedicalHistoryDtoList.parentPreviousMh",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药物通用名",
+    "v5FieldPath": "patient.patientParentDrugHistoryList.drugGenericName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关药物史"
+  },
+  {
+    "v4FieldName": "药物史开始日期",
+    "v4FieldPath": "tmParentPreviousMedicalHistoryDtoList.parentPreviousMhStartDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始日期",
+    "v5FieldPath": "patient.patientParentDrugHistoryList.startDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关药物史"
+  },
+  {
+    "v4FieldName": "药物史结束日期",
+    "v4FieldPath": "tmParentPreviousMedicalHistoryDtoList.parentPreviousMhEndDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束日期",
+    "v5FieldPath": "patient.patientParentDrugHistoryList.stopDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关药物史"
+  },
+  {
+    "v4FieldName": "药物史适应症",
+    "v4FieldPath": "tmParentPreviousMedicalHistoryDtoList.parentPreviousMhIndication",
+    "v4ItemClassId": "-",
+    "v5FieldName": "适应症",
+    "v5FieldPath": "patient.patientParentDrugHistoryList.indications",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关药物史"
+  },
+  {
+    "v4FieldName": "药物史不良事件",
+    "v4FieldPath": "tmParentPreviousMedicalHistoryDtoList.parentPreviousMhAdverseEvent",
+    "v4ItemClassId": "-",
+    "v5FieldName": "不良事件",
+    "v5FieldPath": "patient.patientParentDrugHistoryList.adverseEvent",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "父母相关药物史"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "reportValueDto.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "patientPregnancy.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "reportValueDto.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "patientPregnancy.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "reportValueDto.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "patientPregnancy.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠报告",
+    "v4FieldPath": "reportValueDto.pregnancyreport",
+    "v4ItemClassId": "c9c23e1f-04df-4481-8064-e61b330e85f8",
+    "v5FieldName": "妊娠报告",
+    "v5FieldPath": "patientPregnancy.pregnancyReport",
+    "v5ItemClassId": "c9c23e1f-04df-4481-8064-e61b330e85f8",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "先天性异常",
+    "v4FieldPath": "reportValueDto.thesubjectsofcongenitalanomalies",
+    "v4ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5FieldName": "先天性异常",
+    "v5FieldPath": "patientPregnancy.congenitalAbnormality",
+    "v5ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠次数",
+    "v4FieldPath": "reportValueDto.gravida",
+    "v4ItemClassId": "-",
+    "v5FieldName": "妊娠次数",
+    "v5FieldPath": "patientPregnancy.pregnancyCount",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "末次月经日期",
+    "v4FieldPath": "reportValueDto.lmp",
+    "v4ItemClassId": "-",
+    "v5FieldName": "末次月经日期",
+    "v5FieldPath": "patientPregnancy.lastMenstrualDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "预产期",
+    "v4FieldPath": "reportValueDto.duedate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "预产期",
+    "v5FieldPath": "patientPregnancy.dueDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "胎儿数量",
+    "v4FieldPath": "reportValueDto.numberoffetus",
+    "v4ItemClassId": "-",
+    "v5FieldName": "胎儿数量",
+    "v5FieldPath": "patientPregnancy.fetusesNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "暴露时妊娠周数",
+    "v4FieldPath": "reportValueDto.weeksatexposure",
+    "v4ItemClassId": "-",
+    "v5FieldName": "暴露时妊娠周数",
+    "v5FieldPath": "patientPregnancy.gestationalPeriodProduct",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "发病时妊娠周数",
+    "v4FieldPath": "reportValueDto.weeksatonset",
+    "v4ItemClassId": "-",
+    "v5FieldName": "发病时妊娠周数",
+    "v5FieldPath": "patientPregnancy.gestationalPeriodEvent",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠期单位",
+    "v4FieldPath": "reportValueDto.gestationperiodunit",
+    "v4ItemClassId": "040dd74e-5ba6-42da-833b-f009ce480fd0",
+    "v5FieldName": "妊娠期单位",
+    "v5FieldPath": "patientPregnancy.gestationalPeriodUnitEvent",
+    "v5ItemClassId": "040dd74e-5ba6-42da-833b-f009ce480fd0",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "暴露时妊娠期",
+    "v4FieldPath": "reportValueDto.trimesterofexposure",
+    "v4ItemClassId": "b8b81fdd-d0e5-4a6b-8222-2bdc7aa650c9",
+    "v5FieldName": "暴露时妊娠期",
+    "v5FieldPath": "patientPregnancy.gestationalPeriodStartDrug",
+    "v5ItemClassId": "b8b81fdd-d0e5-4a6b-8222-2bdc7aa650c9",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠是否继续",
+    "v4FieldPath": "reportValueDto.outcomepending",
+    "v4ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5FieldName": "妊娠是否继续",
+    "v5FieldPath": "patientPregnancy.pregnancyContinues",
+    "v5ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠状态",
+    "v4FieldPath": "reportValueDto.birthtype",
+    "v4ItemClassId": "9f9ee3d5-8bdb-47bc-873c-49e5fe058dc5",
+    "v5FieldName": "妊娠状态",
+    "v5FieldPath": "patientPregnancy.pregnancyStatus",
+    "v5ItemClassId": "9f9ee3d5-8bdb-47bc-873c-49e5fe058dc5",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "产前护理",
+    "v4FieldPath": "reportValueDto.prenatalcare",
+    "v4ItemClassId": "4cddbcd2-068d-49e6-8ef4-42084b2ec279",
+    "v5FieldName": "产前护理",
+    "v5FieldPath": "patientPregnancy.prenatalCare",
+    "v5ItemClassId": "4cddbcd2-068d-49e6-8ef4-42084b2ec279",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠详情",
+    "v4FieldPath": "reportValueDto.detailsofpregnancy",
+    "v4ItemClassId": "-",
+    "v5FieldName": "妊娠详情",
+    "v5FieldPath": "patientPregnancy.pregnancyDetail",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "分娩日期",
+    "v4FieldPath": "reportValueDto.deliverydate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "分娩日期",
+    "v5FieldPath": "patientPregnancy.deliveryDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "分娩类型",
+    "v4FieldPath": "reportValueDto.deliverytype",
+    "v4ItemClassId": "a889c969-ed1c-4e25-bd58-1aa6c91b6fda",
+    "v5FieldName": "分娩类型",
+    "v5FieldPath": "patientPregnancy.deliveryType",
+    "v5ItemClassId": "a889c969-ed1c-4e25-bd58-1aa6c91b6fda",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "妊娠过程异常",
+    "v4FieldPath": "reportValueDto.abnormalgestation",
+    "v4ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5FieldName": "妊娠过程异常",
+    "v5FieldPath": "patientPregnancy.processAbnormal",
+    "v5ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "分娩结果",
+    "v4FieldPath": "reportValueDto.birthoutcomes",
+    "v4ItemClassId": "b814a884-3632-4147-9f26-cfa5b6a04b20",
+    "v5FieldName": "分娩结果",
+    "v5FieldPath": "patientPregnancy.laborOutcome",
+    "v5ItemClassId": "b814a884-3632-4147-9f26-cfa5b6a04b20",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "流产原因",
+    "v4FieldPath": "reportValueDto.abortioncause",
+    "v4ItemClassId": "-",
+    "v5FieldName": "流产原因",
+    "v5FieldPath": "patientPregnancy.abortionCause",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "产次",
+    "v4FieldPath": "reportValueDto.para",
+    "v4ItemClassId": "-",
+    "v5FieldName": "产次",
+    "v5FieldPath": "patientPregnancy.para",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "避孕措施",
+    "v4FieldPath": "reportValueDto.contraceptives",
+    "v4ItemClassId": "d796ed9e-68ca-4588-b8cd-b33c878bfa90",
+    "v5FieldName": "避孕措施",
+    "v5FieldPath": "patientPregnancy.contraceptives",
+    "v5ItemClassId": "d796ed9e-68ca-4588-b8cd-b33c878bfa90",
+    "v5ModuleName": "妊娠分娩信息"
+  },
+  {
+    "v4FieldName": "1分钟Apgar评分",
+    "v4FieldPath": "tmBabyInfoDtoList.aminuteOne",
+    "v4ItemClassId": "-",
+    "v5FieldName": "1分钟Apgar评分",
+    "v5FieldPath": "patient.patientBabyList.apgarOne",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "5分钟Apgar评分",
+    "v4FieldPath": "tmBabyInfoDtoList.aminuteFive",
+    "v4ItemClassId": "-",
+    "v5FieldName": "5分钟Apgar评分",
+    "v5FieldPath": "patient.patientBabyList.apgarFive",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "10分钟Apgar评分",
+    "v4FieldPath": "tmBabyInfoDtoList.aminuteTen",
+    "v4ItemClassId": "-",
+    "v5FieldName": "10分钟Apgar评分",
+    "v5FieldPath": "patient.patientBabyList.apgarTen",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "新生儿性别",
+    "v4FieldPath": "tmBabyInfoDtoList.babySex",
+    "v4ItemClassId": "69f360f6-9940-4c61-a195-c7d1d842b17b",
+    "v5FieldName": "新生儿性别",
+    "v5FieldPath": "patient.patientBabyList.babySex",
+    "v5ItemClassId": "69f360f6-9940-4c61-a195-c7d1d842b17b",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "新生儿身高",
+    "v4FieldPath": "tmBabyInfoDtoList.babyHeight",
+    "v4ItemClassId": "-",
+    "v5FieldName": "新生儿身高",
+    "v5FieldPath": "patient.patientBabyList.babyHeight",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "新生儿体重",
+    "v4FieldPath": "tmBabyInfoDtoList.birthWeight",
+    "v4ItemClassId": "-",
+    "v5FieldName": "新生儿体重",
+    "v5FieldPath": "patient.patientBabyList.birthWeight",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "母乳喂养",
+    "v4FieldPath": "tmBabyInfoDtoList.breastFeeding",
+    "v4ItemClassId": "2a18f11f-d1db-11e8-a962-000c29399d7c",
+    "v5FieldName": "母乳喂养",
+    "v5FieldPath": "patient.patientBabyList.breastFeeding",
+    "v5ItemClassId": "3fcdb178-e0e3-4c62-afc1-f9a6eb8a1d9b",
+    "v5ModuleName": "新生儿信息"
+  },
+  {
+    "v4FieldName": "是否住院",
+    "v4FieldPath": "patientInformationDto.whetherInHospital",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否住院",
+    "v5FieldPath": "patient.patientVaccine.inHospital",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "住院医院名称",
+    "v4FieldPath": "patientInformationDto.hospitalizationName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "住院医院名称",
+    "v5FieldPath": "patient.patientVaccine.hospitalName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "反应分类",
+    "v4FieldPath": "patientInformationDto.reactionClassify",
+    "v4ItemClassId": "66ebe44c-d1af-11e8-a962-000c29399d7c",
+    "v5FieldName": "反应分类",
+    "v5FieldPath": "patient.patientVaccine.reactionClassification",
+    "v5ItemClassId": "66ebe44c-d1af-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "医疗日期",
+    "v4FieldPath": "patientInformationDto.medicalDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "医疗日期",
+    "v5FieldPath": "patient.patientVaccine.medicalDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "腋温范围",
+    "v4FieldPath": "patientInformationDto.axillaryFeverRange",
+    "v4ItemClassId": "74865b4a-d1b9-11e8-a962-000c29399d7c",
+    "v5FieldName": "腋温范围",
+    "v5FieldPath": "patient.patientVaccine.axillaryFeverRange",
+    "v5ItemClassId": "74865b4a-d1b9-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "腋温",
+    "v4FieldPath": "patientInformationDto.axillaryFever",
+    "v4ItemClassId": "-",
+    "v5FieldName": "腋温",
+    "v5FieldPath": "patient.patientVaccine.axillaryFever",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "局部红肿范围",
+    "v4FieldPath": "patientInformationDto.localRednessRange",
+    "v4ItemClassId": "51204ad2-d1b9-11e8-a962-000c29399d7c",
+    "v5FieldName": "局部红肿范围",
+    "v5FieldPath": "patient.patientVaccine.localRednessRange",
+    "v5ItemClassId": "51204ad2-d1b9-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "局部红肿",
+    "v4FieldPath": "patientInformationDto.localRedness",
+    "v4ItemClassId": "-",
+    "v5FieldName": "局部红肿",
+    "v5FieldPath": "patient.patientVaccine.localRedness",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "局部硬结范围",
+    "v4FieldPath": "patientInformationDto.localIndurationRange",
+    "v4ItemClassId": "de57a1c2-d1b8-11e8-a962-000c29399d7c",
+    "v5FieldName": "局部硬结范围",
+    "v5FieldPath": "patient.patientVaccine.localIndurationRange",
+    "v5ItemClassId": "de57a1c2-d1b8-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "局部硬结",
+    "v4FieldPath": "patientInformationDto.localInduration",
+    "v4ItemClassId": "-",
+    "v5FieldName": "局部硬结",
+    "v5FieldPath": "patient.patientVaccine.localInduration",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "住院日期",
+    "v4FieldPath": "patientInformationDto.hospitalizationDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "住院日期",
+    "v5FieldPath": "patient.patientVaccine.hospitalizationDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "出院日期",
+    "v4FieldPath": "patientInformationDto.dischargeDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "出院日期",
+    "v5FieldPath": "patient.patientVaccine.dischargeDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "初步诊断",
+    "v4FieldPath": "patientInformationDto.initiallyDiagnose",
+    "v4ItemClassId": "2508aad6-d13b-11e8-a962-000c29399d7c",
+    "v5FieldName": "初步诊断",
+    "v5FieldPath": "patient.patientVaccine.initiallyDiagnose",
+    "v5ItemClassId": "2508aad6-d13b-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "疫苗流通实施",
+    "v4FieldPath": "patientInformationDto.vaccineCirculationImplementation",
+    "v4ItemClassId": "-",
+    "v5FieldName": "疫苗流通实施",
+    "v5FieldPath": "patient.patientVaccine.vaccineCirculationImplementation",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "同批次疫苗反应",
+    "v4FieldPath": "patientInformationDto.sameBatchVaccineResponse",
+    "v4ItemClassId": "-",
+    "v5FieldName": "同批次疫苗反应",
+    "v5FieldPath": "patient.patientVaccine.sameBatchVaccineResponse",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "类似局部情况",
+    "v4FieldPath": "patientInformationDto.similarLocalConditions",
+    "v4ItemClassId": "-",
+    "v5FieldName": "类似局部情况",
+    "v5FieldPath": "patient.patientVaccine.similarLocalConditions",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "获取途径",
+    "v4FieldPath": "patientInformationDto.accessWay",
+    "v4ItemClassId": "f06f8cc3-d1d4-11e8-a962-000c29399d7c",
+    "v5FieldName": "获取途径",
+    "v5FieldPath": "patient.patientVaccine.accessWay",
+    "v5ItemClassId": "f06f8cc3-d1d4-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "调查单位",
+    "v4FieldPath": "patientInformationDto.surveyUnit",
+    "v4ItemClassId": "-",
+    "v5FieldName": "调查单位",
+    "v5FieldPath": "patient.patientVaccine.surveyUnit",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "调查人",
+    "v4FieldPath": "patientInformationDto.surveyor",
+    "v4ItemClassId": "-",
+    "v5FieldName": "调查人",
+    "v5FieldPath": "patient.patientVaccine.surveyor",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "调查日期",
+    "v4FieldPath": "patientInformationDto.surveyDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "调查日期",
+    "v5FieldPath": "patient.patientVaccine.surveyDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "组织结论",
+    "v4FieldPath": "patientInformationDto.conclusionByOrganization",
+    "v4ItemClassId": "-",
+    "v5FieldName": "组织结论",
+    "v5FieldPath": "patient.patientVaccine.conclusionByOrganization",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "组织级别",
+    "v4FieldPath": "patientInformationDto.organizationLevel",
+    "v4ItemClassId": "bf780371-d1b5-11e8-a962-000c29399d7c",
+    "v5FieldName": "组织级别",
+    "v5FieldPath": "patient.patientVaccine.organizationLevel",
+    "v5ItemClassId": "04d4d45d-d1d5-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "初步分类",
+    "v4FieldPath": "patientInformationDto.initiallyClassification",
+    "v4ItemClassId": "8f44c830-d1b7-11e8-a962-000c29399d7c",
+    "v5FieldName": "初步分类",
+    "v5FieldPath": "patient.patientVaccine.initiallyClassification",
+    "v5ItemClassId": "8f44c830-d1b7-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "最终临床诊断",
+    "v4FieldPath": "patientInformationDto.finalClinicalDiagnosis",
+    "v4ItemClassId": "2508aad6-d13b-11e8-a962-000c29399d7c",
+    "v5FieldName": "最终临床诊断",
+    "v5FieldPath": "patient.patientVaccine.finalClinicalDiagnosis",
+    "v5ItemClassId": "2508aad6-d13b-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "其他临床诊断",
+    "v4FieldPath": "patientInformationDto.otherClinicalDiagnosis",
+    "v4ItemClassId": "-",
+    "v5FieldName": "其他临床诊断",
+    "v5FieldPath": "patient.patientVaccine.otherClinicalDiagnosis",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "次要临床诊断",
+    "v4FieldPath": "patientInformationDto.secondaryClinicalDiagnosis",
+    "v4ItemClassId": "-",
+    "v5FieldName": "次要临床诊断",
+    "v5FieldPath": "patient.patientVaccine.secondaryClinicalDiagnosis",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "严重AEFI",
+    "v4FieldPath": "patientInformationDto.severeAefi",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "严重AEFI",
+    "v5FieldPath": "patient.patientVaccine.severeAefi",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "群体AEFI",
+    "v4FieldPath": "patientInformationDto.groupAefi",
+    "v4ItemClassId": "-",
+    "v5FieldName": "群体AEFI",
+    "v5FieldPath": "patient.patientVaccine.groupAefi",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "反常反应级别",
+    "v4FieldPath": "patientInformationDto.paradoxicalReactionLevel",
+    "v4ItemClassId": "d8cdc189-d146-11e8-a962-000c29399d7c",
+    "v5FieldName": "反常反应级别",
+    "v5FieldPath": "patient.patientVaccine.paradoxicalReactionLevel",
+    "v5ItemClassId": "d8cdc189-d146-11e8-a962-000c29399d7c",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "群体AEFI代码",
+    "v4FieldPath": "patientInformationDto.groupAefiCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "群体AEFI代码",
+    "v5FieldPath": "patient.patientVaccine.groupAefiCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "疫苗报告",
+    "v4FieldPath": "patientInformationDto.vaccineReport",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "疫苗报告",
+    "v5FieldPath": "patient.patientVaccine.vaccineReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "疫苗信息"
+  },
+  {
+    "v4FieldName": "报告编号",
+    "v4FieldPath": "reportValueDto.safetyreportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告编号",
+    "v5FieldPath": "reportValue.safetyReportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "首次/随访报告",
+    "v4FieldPath": "reportValueDto.initialfollowid",
+    "v4ItemClassId": "1a43ca75-d1d1-475f-a420-16b03de0f085",
+    "v5FieldName": "首次/随访",
+    "v5FieldPath": "reportValue.initialFollowId",
+    "v5ItemClassId": "1a43ca75-d1d1-475f-a420-16b03de0f085",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "企业报告类型",
+    "v4FieldPath": "reportValueDto.receivedfromid",
+    "v4ItemClassId": "6dc45a9d-430b-4b3d-b0ee-7e8b99062692",
+    "v5FieldName": "企业报告类型",
+    "v5FieldPath": "reportValue.receivedFromId",
+    "v5ItemClassId": "6dc45a9d-430b-4b3d-b0ee-7e8b99062692",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "国家",
+    "v4FieldPath": "reportValueDto.aecountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "国家",
+    "v5FieldPath": "reportValue.aeCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "事件发生地",
+    "v4FieldPath": "reportValueDto.aelocality",
+    "v4ItemClassId": "-",
+    "v5FieldName": "事件发生地",
+    "v5FieldPath": "reportValue.aeLocality",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "报告分类",
+    "v4FieldPath": "reportValueDto.classifyOfReport",
+    "v4ItemClassId": "8a5c448f-11ae-11ea-8022-000c29ee981b",
+    "v5FieldName": "报告分类",
+    "v5FieldPath": "reportValue.classifyOfReport",
+    "v5ItemClassId": "8a5c448f-11ae-11ea-8022-000c29ee981b",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "企业信息来源",
+    "v4FieldPath": "reportValueDto.sourceinfoid",
+    "v4ItemClassId": "b81b25f6-517e-4f97-acc2-7192564151a7",
+    "v5FieldName": "企业信息来源",
+    "v5FieldPath": "reportValue.sourceInfoId",
+    "v5ItemClassId": "b81b25f6-517e-4f97-acc2-7192564151a7",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "持有人标识",
+    "v4FieldPath": "reportValueDto.mahId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "持有人标识",
+    "v5FieldPath": "reportValue.mahId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "全球唯一编号",
+    "v4FieldPath": "reportValueDto.worldwideuniquenumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "全球唯一编号",
+    "v5FieldPath": "reportValue.worldUniqueNum",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "首次收到报告日期",
+    "v4FieldPath": "reportValueDto.firstreceivedreportdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "首次收到报告日期",
+    "v5FieldPath": "reportValue.firstReceivedDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "PV获知日期",
+    "v4FieldPath": "reportValueDto.reportDrugsafetyDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "PV获知日期",
+    "v5FieldPath": "reportValue.pvReceiveDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "收到报告日期",
+    "v4FieldPath": "reportValueDto.reportReceiveDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "收到报告日期",
+    "v5FieldPath": "reportValue.reportReceiveDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "收到报告日期时分秒",
+    "v4FieldPath": "reportValueDto.reportReceiveDateTime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "收到报告日期时分秒",
+    "v5FieldPath": "reportValue.reportReceiveDateTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "无效标识",
+    "v4FieldPath": "reportValueDto.isinvalid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "无效标识",
+    "v5FieldPath": "reportValue.invalidFlag",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "无效报告原因",
+    "v4FieldPath": "reportValueDto.invalidreason",
+    "v4ItemClassId": "9914b722-5362-11e8-919b-000c29399d7c",
+    "v5FieldName": "无效报告原因",
+    "v5FieldPath": "reportValue.invalidReason",
+    "v5ItemClassId": "9914b722-5362-11e8-919b-000c29399d7c",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "reportValueDto.invalidMark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "reportValue.invalidMark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "是否无效报告设为已完成",
+    "v4FieldPath": "reportValueDto.invalidComplete",
+    "v4ItemClassId": "-",
+    "v5FieldName": "是否无效报告设为已完成",
+    "v5FieldPath": "reportValue.invalidComplete",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "版本号",
+    "v4FieldPath": "reportValueDto.versions",
+    "v4ItemClassId": "-",
+    "v5FieldName": "版本号",
+    "v5FieldPath": "reportValue.versions",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "首次发送者",
+    "v4FieldPath": "reportValueDto.firstsender",
+    "v4ItemClassId": "27754421-624d-11e8-9882-000c29399d7c",
+    "v5FieldName": "首次发送者",
+    "v5FieldPath": "reportValue.firstSender",
+    "v5ItemClassId": "27754421-624d-11e8-9882-000c29399d7c",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "管理者报告日期",
+    "v4FieldPath": "reportValueDto.managerreportdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "管理者报告日期",
+    "v5FieldPath": "reportValue.managerReportDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "审核人ID",
+    "v4FieldPath": "reportValueDto.auditorUserId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "审核人ID",
+    "v5FieldPath": "reportValue.auditorUserId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "审核人姓名",
+    "v4FieldPath": "reportValueDto.auditorUserName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "审核人姓名",
+    "v5FieldPath": "reportValue.auditorUserName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "加速报告",
+    "v4FieldPath": "reportValueDto.fulfillexpeditecriteria",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "加速报告",
+    "v5FieldPath": "reportValue.accelerateReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "无效修复",
+    "v4FieldPath": "reportValueDto.reportnullificationamendment",
+    "v4ItemClassId": "6ed65133-6c86-11e8-a602-000c29399d7c",
+    "v5FieldName": "无效修复",
+    "v5FieldPath": "reportValue.invalidFix",
+    "v5ItemClassId": "6ed65133-6c86-11e8-a602-000c29399d7c",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "无效修复原因",
+    "v4FieldPath": "reportValueDto.createnewversionreason",
+    "v4ItemClassId": "-",
+    "v5FieldName": "无效修复原因",
+    "v5FieldPath": "reportValue.invalidFixReason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "外部报告",
+    "v4FieldPath": "reportValueDto.outsideReport",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "外部报告",
+    "v5FieldPath": "reportValue.outsiteReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "最后报告时间",
+    "v4FieldPath": "reportValueDto.lastreporttime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "最后报告时间",
+    "v5FieldPath": "reportValue.lastReportTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "国家中心接收时间",
+    "v4FieldPath": "reportValueDto.countrycenterreceivetime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "国家中心接收时间",
+    "v5FieldPath": "reportValue.countryCenterReceiveTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "第一人姓名",
+    "v4FieldPath": "reportValueDto.firstpersonname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "第一人姓名",
+    "v5FieldPath": "reportValue.firstPersonName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "第一人部门",
+    "v4FieldPath": "reportValueDto.firstpersondepartment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "第一人部门",
+    "v5FieldPath": "reportValue.firstPersonDepartment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "第一人联系方式",
+    "v4FieldPath": "reportValueDto.fristpersoncontact",
+    "v4ItemClassId": "-",
+    "v5FieldName": "第一人联系方式",
+    "v5FieldPath": "reportValue.firstPersonContact",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "报告状态",
+    "v4FieldPath": "reportValueDto.reportstatus",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告状态",
+    "v5FieldPath": "reportValue.reportStatus",
+    "v5ItemClassId": "ec52b7be-202e-11ec-ad65-0050568ea815",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "随访结束",
+    "v4FieldPath": "reportValueDto.followupend",
+    "v4ItemClassId": "58417009-75cb-11e8-a602-000c29399d7c",
+    "v5FieldName": "随访结束",
+    "v5FieldPath": "reportValue.followUpEnd",
+    "v5ItemClassId": "58417009-75cb-11e8-a602-000c29399d7c",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "已知性",
+    "v4FieldPath": "reportValueDto.reporttypeid",
+    "v4ItemClassId": "d696ed59-52a1-46bb-ae56-72101abc79bd",
+    "v5FieldName": "已知性",
+    "v5FieldPath": "reportValue.knownness",
+    "v5ItemClassId": "d696ed59-52a1-46bb-ae56-72101abc79bd",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "相关性",
+    "v4FieldPath": "reportValueDto.causalityid",
+    "v4ItemClassId": "3fb84cd4-0f49-45a6-98ca-38ad529b67d3",
+    "v5FieldName": "相关性",
+    "v5FieldPath": "reportValue.relevant",
+    "v5ItemClassId": "3fb84cd4-0f49-45a6-98ca-38ad529b67d3",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "严重性",
+    "v4FieldPath": "reportValueDto.ponderanceid",
+    "v4ItemClassId": "2dfcb1fa-7358-4996-9467-b672fa902d80",
+    "v5FieldName": "严重性",
+    "v5FieldPath": "reportValue.severity",
+    "v5ItemClassId": "2dfcb1fa-7358-4996-9467-b672fa902d80",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "创建新版本原因",
+    "v4FieldPath": "reportValueDto.versiondescription",
+    "v4ItemClassId": "20f43a38-9309-4510-8de7-c13cb034e51c",
+    "v5FieldName": "创建新版本原因",
+    "v5FieldPath": "reportValue.createNewVersionReason",
+    "v5ItemClassId": "20f43a38-9309-4510-8de7-c13cb034e51c",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "LP接收日期",
+    "v4FieldPath": "reportValueDto.lpreceivedate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "LP接收日期",
+    "v5FieldPath": "reportValue.lpReceiveDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "安全报告唯一标识符",
+    "v4FieldPath": "reportValueDto.securityIdentifyingCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "安全报告唯一标识符",
+    "v5FieldPath": "reportValue.safetyReportUniqueIdentifier",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "未提交原因",
+    "v4FieldPath": "reportValueDto.reasonsForNonSubmission",
+    "v4ItemClassId": "-",
+    "v5FieldName": "未提交原因",
+    "v5FieldPath": "reportValue.noSubmitReason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "最新版本",
+    "v4FieldPath": "reportValueDto.newestVersion",
+    "v4ItemClassId": "-",
+    "v5FieldName": "最新版本",
+    "v5FieldPath": "reportValue.newestVersion",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "总结报告",
+    "v4FieldPath": "reportValueDto.summaryReport",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "总结报告",
+    "v5FieldPath": "reportValue.summaryReport",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "删除标记",
+    "v4FieldPath": "reportValueDto.deleteMark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "删除标记",
+    "v5FieldPath": "reportValue.deleteMark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "归属区域名称",
+    "v4FieldPath": "reportValueDto.attributionAreaName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "归属区域名称",
+    "v5FieldPath": "reportValue.attributionAreaName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "归属区域代码",
+    "v4FieldPath": "reportValueDto.attributionAreaCode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "归属区域代码",
+    "v5FieldPath": "reportValue.attributionAreaCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "基础信息"
+  },
+  {
+    "v4FieldName": "总结文本",
+    "v4FieldPath": "tmCaseSummaryDtoList.comment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "总结文本",
+    "v5FieldPath": "reportSummaryList.comment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告总结"
+  },
+  {
+    "v4FieldName": "语言",
+    "v4FieldPath": "tmCaseSummaryDtoList.commentLanguage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "语言",
+    "v5FieldPath": "reportSummaryList.commentLanguage",
+    "v5ItemClassId": "fbda3b45-c48e-45d8-8d6a-3f2a301c187b",
+    "v5ModuleName": "报告总结"
+  },
+  {
+    "v4FieldName": "研究ID",
+    "v4FieldPath": "reportValueDto.researchid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "项目ID",
+    "v5FieldPath": "reportProject.projectId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究项目编号",
+    "v4FieldPath": "reportValueDto.researchItemNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "项目编号",
+    "v5FieldPath": "reportProject.projectNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究主题",
+    "v4FieldPath": "reportValueDto.researchtopic",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究主题",
+    "v5FieldPath": "reportProject.researchTopic",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究类型详情ID",
+    "v4FieldPath": "reportValueDto.researchtypedtlid",
+    "v4ItemClassId": "037f44c6-0170-43a8-946c-fc47a53e6926",
+    "v5FieldName": "研究阶段详情",
+    "v5FieldPath": "reportProject.researchStagingDetail",
+    "v5ItemClassId": "037f44c6-0170-43a8-946c-fc47a53e6926",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究设计",
+    "v4FieldPath": "reportValueDto.studydesign",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究设计ID",
+    "v5FieldPath": "reportProject.studyDesignId",
+    "v5ItemClassId": "a5678e48-8962-441e-9ad3-6cd1308da049",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究类型",
+    "v4FieldPath": "reportValueDto.studyType",
+    "v4ItemClassId": "307ec060-68b2-11e8-a602-000c29399d7c",
+    "v5FieldName": "研究类型",
+    "v5FieldPath": "reportProject.studyType",
+    "v5ItemClassId": "307ec060-68b2-11e8-a602-000c29399d7c",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "运营方",
+    "v4FieldPath": "reportValueDto.operatingparties",
+    "v4ItemClassId": "-",
+    "v5FieldName": "赞助方",
+    "v5FieldPath": "reportProject.sponsor",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究注册编号",
+    "v4FieldPath": "reportValueDto.studyregistrationnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究注册编号",
+    "v5FieldPath": "reportProject.studyRegistrationNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究注册国家",
+    "v4FieldPath": "reportValueDto.studyregistrationcountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "研究注册国家",
+    "v5FieldPath": "reportProject.studyRegistrationCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究类型",
+    "v4FieldPath": "reportValueDto.researchtype",
+    "v4ItemClassId": "-",
+    "v5FieldName": "研究阶段",
+    "v5FieldPath": "reportProject.researchStaging",
+    "v5ItemClassId": "504754897cd511ecad650050568ea815",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "项目状态",
+    "v4FieldPath": "reportValueDto.projectStatus",
+    "v4ItemClassId": "42d37cea-ac05-11e8-87d1-000c293171ca",
+    "v5FieldName": "项目状态",
+    "v5FieldPath": "reportProject.projectStatus",
+    "v5ItemClassId": "42d37cea-ac05-11e8-87d1-000c293171ca",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究ID",
+    "v4FieldPath": "reportValueDto.researchid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "PMD项目ID",
+    "v5FieldPath": "reportProject.pmdProjectId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "研究阶段",
+    "v4FieldPath": "reportValueDto.researchStage",
+    "v4ItemClassId": "4b719d49-09ae-11ea-8022-000c29ee981b",
+    "v5FieldName": "研究阶段",
+    "v5FieldPath": "reportProject.researchStage",
+    "v5ItemClassId": "4b719d49-09ae-11ea-8022-000c29ee981b",
+    "v5ModuleName": "研究信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmReporterDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "reporterList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmReporterDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "reporterList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmReporterDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "reporterList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "电话号码",
+    "v4FieldPath": "tmReporterDtoList.telephonenumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "电话号码",
+    "v5FieldPath": "reporterList.telephoneNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者职业",
+    "v4FieldPath": "tmReporterDtoList.reporteroccupation",
+    "v4ItemClassId": "b1ea4f71-3f48-4b0f-839f-034a82eb04dd",
+    "v5FieldName": "报告者职业",
+    "v5FieldPath": "reporterList.reporterOccupation",
+    "v5ItemClassId": "b1ea4f71-3f48-4b0f-839f-034a82eb04dd",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "主要报告者",
+    "v4FieldPath": "tmReporterDtoList.primaryreporter",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "主要报告者",
+    "v5FieldPath": "reporterList.primaryReporter",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者姓名",
+    "v4FieldPath": "tmReporterDtoList.reportername",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者姓名",
+    "v5FieldPath": "reporterList.reporterName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "邮寄地址",
+    "v4FieldPath": "tmReporterDtoList.postaddress",
+    "v4ItemClassId": "-",
+    "v5FieldName": "邮寄地址",
+    "v5FieldPath": "reporterList.postAddress",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "评估方法",
+    "v4FieldPath": "tmReporterDtoList.roughclassification",
+    "v4ItemClassId": "-",
+    "v5FieldName": "评估方法",
+    "v5FieldPath": "reporterList.evaluationMethod",
+    "v5ItemClassId": "c4aa31b2-2985-11ec-ad65-0050568ea815",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "评估方法详情",
+    "v4FieldPath": "tmReporterDtoList.reporterevaluationdcitkey",
+    "v4ItemClassId": "ff7105de-c38d-11e8-a962-000c29399d7c",
+    "v5FieldName": "评估方法详情",
+    "v5FieldPath": "reporterList.evaluationMethodDetail",
+    "v5ItemClassId": "ff7105de-c38d-11e8-a962-000c29399d7c",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "可随访",
+    "v4FieldPath": "tmReporterDtoList.canreporterbefollowedup",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "可随访",
+    "v5FieldPath": "reporterList.canBeFollowedUp",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmReporterDtoList.notes",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "reporterList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "是否严重",
+    "v4FieldPath": "tmReporterDtoList.isserious",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否严重",
+    "v5FieldPath": "reporterList.isSerious",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者昵称",
+    "v4FieldPath": "tmReporterDtoList.reporternickname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者昵称",
+    "v5FieldPath": "reporterList.reporterNickName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者组织",
+    "v4FieldPath": "tmReporterDtoList.reporterorganization",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者组织",
+    "v5FieldPath": "reporterList.reporterOrganization",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者部门",
+    "v4FieldPath": "tmReporterDtoList.reporterdepartment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者部门",
+    "v5FieldPath": "reporterList.reporterDepartment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者地址",
+    "v4FieldPath": "tmReporterDtoList.reporteraddress",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者地址",
+    "v5FieldPath": "reporterList.reporterAddress",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者国家",
+    "v4FieldPath": "tmReporterDtoList.reportercountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "报告者国家",
+    "v5FieldPath": "reporterList.reporterCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者省份",
+    "v4FieldPath": "tmReporterDtoList.reporterprovince",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者省份",
+    "v5FieldPath": "reporterList.reporterProvince",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者城市",
+    "v4FieldPath": "tmReporterDtoList.reportercity",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者城市",
+    "v5FieldPath": "reporterList.reporterCity",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者邮编",
+    "v4FieldPath": "tmReporterDtoList.reporterzipcode",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者邮编",
+    "v5FieldPath": "reporterList.reporterZipCode",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者姓氏",
+    "v4FieldPath": "tmReporterDtoList.reporterfamilyname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者姓氏",
+    "v5FieldPath": "reporterList.reporterFamilyName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告者中间名",
+    "v4FieldPath": "tmReporterDtoList.reportermiddlename",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告者中间名",
+    "v5FieldPath": "reporterList.reporterMiddleName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "职业描述",
+    "v4FieldPath": "tmReporterDtoList.occupationaldescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "职业描述",
+    "v5FieldPath": "reporterList.occupationalDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "研究角色",
+    "v4FieldPath": "tmReporterDtoList.researchrole",
+    "v4ItemClassId": "8bd966d6-662b-4ac0-9242-31165ac6c7c1",
+    "v5FieldName": "研究角色",
+    "v5FieldPath": "reporterList.researchRole",
+    "v5ItemClassId": "8bd966d6-662b-4ac0-9242-31165ac6c7c1",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "严重性标准",
+    "v4FieldPath": "tmReporterDtoList.reporterstandardofseriousness",
+    "v4ItemClassId": "fa0daa19-247c-4cd4-93a7-f16ade76728f",
+    "v5FieldName": "严重性标准",
+    "v5FieldPath": "reporterList.seriousnessStandard",
+    "v5ItemClassId": "fa0daa19-247c-4cd4-93a7-f16ade76728f",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "获悉SAE时间",
+    "v4FieldPath": "tmReporterDtoList.learnedsaetime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "获悉SAE时间",
+    "v5FieldPath": "reporterList.learnedSaeTime",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "电子邮件",
+    "v4FieldPath": "tmReporterDtoList.email",
+    "v4ItemClassId": "-",
+    "v5FieldName": "电子邮件",
+    "v5FieldPath": "reporterList.email",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "传真",
+    "v4FieldPath": "tmReporterDtoList.fax",
+    "v4ItemClassId": "-",
+    "v5FieldName": "传真",
+    "v5FieldPath": "reporterList.fax",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "报告相关性",
+    "v4FieldPath": "tmReporterDtoList.reporterevaluation",
+    "v4ItemClassId": "34782994-c152-11e8-a962-000c29399d7c",
+    "v5FieldName": "报告相关性",
+    "v5FieldPath": "reporterList.reportRelevance",
+    "v5ItemClassId": "34782994-c152-11e8-a962-000c29399d7c",
+    "v5ModuleName": "报告者模块"
+  },
+  {
+    "v4FieldName": "标题",
+    "v4FieldPath": "tmDocumentretrievalDtoList.drtitle",
+    "v4ItemClassId": "-",
+    "v5FieldName": "标题",
+    "v5FieldPath": "reportDocumentList.title",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "作者",
+    "v4FieldPath": "tmDocumentretrievalDtoList.drauthor",
+    "v4ItemClassId": "-",
+    "v5FieldName": "作者",
+    "v5FieldPath": "reportDocumentList.author",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "期刊名称",
+    "v4FieldPath": "tmDocumentretrievalDtoList.drperiodicalname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "期刊名称",
+    "v5FieldPath": "reportDocumentList.periodicalName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "期号",
+    "v4FieldPath": "tmDocumentretrievalDtoList.drvolume",
+    "v4ItemClassId": "-",
+    "v5FieldName": "期号",
+    "v5FieldPath": "reportDocumentList.issue",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "年份",
+    "v4FieldPath": "tmDocumentretrievalDtoList.dryear",
+    "v4ItemClassId": "-",
+    "v5FieldName": "年份",
+    "v5FieldPath": "reportDocumentList.year",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "页码",
+    "v4FieldPath": "tmDocumentretrievalDtoList.drpage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "页码",
+    "v5FieldPath": "reportDocumentList.page",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "文献模块"
+  },
+  {
+    "v4FieldName": "随机编号",
+    "v4FieldPath": "tmUnblindingDrugList.drugNum",
+    "v4ItemClassId": "-",
+    "v5FieldName": "随机编号",
+    "v5FieldPath": "blind.blindDrugList.randomNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "剂量信息",
+    "v4FieldPath": "tmUnblindingDrugList.doseMessage",
+    "v4ItemClassId": "-",
+    "v5FieldName": "剂量信息",
+    "v5FieldPath": "blind.blindDrugList.doseInfo",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "药品名称",
+    "v4FieldPath": "tmUnblindingDrugList.drugName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品名称",
+    "v5FieldPath": "blind.blindDrugList.drugName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "备注",
+    "v4FieldPath": "tmUnblindingDrugList.remark",
+    "v4ItemClassId": "-",
+    "v5FieldName": "备注",
+    "v5FieldPath": "blind.blindDrugList.remark",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "操作",
+    "v4FieldPath": "tmUnblindingDrugList.operate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "操作",
+    "v5FieldPath": "blind.blindDrugList.operate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "分组细分",
+    "v4FieldPath": "tmUnblindingDrugList.groupSubdivision",
+    "v4ItemClassId": "-",
+    "v5FieldName": "分组细分",
+    "v5FieldPath": "blind.blindDrugList.groupSubdivision",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "分组名称",
+    "v4FieldPath": "tmUnblindingDrugList.unblindingGroupName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "分组名称",
+    "v5FieldPath": "blind.blindDrugList.groupName",
+    "v5ItemClassId": "BLIND_PATIENT_GROUP_CLASS",
+    "v5ModuleName": "盲态药品信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmDrugDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "drugModelList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmDrugDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "drugModelList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmDrugDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "drugModelList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmDrugDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "drugModelList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品类型",
+    "v4FieldPath": "tmDrugDtoList.drugtype",
+    "v4ItemClassId": "831cde82-fc1d-45f6-8cb0-65be046aa3f0",
+    "v5FieldName": "药品类型",
+    "v5FieldPath": "drugModelList.drugType",
+    "v5ItemClassId": "831cde82-fc1d-45f6-8cb0-65be046aa3f0",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "英文名称",
+    "v4FieldPath": "tmDrugDtoList.englishname",
+    "v4ItemClassId": "-",
+    "v5FieldName": "英文名称",
+    "v5FieldPath": "drugModelList.englishName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "许可证号",
+    "v4FieldPath": "tmDrugDtoList.licencenumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "许可证号",
+    "v5FieldPath": "drugModelList.licenseNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "获取国家",
+    "v4FieldPath": "tmDrugDtoList.obtainedcountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "获取国家",
+    "v5FieldPath": "drugModelList.obtainedCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "授权号",
+    "v4FieldPath": "tmDrugDtoList.authorisationnumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "授权号",
+    "v5FieldPath": "drugModelList.authorisationNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "授权国家",
+    "v4FieldPath": "tmDrugDtoList.authorisationcountry",
+    "v4ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5FieldName": "授权国家",
+    "v5FieldPath": "drugModelList.authorisationCountry",
+    "v5ItemClassId": "e8abc001-3357-48c2-839c-568c5b0bf43f",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "持有人名称",
+    "v4FieldPath": "tmDrugDtoList.holdername",
+    "v4ItemClassId": "-",
+    "v5FieldName": "持有人名称",
+    "v5FieldPath": "drugModelList.holderName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "累计剂量",
+    "v4FieldPath": "tmDrugDtoList.cumulativedose",
+    "v4ItemClassId": "-",
+    "v5FieldName": "累计剂量",
+    "v5FieldPath": "drugModelList.cumulativeDose",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "累计剂量单位",
+    "v4FieldPath": "tmDrugDtoList.cumulativedoseunit",
+    "v4ItemClassId": "f084c704-9523-44cf-a539-5c3e6f863367",
+    "v5FieldName": "累计剂量单位",
+    "v5FieldPath": "drugModelList.cumulativeDoseUnit",
+    "v5ItemClassId": "f084c704-9523-44cf-a539-5c3e6f863367",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "暴露妊娠期",
+    "v4FieldPath": "tmDrugDtoList.exposuregestationperiod",
+    "v4ItemClassId": "-",
+    "v5FieldName": "暴露妊娠期",
+    "v5FieldPath": "drugModelList.exposureGestationPeriod",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "暴露妊娠期单位",
+    "v4FieldPath": "tmDrugDtoList.exposuregestationperiodunit",
+    "v4ItemClassId": "76b71cc2-afc7-483f-abdb-141d68d1a756",
+    "v5FieldName": "暴露妊娠期单位",
+    "v5FieldPath": "drugModelList.exposureGestationPeriodUnit",
+    "v5ItemClassId": "76b71cc2-afc7-483f-abdb-141d68d1a756",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "采取的措施",
+    "v4FieldPath": "tmDrugDtoList.actiontakenfors极suspectdrug",
+    "v4ItemClassId": "b961c0ce-29a8-48a5-baa1-7e11ae73279c",
+    "v5FieldName": "采取的措施",
+    "v5FieldPath": "drugModelList.actionTaken",
+    "v5ItemClassId": "b961c0ce-29a8-48a5-baa1-7e11ae73279c",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品其他信息",
+    "v4FieldPath": "tmDrugDtoList.drugotherinfo",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品其他信息",
+    "v5FieldPath": "drugModelList.drugOtherInfo",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "是否为复合药物",
+    "v4FieldPath": "tmDrugDtoList.iscompound",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否为复合药物",
+    "v5FieldPath": "drugModelList.isCompound",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "是否为OTC",
+    "v4FieldPath": "tmDrugDtoList.isotc",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否为OTC",
+    "v5FieldPath": "drugModelList.isOtc",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品分类",
+    "v4FieldPath": "tmDrugDtoList.drugcategorization",
+    "v4ItemClassId": "68292f6a-d596-456b-b6d1-7002e70daf32",
+    "v5FieldName": "药品分类",
+    "v5FieldPath": "drugModelList.drugCategorization",
+    "v5ItemClassId": "68292f6a-d596-456b-b6d1-7002e70daf32",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品包装",
+    "v4FieldPath": "tmDrugDtoList.drugpacking",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品包装",
+    "v5FieldPath": "drugModelList.drugPacking",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "适应症",
+    "v4FieldPath": "tmDrugDtoList.indication",
+    "v4ItemClassId": "-",
+    "v5FieldName": "适应症",
+    "v5FieldPath": "drugModelList.indication",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "采取行动的原因",
+    "v4FieldPath": "tmDrugDtoList.causeofthedrugaction",
+    "v4ItemClassId": "-",
+    "v5FieldName": "采取行动的原因",
+    "v5FieldPath": "drugModelList.actionTakenReason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "采取行动的日期",
+    "v4FieldPath": "tmDrugDtoList.dateofactiontaken",
+    "v4ItemClassId": "-",
+    "v5FieldName": "采取行动的日期",
+    "v5FieldPath": "drugModelList.actionTakenDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "排除激发",
+    "v4FieldPath": "tmDrugDtoList.qjf",
+    "v4ItemClassId": "053e1df4-81cb-4fa8-8545-2bd4214d02ab",
+    "v5FieldName": "排除激发",
+    "v5FieldPath": "drugModelList.excludeExcite",
+    "v5ItemClassId": "053e1df4-81cb-4fa8-8545-2bd4214d02ab",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "再次激发",
+    "v4FieldPath": "tmDrugDtoList.zjf",
+    "v4ItemClassId": "13fd3c24-43e5-4d40-bd83-087d9dadcb96",
+    "v5FieldName": "再次激发",
+    "v5FieldPath": "drugModelList.exciteAgain",
+    "v5ItemClassId": "13fd3c24-43e5-4d40-bd83-087d9dadcb96",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "附加信息",
+    "v4FieldPath": "tmDrugDtoList.drugadditionalinfo",
+    "v4ItemClassId": "1f5e1381-7a75-41fd-a80c-6ff4b2f7df7f",
+    "v5FieldName": "附加信息",
+    "v5FieldPath": "drugModelList.addtionalValue",
+    "v5ItemClassId": "1f5e1381-7a75-41fd-a80c-6ff4b2f7df7f",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药物相互作用",
+    "v4FieldPath": "tmDrugDtoList.medicineinteractions",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "药物相互作用",
+    "v5FieldPath": "drugModelList.medicineInteractions",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "首次剂量到事件发生",
+    "v4FieldPath": "tmDrugDtoList.firstdosetoeventonset",
+    "v4ItemClassId": "-",
+    "v5FieldName": "首次剂量到事件发生",
+    "v5FieldPath": "drugModelList.firstDoseToEventOnset",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "首次剂量到事件发生单位",
+    "v4FieldPath": "tmDrugDtoList.firstdosetoeventonsetunit",
+    "v4ItemClassId": "-",
+    "v5FieldName": "首次剂量到事件发生单位",
+    "v5FieldPath": "drugModelList.firstDoseToEventOnsetUnit",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "末次剂量到事件发生",
+    "v4FieldPath": "tmDrugDtoList.lastdosetoeventonset",
+    "v4ItemClassId": "-",
+    "v5FieldName": "末次剂量到事件发生",
+    "v5FieldPath": "drugModelList.lastDoseToEventOnset",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "末次剂量到事件发生单位",
+    "v4FieldPath": "tmDrugDtoList.lastdosetoeventonsetunit",
+    "v4ItemClassId": "-",
+    "v5FieldName": "末次剂量到事件发生单位",
+    "v5FieldPath": "drugModelList.lastDoseToEventOnsetUnit",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "疫苗批次",
+    "v4FieldPath": "tmDrugDtoList.vaccinebatches",
+    "v4ItemClassId": "-",
+    "v5FieldName": "疫苗批次",
+    "v5FieldPath": "drugModelList.vaccineBatches",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "接种形式",
+    "v4FieldPath": "tmDrugDtoList.inoculationform",
+    "v4ItemClassId": "3c7abf1d-d13d-11e8-a962-000c29399d7c",
+    "v5FieldName": "接种形式",
+    "v5FieldPath": "drugModelList.inoculationForm",
+    "v5ItemClassId": "3c7abf1d-d13d-11e8-a962-000c29399d7c",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "接种部位",
+    "v4FieldPath": "tmDrugDtoList.inoculationposition",
+    "v4ItemClassId": "8a7251da-d140-11e8-a962-000c29399d7c",
+    "v5FieldName": "接种部位",
+    "v5FieldPath": "drugModelList.inoculationPosition",
+    "v5ItemClassId": "8a7251da-d140-11e8-a962-000c29399d7c",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "接种剂量",
+    "v4FieldPath": "tmDrugDtoList.inoculationdose",
+    "v4ItemClassId": "-",
+    "v5FieldName": "接种剂量",
+    "v5FieldPath": "drugModelList.inoculationDose",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "自用药品",
+    "v4FieldPath": "tmDrugDtoList.selfDrugProduct",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "自用药品",
+    "v5FieldPath": "drugModelList.selfDrugProduct",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "医疗器械",
+    "v4FieldPath": "tmDrugDtoList.medicalEquipment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "医疗器械",
+    "v5FieldPath": "drugModelList.medicalEquipment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "产品类别",
+    "v4FieldPath": "tmDrugDtoList.productCategory",
+    "v4ItemClassId": "cedcfa30-0dbb-48a1-b4aa-b1f535304733",
+    "v5FieldName": "产品类别",
+    "v5FieldPath": "drugModelList.productCategory",
+    "v5ItemClassId": "cedcfa30-0dbb-48a1-b4aa-b1f535304733",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "制造商",
+    "v4FieldPath": "tmDrugDtoList.manufacture",
+    "v4ItemClassId": "-",
+    "v5FieldName": "制造商",
+    "v5FieldPath": "drugModelList.manufacture",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "浓度",
+    "v4FieldPath": "tmDrugDtoList.concentration",
+    "v4ItemClassId": "-",
+    "v5FieldName": "浓度",
+    "v5FieldPath": "drugModelList.concentration",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "PSUR药品ID",
+    "v4FieldPath": "tmDrugDtoList.psurDrugId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "PSUR药品ID",
+    "v5FieldPath": "drugModelList.psurDrugId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "未处理",
+    "v4FieldPath": "tmDrugDtoList.untreated",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "未处理",
+    "v5FieldPath": "drugModelList.untreated",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品医学发明名称",
+    "v4FieldPath": "tmDrugDtoList.drugMedicalInventedName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品医学发明名称",
+    "v5FieldPath": "drugModelList.drugMedicalInventedName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品科学名称",
+    "v4FieldPath": "tmDrugDtoList.drugScientificName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品科学名称",
+    "v5FieldPath": "drugModelList.drugScientificName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品商标名称",
+    "v4FieldPath": "tmDrugDtoList.drugTrademarkName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品商标名称",
+    "v5FieldPath": "drugModelList.drugTrademarkName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品强度名称",
+    "v4FieldPath": "tmDrugDtoList.drugStrengthName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品强度名称",
+    "v5FieldPath": "drugModelList.drugStrengthName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品剂型名称",
+    "v4FieldPath": "tmDrugDtoList.drugFormName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品剂型名称",
+    "v5FieldPath": "drugModelList.drugFormName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品容器名称",
+    "v4FieldPath": "tmDrugDtoList.drugContainerName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品容器名称",
+    "v5FieldPath": "drugModelList.drugContainerName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品设备名称",
+    "v4FieldPath": "tmDrugDtoList.drugDeviceName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品设备名称",
+    "v5FieldPath": "drugModelList.drugDeviceName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "药品预期名称",
+    "v4FieldPath": "tmDrugDtoList.drugIntendedName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品预期名称",
+    "v5FieldPath": "drugModelList.drugIntendedName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "是否为仿制药",
+    "v4FieldPath": "tmDrugDtoList.isGeneric",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否为仿制药",
+    "v5FieldPath": "drugModelList.isGeneric",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "是否为生物类似药",
+    "v4FieldPath": "tmDrugDtoList.isBiosimilar",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否为生物类似药",
+    "v5FieldPath": "drugModelList.isBiosimilar",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "疫苗认证",
+    "v4FieldPath": "tmDrugDtoList.vaccineCertified",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "疫苗认证",
+    "v5FieldPath": "drugModelList.vaccineCertified",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "合格证书签发",
+    "v4FieldPath": "tmDrugDtoList.issueOfCertificateOfConformity",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "合格证书签发",
+    "v5FieldPath": "drugModelList.issueOfCertificateOfConformity",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "疫苗保存容器",
+    "v4FieldPath": "tmDrugDtoList.vaccineSaveTheContainer",
+    "v4ItemClassId": "79e2c606-d12e-11e8-a962-000c29399d7c",
+    "v5FieldName": "疫苗保存容器",
+    "v5FieldPath": "drugModelList.vaccineSaveTheContainer",
+    "v5ItemClassId": "79e2c606-d12e-11e8-a962-000c29399d7c",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "疫苗储存温度",
+    "v4FieldPath": "tmDrugDtoList.vaccineStorageTemperature",
+    "v4ItemClassId": "-",
+    "v5FieldName": "疫苗储存温度",
+    "v5FieldPath": "drugModelList.vaccineStorageTemperature",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂名称",
+    "v4FieldPath": "tmDrugDtoList.diluentName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "稀释剂名称",
+    "v5FieldPath": "drugModelList.diluentName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂规格",
+    "v4FieldPath": "tmDrugDtoList.diluentSpecification",
+    "v4ItemClassId": "-",
+    "v5FieldName": "稀释剂规格",
+    "v5FieldPath": "drugModelList.diluentSpecification",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂生产企业",
+    "v4FieldPath": "tmDrugDtoList.diluentManufacturingEnterprise",
+    "v4ItemClassId": "-",
+    "v5FieldName": "稀释剂生产企业",
+    "v5FieldPath": "drugModelList.diluentManufacturingEnterprise",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂批号",
+    "v4FieldPath": "tmDrugDtoList.diluentLotNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "稀释剂批号",
+    "v5FieldPath": "drugModelList.diluentLotNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂外观",
+    "v4FieldPath": "tmDrugDtoList.diluentFacade",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "稀释剂外观",
+    "v5FieldPath": "drugModelList.diluentFacade",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂保存容器",
+    "v4FieldPath": "tmDrugDtoList.diluentSaveTheContainer",
+    "v4ItemClassId": "79e2c606-d12e-11e8-a962-000c29399d7c",
+    "v5FieldName": "稀释剂保存容器",
+    "v5FieldPath": "drugModelList.diluentSaveTheContainer",
+    "v5ItemClassId": "79e2c606-d12e-11e8-a962-000c29399d7c",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "稀释剂储存温度",
+    "v4FieldPath": "tmDrugDtoList.diluentStorageTemperature",
+    "v4ItemClassId": "-",
+    "v5FieldName": "稀释剂储存温度",
+    "v5FieldPath": "drugModelList.diluentStorageTemperature",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "drugList.drugDoseList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品剂量信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "drugList.drugDoseList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品剂量信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "drugList.drugDoseList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品剂量信息"
+  },
+  {
+    "v4FieldName": "使用间隔单位",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.unitIntervalDefinition",
+    "v4ItemClassId": "8ad62379-76f4-40ff-95c7-e9087f44874b",
+    "v5FieldName": "使用间隔单位",
+    "v5FieldPath": "drugList.drugDoseList.useIntervalUnit",
+    "v5ItemClassId": "8ad62379-76f4-40ff-95c7-e9087f44874b",
+    "v5ModuleName": "药品剂量信息"
+  },
+  {
+    "v4FieldName": "使用间隔",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.unitInterval",
+    "v4ItemClassId": "-",
+    "v5FieldName": "使用间隔",
+    "v5FieldPath": "drugList.drugDoseList.useInterval",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品剂量信息"
+  },
+  {
+    "v4FieldName": "开始日期",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.doseStartDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始日期",
+    "v5FieldPath": "drugList.drugDoseList.startDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "结束日期",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.doseEndDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束日期",
+    "v5FieldPath": "drugList.drugDoseList.endDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "是否持续",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.drugContinued",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否持续",
+    "v5FieldPath": "drugList.drugDoseList.isContinued",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "生产批次",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.batch",
+    "v4ItemClassId": "-",
+    "v5FieldName": "生产批次",
+    "v5FieldPath": "drugList.drugDoseList.productionBatch",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "剂量详情",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.dosageText",
+    "v4ItemClassId": "-",
+    "v5FieldName": "剂量详情",
+    "v5FieldPath": "drugList.drugDoseList.doseDetail",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "剂量数量",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.doseNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "剂量数量",
+    "v5FieldPath": "drugList.drugDoseList.doseNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "剂量单位",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.doseUnit",
+    "v4ItemClassId": "f1821d78-f7d9-4e75-b6a3-1b0c309ccbc1",
+    "v5FieldName": "剂量单位",
+    "v5FieldPath": "drugList.drugDoseList.doseUnit",
+    "v5ItemClassId": "f1821d78-f7d9-4e75-b6a3-1b0c309ccbc1",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "持续时间数量",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.durationNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "持续时间数量",
+    "v5FieldPath": "drugList.drugDoseList.durationNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "持续时间单位",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.durationUnit",
+    "v4ItemClassId": "896E7796-1E22-4CC5-81B4-22FD5910D1DD",
+    "v5FieldName": "持续时间单位",
+    "v5FieldPath": "drugList.drugDoseList.durationUnit",
+    "v5ItemClassId": "896E7796-1E22-4CC5-81B4-22FD5910D1DD",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "剂量形式",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.doseForm",
+    "v4ItemClassId": "689307c7-6af5-42fd-b63b-774f77e1c258",
+    "v5FieldName": "剂量形式",
+    "v5FieldPath": "drugList.drugDoseList.doseForm",
+    "v5ItemClassId": "689307c7-6af5-42fd-b63b-774f77e1c258",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "给药途径",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.routeOfAdministration",
+    "v4ItemClassId": "0341c6f3-7d46-463f-b6aa-a6769167db26",
+    "v5FieldName": "给药途径",
+    "v5FieldPath": "drugList.drugDoseList.routeOfAdministration",
+    "v5ItemClassId": "0341c6f3-7d46-463f-b6aa-a6769167db26",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "父级给药途径",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.parentRouteOfAdministration",
+    "v4ItemClassId": "-",
+    "v5FieldName": "父级给药途径",
+    "v5FieldPath": "drugList.drugDoseList.parentRouteOfAdministration",
+    "v5ItemClassId": "0341c6f3-7d46-463f-b6aa-a6769167db26",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "过期日期",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.expirationDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "过期日期",
+    "v5FieldPath": "drugList.drugDoseList.expirationDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "每日剂量",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.dailyDose",
+    "v4ItemClassId": "-",
+    "v5FieldName": "每日剂量",
+    "v5FieldPath": "drugList.drugDoseList.dailyDose",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "每日剂量单位",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.dailyDoseUnit",
+    "v4ItemClassId": "f1821d78-f7d9-4e75-b6a3-1b0c309ccbc1",
+    "v5FieldName": "每日剂量单位",
+    "v5FieldPath": "drugList.drugDoseList.dailyDoseUnit",
+    "v5ItemClassId": "f1821d78-f7d9-4e75-b6a3-1b0c309ccbc1",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "频率",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.frequency",
+    "v4ItemClassId": "7f6b4a50-548f-43d8-ba2a-a96d60d13e96",
+    "v5FieldName": "频率",
+    "v5FieldPath": "drugList.drugDoseList.frequency",
+    "v5ItemClassId": "7f6b4a50-548f-43d8-ba2a-a96d60d13e96",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "使用天数",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.usageDay",
+    "v4ItemClassId": "-",
+    "v5FieldName": "使用天数",
+    "v5FieldPath": "drugList.drugDoseList.usageDay",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "使用次数",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.usageTimes",
+    "v4ItemClassId": "-",
+    "v5FieldName": "使用次数",
+    "v5FieldPath": "drugList.drugDoseList.usageTimes",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "治疗方案药物暴露",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.regimenDrugExposure",
+    "v4ItemClassId": "-",
+    "v5FieldName": "治疗方案药物暴露",
+    "v5FieldPath": "drugList.drugDoseList.regimenDrugExposure",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "设备组件名称",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.deviceComponentName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "设备组件名称",
+    "v5FieldPath": "drugList.drugDoseList.deviceComponentName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "设备组件术语ID版本",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.deviceComponentTermIdVersion",
+    "v4ItemClassId": "-",
+    "v5FieldName": "设备组件术语ID版本",
+    "v5FieldPath": "drugList.drugDoseList.deviceComponentTermIdVersion",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "设备组件术语ID",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.deviceComponentTermId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "设备组件术语ID",
+    "v5FieldPath": "drugList.drugDoseList.deviceComponentTermId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "设备组件批次号",
+    "v4FieldPath": "tmDrugDtoList.tmDrugDoseDtoList.deviceComponentBatchNumber",
+    "v4ItemClassId": "-",
+    "v5FieldName": "设备组件批次号",
+    "v5FieldPath": "drugList.drugDoseList.deviceComponentBatchNumber",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "剂量信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "drugList.drugSubstanceList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "drugList.drugSubstanceList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "drugList.drugSubstanceList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "药品ID",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.drugId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品ID",
+    "v5FieldPath": "drugList.drugSubstanceList.drugId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "规格",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.spec",
+    "v4ItemClassId": "-",
+    "v5FieldName": "规格",
+    "v5FieldPath": "drugList.drugSubstanceList.spec",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "规格单位",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.specUnit",
+    "v4ItemClassId": "603fdc5b-4baf-40b5-8ae4-e787cc04c589",
+    "v5FieldName": "规格单位",
+    "v5FieldPath": "drugList.drugSubstanceList.specUnit",
+    "v5ItemClassId": "603fdc5b-4baf-40b5-8ae4-e787cc04c589",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "物质名称",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.substanceName",
+    "v4ItemClassId": "-",
+    "v5FieldName": "物质名称",
+    "v5FieldPath": "drugList.drugSubstanceList.substanceName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "版本日期",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.versionDate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "版本日期",
+    "v5FieldPath": "drugList.drugSubstanceList.versionDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "物质术语ID",
+    "v4FieldPath": "tmDrugDtoList.tmDrugPsurItemDtoList.substanceTermId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "物质术语ID",
+    "v5FieldPath": "drugList.drugSubstanceList.substanceTermId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品物质信息"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmDrugDtoList.tmMedicationReasonDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "drugList.drugReasonList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品用药原因"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmDrugDtoList.tmMedicationReasonDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "drugList.drugReasonList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品用药原因"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmDrugDtoList.tmMedicationReasonDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "drugList.drugReasonList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品用药原因"
+  },
+  {
+    "v4FieldName": "用药原因",
+    "v4FieldPath": "tmDrugDtoList.tmMedicationReasonDtoList.reason",
+    "v4ItemClassId": "-",
+    "v5FieldName": "用药原因",
+    "v5FieldPath": "drugList.drugReasonList.reason",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "药品用药原因"
+  },
+  {
+    "v4FieldName": "MedDRA映射",
+    "v4FieldPath": "tmCausalityDtoList.meddraMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "MedDRA映射",
+    "v5FieldPath": "evaluationList.meddraMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "WHO药物映射",
+    "v4FieldPath": "tmCausalityDtoList.whodrugMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "WHO药物映射",
+    "v5FieldPath": "evaluationList.whodrugMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "空值标记映射",
+    "v4FieldPath": "tmCausalityDtoList.nullflavorInfoDtoMap",
+    "v4ItemClassId": "-",
+    "v5FieldName": "空值标记映射",
+    "v5FieldPath": "evaluationList.nullflavorMap",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "报告ID",
+    "v4FieldPath": "tmCausalityDtoList.reportid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "报告ID",
+    "v5FieldPath": "evaluationList.reportId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "不良事件ID",
+    "v4FieldPath": "tmCausalityDtoList.adverseeventid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "不良事件ID",
+    "v5FieldPath": "evaluationList.adverseEventId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "事件名称",
+    "v4FieldPath": "tmCausalityDtoList.event",
+    "v4ItemClassId": "-",
+    "v5FieldName": "事件名称",
+    "v5FieldPath": "evaluationList.adverseEventName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "药品ID",
+    "v4FieldPath": "tmCausalityDtoList.drugid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品ID",
+    "v5FieldPath": "evaluationList.drugId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "药品名称",
+    "v4FieldPath": "tmCausalityDtoList.product",
+    "v4ItemClassId": "-",
+    "v5FieldName": "药品名称",
+    "v5FieldPath": "evaluationList.drugName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "是否预期",
+    "v4FieldPath": "tmCausalityDtoList.whetherexpectedorunexpected",
+    "v4ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5FieldName": "是否预期",
+    "v5FieldPath": "evaluationList.isExpected",
+    "v5ItemClassId": "cca85cbd-de10-4e5b-ac81-945decf7b3e4",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "开始用药至事件发生时间的间隔",
+    "v4FieldPath": "tmCausalityDtoList.begindrugstarteventinterval",
+    "v4ItemClassId": "-",
+    "v5FieldName": "开始用药至事件发生时间的间隔",
+    "v5FieldPath": "evaluationList.startToEventInterval",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "结束用药至事件发生时间的间隔",
+    "v4FieldPath": "tmCausalityDtoList.lastdrugstarteventinterval",
+    "v4ItemClassId": "-",
+    "v5FieldName": "结束用药至事件发生时间的间隔",
+    "v5FieldPath": "evaluationList.endToEventInterval",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "结束用药至事件发生时间的间隔单位",
+    "v4FieldPath": "tmCausalityDtoList.lastdrugstarteventintervalunit",
+    "v4ItemClassId": "9d4621fb-b19b-4cbe-8998-b3f9bee75fc2",
+    "v5FieldName": "结束用药至事件发生时间的间隔单位",
+    "v5FieldPath": "evaluationList.endToEventIntervalUnit",
+    "v5ItemClassId": "9d4621fb-b19b-4cbe-8998-b3f9bee75fc2",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "对可疑药物采取的措施",
+    "v4FieldPath": "tmCausalityDtoList.calactiontakenforsuspectdrug",
+    "v4ItemClassId": "b961c0ce-29a8-48a5-baa1-7e11ae73279c",
+    "v5FieldName": "对可疑药物采取的措施",
+    "v5FieldPath": "evaluationList.measuresTakenForProduct",
+    "v5ItemClassId": "b961c0ce-29a8-48a5-baa1-7e11ae73279c",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "停药或减量后，反应/事件是否消失或减轻",
+    "v4FieldPath": "tmCausalityDtoList.dechallenge",
+    "v4ItemClassId": "053e1df4-81cb-4fa8-8545-2bd4214d02ab",
+    "v5FieldName": "停药或减量后，反应/事件是否消失或减轻",
+    "v5FieldPath": "evaluationList.excludedExcited",
+    "v5ItemClassId": "053e1df4-81cb-4fa8-8545-2bd4214d02ab",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "再次使用可疑药品后是否再次出现同样反应/事件",
+    "v4FieldPath": "tmCausalityDtoList.rechallenge",
+    "v4ItemClassId": "13fd3c24-43e5-4d40-bd83-087d9dadcb96",
+    "v5FieldName": "再次使用可疑药品后是否再次出现同样反应/事件",
+    "v5FieldPath": "evaluationList.againExcited",
+    "v5ItemClassId": "13fd3c24-43e5-4d40-bd83-087d9dadcb96",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "生产厂家",
+    "v4FieldPath": "tmCausalityDtoList.manufacturer",
+    "v4ItemClassId": "-",
+    "v5FieldName": "生产厂家",
+    "v5FieldPath": "evaluationList.manufacturer",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "事件层面相关性",
+    "v4FieldPath": "tmCausalityDtoList.eventRelevant",
+    "v4ItemClassId": "3fb84cd4-0f49-45a6-98ca-38ad529b67d3",
+    "v5FieldName": "事件层面相关性",
+    "v5FieldPath": "evaluationList.eventRelevant",
+    "v5ItemClassId": "3fb84cd4-0f49-45a6-98ca-38ad529b67d3",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "开始用药至事件发生时间的间隔单位",
+    "v4FieldPath": "tmCausalityDtoList.begindrugstarteventintervalunit",
+    "v4ItemClassId": "a01be69a-be00-4237-a950-e46688ec8aab",
+    "v5FieldName": "开始用药至事件发生时间的间隔单位",
+    "v5FieldPath": "evaluationList.startToEventIntervalUnit",
+    "v5ItemClassId": "9d4621fb-b19b-4cbe-8998-b3f9bee75fc2",
+    "v5ModuleName": "评价信息"
+  },
+  {
+    "v4FieldName": "评价基础ID",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.causalityId",
+    "v4ItemClassId": "-",
+    "v5FieldName": "评价基础ID",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.evaluationBaseId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "评价方法",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.roughClassification",
+    "v4ItemClassId": "-",
+    "v5FieldName": "评价方法",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.evaluationMethod",
+    "v5ItemClassId": "c4aa31b2-2985-11ec-ad65-0050568ea815",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "评价方法细分",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.reporterEvaluationDcitkey",
+    "v4ItemClassId": "ff7105de-c38d-11e8-a962-000c29399d7c",
+    "v5FieldName": "评价方法细分",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.evaluationMethodBreakdown",
+    "v5ItemClassId": "ff7105de-c38d-11e8-a962-000c29399d7c",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "评价结果",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.reporterEvaluation",
+    "v4ItemClassId": "-",
+    "v5FieldName": "评价结果",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.evaluationResult",
+    "v5ItemClassId": "34782994-c152-11e8-a962-000c29399d7c",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "数据来源",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.dataSource",
+    "v4ItemClassId": "-",
+    "v5FieldName": "数据来源",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.dataSource",
+    "v5ItemClassId": "3272bfed-9e92-11eb-91bf-000c29ee981b",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "EU评估来源",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.euSourceOfAssessment",
+    "v4ItemClassId": "-",
+    "v5FieldName": "EU评估来源",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.euSourceOfAssessment",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "评价来源",
+    "v4FieldPath": "tmCausalityDtoList.allEvaList.evaluationSource",
+    "v4ItemClassId": "-",
+    "v5FieldName": "评价来源",
+    "v5FieldPath": "evaluationList.evaluationCausalityList.evaluationSource",
+    "v5ItemClassId": "fff53699-35a8-11ea-8f56-000c29ee981b",
+    "v5ModuleName": "评价组合信息"
+  },
+  {
+    "v4FieldName": "文件ID",
+    "v4FieldPath": "pvFileTDtoList.objectid",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件ID",
+    "v5FieldPath": "reportAttachmentList.fileId",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件名",
+    "v4FieldPath": "pvFileTDtoList.filename",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件名",
+    "v5FieldPath": "reportAttachmentList.fileName",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件类型",
+    "v4FieldPath": "pvFileTDtoList.filetype",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件类型",
+    "v5FieldPath": "reportAttachmentList.fileType",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件大小",
+    "v4FieldPath": "pvFileTDtoList.filesize",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件大小",
+    "v5FieldPath": "reportAttachmentList.fileSize",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件路径",
+    "v4FieldPath": "pvFileTDtoList.filepath",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件路径",
+    "v5FieldPath": "reportAttachmentList.filePath",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件来源",
+    "v4FieldPath": "pvFileTDtoList.filesource",
+    "v4ItemClassId": "08245723-42c0-43d0-9129-2f53f9966624",
+    "v5FieldName": "文件来源",
+    "v5FieldPath": "reportAttachmentList.fileSource",
+    "v5ItemClassId": "08245723-42c0-43d0-9129-2f53f9966624",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件分类",
+    "v4FieldPath": "pvFileTDtoList.fileclassify",
+    "v4ItemClassId": "030ec880-f535-449f-a257-f198af97e5d5",
+    "v5FieldName": "文件分类",
+    "v5FieldPath": "reportAttachmentList.fileClassify",
+    "v5ItemClassId": "030ec880-f535-449f-a257-f198af97e5d5",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件描述",
+    "v4FieldPath": "pvFileTDtoList.filedescription",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件描述",
+    "v5FieldPath": "reportAttachmentList.fileDescription",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件接收日期",
+    "v4FieldPath": "pvFileTDtoList.filereceiptdate",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件接收日期",
+    "v5FieldPath": "reportAttachmentList.fileReceiptDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "文件上传日期",
+    "v4FieldPath": "pvFileTDtoList.createTime",
+    "v4ItemClassId": "-",
+    "v5FieldName": "文件上传日期",
+    "v5FieldPath": "reportAttachmentList.fileUploadDate",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  },
+  {
+    "v4FieldName": "创建人",
+    "v4FieldPath": "pvFileTDtoList.createPerson",
+    "v4ItemClassId": "-",
+    "v5FieldName": "创建人",
+    "v5FieldPath": "reportAttachmentList.createPerson",
+    "v5ItemClassId": "-",
+    "v5ModuleName": "附件"
+  }
+]

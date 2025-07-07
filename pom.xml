@@ -179,7 +179,7 @@
 
                    <jdbc>
                         <driver>com.mysql.cj.jdbc.Driver</driver>
-                        <url>jdbc:mysql://test-mysql8-global.taimei.com:3307/hsj_test</url>
+                        <url>jdbc:mysql://test-polarm-global-01-sh2e.taimei.com:3306/hsj_test</url>
                         <user>pvuser</user>
                         <password>pv@TM123</password>
                     </jdbc>

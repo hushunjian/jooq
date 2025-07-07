@@ -45,11 +45,15 @@ import javax.annotation.Resource;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,6 +78,8 @@ public class TestController {
     private RestTemplate restTemplate;
 
     private static final List<String> v4_services = Lists.newArrayList("esae-template-service");
+
+    private static final int THREAD_COUNT = Runtime.getRuntime().availableProcessors() * 2;
 
     private static final List<String> V5_SERVICES = Lists.newArrayList(
             "caps-web",
@@ -174,6 +180,231 @@ public class TestController {
         ignoreKeys.add("service.name.csp-service");
         ignoreKeys.add("service.name.trailer-web");
         ignoreKeys.add("service.name.omp-service");
+    }
+
+    private List<String> readTxtLine(String filePath) {
+        List<String> lines = Lists.newArrayList();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int lineNumber = 0;
+            while ((line = br.readLine()) != null) {
+                lineNumber++;
+                System.out.println("第 " + lineNumber + " 行: " + line);
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            System.err.println("读取文件时出错: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    @SneakyThrows
+    @ApiOperation("genFixSql")
+    @PostMapping(value = "genFixSql")
+    public void genFixSql() {
+        // 读取excel
+        ExcelData excelData = readExcelData("C:\\Users\\shunjian.hu\\Desktop", "report_value.xlsx");
+        //
+        List<String> fixSql = Lists.newArrayList();
+        excelData.getSheetRowsMap().get("Sheet1").forEach(row -> {
+            String id = row.get("id");
+            String aeCountry = row.get("AECountry");
+            if (StringUtils.equals(aeCountry, "中国")) {
+                fixSql.add(String.format("update report_value set AECountry = 'COUNTRY_CN' where id = '%s';", id));
+            }
+        });
+        //
+        exportFixSQLFile(fixSql);
+    }
+
+    @SneakyThrows
+    @ApiOperation("queryErrorDB")
+    @PostMapping(value = "queryErrorDB")
+    public void queryErrorDB(@RequestBody QueryDBReq req) {
+        List<String> reportIds = Lists.newArrayList(
+                "8a8d800d9729399301973544df5a786b",
+                "8a8d800d9729399301974493d9882770",
+                "8a8d800d97293993019752a0a6276c54",
+                "8a8d800d9729399301975daac1e60b79",
+                "8a8d800d97293993019771c7d5692fad",
+                "8a8d800d97293993019777be305b3b2e",
+                "8a8d800d9729399301977e87b09b6104",
+                "8a8d800d97293993019782ab0fe902db",
+                "8a8d800d97293993019786c1c0f8092a",
+                "8a8d800d9729399301978dc19b857a0c",
+                "8a8d818296d3a2700196ecbfaffc45cd",
+                "8a8d818296d3a2700196ecf8ab234686",
+                "8a8d818296d3a2700196ed0810ea03c9",
+                "8a8d818296d3a2700196ed82b42a6b32",
+                "8a8d818296d3a2700196f0c8214762ad",
+                "8a8d818296d3a2700196f10e2c5f11d9",
+                "8a8d818296d3a2700196f2b76b670930",
+                "8a8d818296d3a2700196f7b1cabd6d86",
+                "8a8d818296d3a2700196f81479711257",
+                "8a8d818296d3a2700196f84221b624b4",
+                "8a8d818296d3a27001970f241fe76cec",
+                "8a8d818296d3a27001970f272b5875de",
+                "8a8d818296d3a27001970f2a745e0177",
+                "8a8d818296d3a27001970f5bf5a86764",
+                "8a8d818296d3a27001971b0c96de56ac",
+                "8a8d818296d3a27001971e8bcc0f34dd",
+                "8a8d818296d3a270019738886caf37a9",
+                "8a8d818296d3a27001973dacfea31b37",
+                "8a8d818296d3a270019743377507707b",
+                "8a8d818296d3a270019753197efc53ac",
+                "8a8d818296d3a27001975784219345f1",
+                "8a8d818296d3a270019757a6775520b9",
+                "8a8d818296d3a27001975d78f60964a6",
+                "8a8d818296d3a27001975eba50d8624a",
+                "8a8d818296d3a270019764205b90472e",
+                "8a8d81fd96d39f860196ecc558427908",
+                "8a8d81fd96d39f860196f12d07655f65",
+                "8a8d81fd96d39f860196f5962a157f73",
+                "8a8d81fd96d39f860196fac2be0e1911",
+                "8a8d81fd96d39f860196fc2680d142bf",
+                "8a8d81fd96d39f86019709ec82a21786",
+                "8a8d81fd96d39f8601972e6903475b52",
+                "8a8d81fd96d39f860197388cb107657f",
+                "8a8d81fd96d39f86019738a07bb26d6f",
+                "8a8d81fd96d39f8601973dde37eb64b1",
+                "8a8d81fd96d39f8601975407d847777c",
+                "8a8d82f795b3e558019719ff86183a21",
+                "8a8dbf2a9729365101972974eb6a4012",
+                "8a8dbf2a9729365101973499165333e8",
+                "8a8dbf2a9729365101973a5909b72c13",
+                "8a8dbf2a9729365101973de183db22f1",
+                "8a8dbf2a972936510197434868e86b19",
+                "8a8dbf2a972936510197452612833d9f",
+                "8a8dbf2a972936510197549e643c583a",
+                "8a8dbf2a97293651019768966906705e",
+                "8a8dbf2a9729365101977bb0fff51756",
+                "8a8dbf2a972936510197887537824837",
+                "8a8dbf2a9729365101978cd5229049b3",
+                "8a8dbf2a972936510197913588403ead"
+        );
+        // 读excel
+        ExcelData excelData = readExcelData("C:\\Users\\shunjian.hu\\Desktop", "错误字段信息2.xlsx");
+        // 表列
+        Map<String, Set<String>> tableColumnsMap = Maps.newHashMap();
+        // 循环行处理
+        excelData.getSheetRowsMap().get("Sheet1").forEach(row -> {
+            String table = row.get("表");
+            String column = row.get("列");
+            tableColumnsMap.computeIfAbsent(table, v -> Sets.newHashSet()).add(column);
+        });
+        // 循环查表
+        tableColumnsMap.forEach((table, columns) -> {
+            StringBuilder builder = new StringBuilder(String.format("select id, %s from %s where ", String.join(",", columns), table));
+            switch (table) {
+                case "report_value":
+                    builder.append(" id in ").append(String.format("('%s');", String.join("','", reportIds)));
+                    break;
+                case "tm_othermedicalhistory":
+                case "tm_labdata":
+                case "tm_drug":
+                case "tm_adverseevent" :
+                case "tm_reporter" :
+                    builder.append(" ReportId in ").append(String.format("('%s');", String.join("','", reportIds)));
+                    break;
+                case "tm_drug_dose":
+                    builder.append(" drug_id in ").append(String.format("(select id from tm_drug where ReportId in ('%s'));", String.join("','", reportIds)));
+                    break;
+                default:
+                    throw new RuntimeException();
+            }
+            // 查询sql
+            String sql = builder.toString();
+            System.out.println(sql);
+            req.setSqlContent(sql);
+            req.setLimitNum("0");
+            req.setInstanceName("prod-mysql-pv-ro");
+            req.setDbName("pv");
+            req.setCookie(QueryDBHelper.DB_COOKIE);
+            req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+            // 查询数据
+            D res = QueryDBHelper.getRes(req, restTemplate);
+            // QueryDBHelper.exportExcel(res.getData(), table);
+        });
+        // 查询meddra
+        String sql = String.format("select * from meddrafidldinfo where  ReportId in ('%s') and llt_name_en is null and is_deleted = 0;", String.join("','", reportIds));
+        req.setSqlContent(sql);
+        D res = QueryDBHelper.getRes(req, restTemplate);
+        QueryDBHelper.exportExcel(res.getData(), "meddra");
+    }
+
+    @ApiOperation("getMeddra")
+    @PostMapping(value = "getMeddra")
+    public void getMeddra(@RequestBody ActionResult<List<MeddraInfo>> input) {
+        List<MeddraInfo> meddraInfos = input.getData();
+        List<String> collect = meddraInfos.get(1).getChilds().stream().map(MeddraChildren::getName).collect(Collectors.toList());
+        System.out.println();
+    }
+
+    @SneakyThrows
+    @ApiOperation("readTxt")
+    @PostMapping(value = "readTxt")
+    public void readTxt() {
+        List<String> paths = Lists.newArrayList("C:\\Users\\shunjian.hu\\Desktop\\下载文件\\20250625144145.log", "C:\\Users\\shunjian.hu\\Desktop\\下载文件\\20250625144023.log");
+        Pattern pattern = Pattern.compile("字段:\\[([^\\]]+)\\]");
+        List<String> headers = Lists.newArrayList("字段", "错误信息", "字段描述", "表", "列");
+        List<List<String>> table = Lists.newArrayList();
+        // 读配置
+        ReportCheckConfigDTO reportCheckConfig = readConfig();
+        // 读字段
+        Map<String, FieldChekConfigDTO> dataPathConfigMap = reportCheckConfig.getFieldChekConfigs().stream().collect(Collectors.toMap(FieldChekConfigDTO::getDataPath, config -> config));
+
+        paths.forEach(path -> {
+            log.info("开始处理文件:[{}]", path);
+            List<String> inputs = readTxtLine(path);
+            inputs.forEach(input -> {
+                String[] split = input.split("tm-header-tenantid");
+                for (String s : split) {
+                    String[] error = s.split(" : ");
+                    if (error.length > 2) {
+                        String errorInfo = error[1];
+                        if (StringUtils.contains(errorInfo, "控件") && StringUtils.containsAny(errorInfo, "下拉框", "单选", "多选", "下拉选项")) {
+                            String group = findGroup(pattern, errorInfo);
+                            System.out.println(group);
+                            System.out.println(errorInfo);
+                            // 获取字段信息
+                            FieldChekConfigDTO config = dataPathConfigMap.get(group);
+                            table.add(Lists.newArrayList(group, errorInfo, config.getDescribe(), config.getTable(), config.getColumn()));
+                        }
+                    }
+                }
+            });
+        });
+        QueryDBHelper.exportExcel2(headers, table, "错误字段信息2");
+
+
+/*        List<String> inputs = readTxtLine("C:\\Users\\shunjian.hu\\Desktop\\入参文件.txt");
+        // 替换为你自己的文件路径
+        List<V4V5FieldConfig> v4V5FieldConfigs = readTxtLine("C:\\Users\\shunjian.hu\\Desktop\\映射文件.txt").stream().map(line -> {
+            String[] split = line.split("\\|");
+            return V4V5FieldConfig.builder()
+                    .v4FieldPath(split[1])
+                    .v4FieldName(split[2])
+                    .v4ItemClassId(split[3])
+                    .v5FieldPath(split[4])
+                    .v5FieldName(split[5])
+                    .v5ItemClassId(split[6])
+                    .v5ModuleName(split[7])
+                    .build();
+        }).collect(Collectors.toList());
+        System.out.println();
+        String[] searchList = new String[v4V5FieldConfigs.size()];
+        String[] replacementList = new String[v4V5FieldConfigs.size()];
+        // 按照v4FieldPath toMap
+        for (int i = 0; i < v4V5FieldConfigs.size(); i++) {
+            searchList[i] = "chReport." + v4V5FieldConfigs.get(i).getV4FieldPath();
+            replacementList[i] = "report." + v4V5FieldConfigs.get(i).getV5FieldPath();
+        }
+        // 替换字符串
+        inputs.forEach(input -> {
+            String output = StringUtils.replaceEach(input, searchList, replacementList);
+            System.out.println(output);
+        });*/
     }
 
     @ApiOperation("prodSenderSearch")
@@ -354,12 +585,18 @@ public class TestController {
                 File mergeFile = new File(dir.toFile(), "merge.sql");
                 try (PrintWriter writer = new PrintWriter(new FileWriter(mergeFile))) {
                     for (File sqlFile : sqlFiles) {
-                        try (BufferedReader reader = new BufferedReader(new FileReader(sqlFile))) {
-                            String line;
-                            while ((line = reader.readLine()) != null) {
+                        List<String> lines = Files.readAllLines(sqlFile.toPath(), StandardCharsets.UTF_8);
+
+                        for (int i = 0; i < lines.size(); i++) {
+                            String line = lines.get(i);
+
+                            // 判断是否是最后一行 && 不为空 && 没有以分号结尾
+                            if (i == lines.size() - 1 && !line.trim().isEmpty() && !line.trim().endsWith(";")) {
+                                log.info("文件名:{}", sqlFile.getName());
+                                writer.println(line + ";"); // 在原行末尾添加分号
+                            } else {
                                 writer.println(line);
                             }
-                            writer.println(); // 在不同文件内容之间添加空行分隔
                         }
                     }
                 }
@@ -464,7 +701,14 @@ public class TestController {
         LogEventRes res = QueryDBHelper.getRes(req, restTemplate);
         // 获取信息
         List<String> messages = res.getQuery().stream().map(info -> info.getInfo().getMessage()).collect(Collectors.toList());
-        // 端口id匹配
+        Pattern pattern = Pattern.compile("字段:\\$([^$$]+)\\$\\s*数据");
+        Set<String> errorFieldKeys = Sets.newHashSet();
+        messages.forEach(message -> {
+            String fieldKey = findGroup(pattern, message);
+            errorFieldKeys.add(fieldKey);
+        });
+        System.out.println();
+/*        // 端口id匹配
         Pattern portIdPattern = Pattern.compile("\"portId\"\\s*:\\s*\"([^\"]+)\"");
         // 时间匹配
         Pattern dateTimePattern = Pattern.compile("\"dateTime\"\\s*:\\s*(\\d+)");
@@ -494,7 +738,7 @@ public class TestController {
         // 表格数据
         List<List<String>> table = portFiles.stream().map(portFile -> Lists.newArrayList(portMap.get(portFile.getPortId()), portFile.getFileName(), portFile.getDateTime())).collect(Collectors.toList());
         // 导出excel
-        QueryDBHelper.exportExcel(headers, table, "接收到的重复文件");
+        QueryDBHelper.exportExcel(headers, table, "接收到的重复文件");*/
     }
 
 
@@ -689,6 +933,56 @@ public class TestController {
         System.out.println();
         System.out.println(JSON.toJSONString(reqs));
         System.out.println();
+    }
+
+    @SneakyThrows
+    @ApiOperation("autoMeddra")
+    @PostMapping(value = "autoMeddra")
+    public void autoMeddra(@RequestBody List<String> reportIds) {
+        QueryDBHelper.autoMeddra(restTemplate, QueryDBHelper.ESAFETY_5_COOKIE, reportIds);
+    }
+
+    @SneakyThrows
+    @ApiOperation("finishMyStudyTask")
+    @PostMapping(value = "finishMyStudyTask")
+    public void finishMyStudyTask() {
+        QueryDBHelper.finishTask(restTemplate);
+    }
+
+    @SneakyThrows
+    @ApiOperation("getAnswer")
+    @PostMapping(value = "getAnswer")
+    public List<List<String>> getAnswer(@RequestBody AnswerInfo answerInfo) {
+        List<List<String>> result = Lists.newArrayList();
+        answerInfo.getData().stream().forEach(answerInfo1 -> {
+            List<String> an = Lists.newArrayList();
+            answerInfo1.getListQuestionAnswerList().forEach(answerInfo2 -> {
+                if (answerInfo2.getIsAnswer() == 1) {
+                    System.out.println(answerInfo2.getAnswerChoice());
+                    an.add(answerInfo2.getAnswerChoice().split("\\.")[0]);
+                }
+            });
+            result.add(an);
+        });
+        return result;
+    }
+
+    @SneakyThrows
+    @ApiOperation("测试easyExcel")
+    @GetMapping(value = "testEasyExcel")
+    public void testEasyExcel(@RequestParam Integer rowIndex) {
+        // 表头
+        List<String> headers = Lists.newArrayList("column1", "column2", "column3", "column4");
+        // 表格数据
+        List<List<String>> table = Lists.newArrayList();
+        for (int i = 0; i < rowIndex; i++) {
+            List<String> rows = Lists.newArrayList();
+            for (String header : headers) {
+                rows.add(String.valueOf(i));
+            }
+            table.add(rows);
+        }
+        QueryDBHelper.exportExcel(headers.stream().map(Lists::newArrayList).collect(Collectors.toList()), table, "test");
     }
 
     @SneakyThrows
@@ -975,6 +1269,260 @@ public class TestController {
         newFile(("C:\\Users\\shunjian.hu\\Desktop" + "\\" + "fixMeddraVersion.sql"), String.join("\n", fixSql));
     }
 
+    @ApiOperation("pv数据库校验")
+    @PostMapping(value = "doPvDbReportCheck")
+    public void doPvDbReportCheck() {
+        List<String> reportIds = Lists.newArrayList(
+                "8a8d800d9729399301972a32cc3670d8",
+                "8a8d800d9729399301973544df5a786b",
+                "8a8d800d97293993019739978faf41e7",
+                "8a8d800d9729399301973df6b0e40b17",
+                "8a8d800d9729399301973e1327887651",
+                "8a8d800d9729399301973f1373e47122",
+                "8a8d800d97293993019743ea071b0821",
+                "8a8d800d9729399301974493d9882770",
+                "8a8d800d972939930197449be5743ddb",
+                "8a8d800d97293993019748ddfe1366a6",
+                "8a8d800d97293993019752a0a6276c54",
+                "8a8d800d97293993019752b94a971b80",
+                "8a8d800d97293993019752ba851a20a9",
+                "8a8d800d97293993019753b02a735278",
+                "8a8d800d97293993019757d011b071b9",
+                "8a8d800d972939930197588ad53b581c",
+                "8a8d800d9729399301975cfe0bc97fe1",
+                "8a8d800d9729399301975daac1e60b79",
+                "8a8d800d972939930197623f16980643",
+                "8a8d800d97293993019763f7c59f5d35",
+                "8a8d800d9729399301976895cc1a3f8c",
+                "8a8d800d972939930197689f05ff4db9",
+                "8a8d800d97293993019768bde5f111ea",
+                "8a8d800d97293993019771b1c2bd2a48",
+                "8a8d800d97293993019771c7d5692fad",
+                "8a8d800d972939930197764e7c331abd",
+                "8a8d800d97293993019776a110a6192f",
+                "8a8d800d97293993019776d7741624fe",
+                "8a8d800d97293993019777be305b3b2e",
+                "8a8d800d9729399301977bb3db7f6602",
+                "8a8d800d9729399301977bbcf0a2138c",
+                "8a8d800d9729399301977e87b09b6104",
+                "8a8d800d972939930197825da6f218ab",
+                "8a8d800d97293993019782a98c2f7c4a",
+                "8a8d800d97293993019782ab0fe902db",
+                "8a8d800d97293993019786344da16f30",
+                "8a8d800d9729399301978696b53e7a6e",
+                "8a8d800d97293993019786a98eaa25ad",
+                "8a8d800d97293993019786c1c0f8092a",
+                "8a8d800d972939930197874cd5d56ef4",
+                "8a8d800d9729399301978787199f21b3",
+                "8a8d800d9729399301978b150d884f20",
+                "8a8d800d9729399301978b66d2f93e9f",
+                "8a8d800d9729399301978b67930f4494",
+                "8a8d800d9729399301978bc4ce354237",
+                "8a8d800d9729399301978dc19b857a0c",
+                "8a8d800d9729399301979a95456c1e68",
+                "8a8d800d9729399301979bd05eb246d9",
+                "8a8d800d9729399301979bd4a98c5155",
+                "8a8d800d972939930197a0b2ce7f1941",
+                "8a8d800d972939930197a513cc545a7c",
+                "8a8d800d972939930197a676f6d15d27",
+                "8a8d800d972939930197a6bb24c30d70",
+                "8a8d800d972939930197a6fb1c2f4cfe",
+                "8a8d818296d3a2700196eb846dfc2986",
+                "8a8d818296d3a2700196ecbfaffc45cd",
+                "8a8d818296d3a2700196ecf8ab234686",
+                "8a8d818296d3a2700196ed0810ea03c9",
+                "8a8d818296d3a2700196ed82b42a6b32",
+                "8a8d818296d3a2700196f0c8214762ad",
+                "8a8d818296d3a2700196f10e2c5f11d9",
+                "8a8d818296d3a2700196f2b76b670930",
+                "8a8d818296d3a2700196f6d2a9c335eb",
+                "8a8d818296d3a2700196f7b1cabd6d86",
+                "8a8d818296d3a2700196f81479711257",
+                "8a8d818296d3a2700196f84221b624b4",
+                "8a8d818296d3a2700196fb13c3c928ba",
+                "8a8d818296d3a27001970f241fe76cec",
+                "8a8d818296d3a27001970f272b5875de",
+                "8a8d818296d3a27001970f2a745e0177",
+                "8a8d818296d3a27001970f5bf5a86764",
+                "8a8d818296d3a27001971aa76ea02bd6",
+                "8a8d818296d3a27001971b0c96de56ac",
+                "8a8d818296d3a27001971e8bcc0f34dd",
+                "8a8d818296d3a270019734b4628347d2",
+                "8a8d818296d3a270019734b4dfa94cb9",
+                "8a8d818296d3a270019738886caf37a9",
+                "8a8d818296d3a27001973dacfea31b37",
+                "8a8d818296d3a270019743377507707b",
+                "8a8d818296d3a2700197449426d833cc",
+                "8a8d818296d3a270019753197efc53ac",
+                "8a8d818296d3a27001975784219345f1",
+                "8a8d818296d3a270019757a6775520b9",
+                "8a8d818296d3a27001975d78f60964a6",
+                "8a8d818296d3a27001975d7ad2d36e6f",
+                "8a8d818296d3a27001975eba50d8624a",
+                "8a8d818296d3a270019764205b90472e",
+                "8a8d818296d3a2700197688025dc16fb",
+                "8a8d818296d3a270019781b515fd0d7f",
+                "8a8d818296d3a2700197827469c12ea3",
+                "8a8d818296d3a27001979ba9b7fa4626",
+                "8a8d81fd96d39f860196d839dd462277",
+                "8a8d81fd96d39f860196ecc558427908",
+                "8a8d81fd96d39f860196f12d07655f65",
+                "8a8d81fd96d39f860196f5962a157f73",
+                "8a8d81fd96d39f860196fac2be0e1911",
+                "8a8d81fd96d39f860196fc2680d142bf",
+                "8a8d81fd96d39f86019709ec82a21786",
+                "8a8d81fd96d39f8601970ab656975ce9",
+                "8a8d81fd96d39f8601971f5b72c4286b",
+                "8a8d81fd96d39f86019720b6a0cd32bc",
+                "8a8d81fd96d39f8601972e6903475b52",
+                "8a8d81fd96d39f86019733ecfaa9411d",
+                "8a8d81fd96d39f860197388cb107657f",
+                "8a8d81fd96d39f86019738a07bb26d6f",
+                "8a8d81fd96d39f8601973dde37eb64b1",
+                "8a8d81fd96d39f8601973efe511a2ad4",
+                "8a8d81fd96d39f86019744d065db483c",
+                "8a8d81fd96d39f8601975407d847777c",
+                "8a8d81fd96d39f86019761e515867fef",
+                "8a8d81fd96d39f860197770ee2f32237",
+                "8a8d81fd96d39f86019786fa675049e8",
+                "8a8d81fd96d39f8601979ae281603cc9",
+                "8a8d81fd96d39f860197aa7707934ba1",
+                "8a8d82eb95b3e5780196d484b8166c66",
+                "8a8d82eb95b3e5780196d7ed13973ac9",
+                "8a8d82eb95b3e5780196d8a7afda5c6b",
+                "8a8d82eb95b3e5780196e6a0e2b37fd5",
+                "8a8d82eb95b3e5780196e74cc601512e",
+                "8a8d82eb95b3e5780196e76e925c7a10",
+                "8a8d82eb95b3e5780196e846cbc378bd",
+                "8a8d82eb95b3e5780196edf0d56b7cf9",
+                "8a8d82eb95b3e5780196f35ca6dd3742",
+                "8a8d82eb95b3e5780196f5f2d45427bd",
+                "8a8d82eb95b3e5780196f79399ec44cc",
+                "8a8d82eb95b3e5780196facaaa4d4186",
+                "8a8d82eb95b3e5780196fc3a66de2312",
+                "8a8d82eb95b3e5780196fc4f082908a4",
+                "8a8d82eb95b3e5780197028ad6467f62",
+                "8a8d82eb95b3e57801970aae51b74926",
+                "8a8d82eb95b3e57801970b2de92a5e10",
+                "8a8d82eb95b3e578019710e1c4572ceb",
+                "8a8d82eb95b3e57801971619c41a5ae4",
+                "8a8d82eb95b3e57801972052772e7af7",
+                "8a8d82eb95b3e578019724d25d4b668b",
+                "8a8d82f795b3e5580196d19c1acd4734",
+                "8a8d82f795b3e5580196d1d6b03e05e9",
+                "8a8d82f795b3e5580196d2054f0d6884",
+                "8a8d82f795b3e5580196d36574671718",
+                "8a8d82f795b3e5580196dd0c525f73d8",
+                "8a8d82f795b3e5580196dd68a36516bd",
+                "8a8d82f795b3e5580196de31e3ce3eb5",
+                "8a8d82f795b3e5580196e878b2841bad",
+                "8a8d82f795b3e5580196ebb23c2a0dcb",
+                "8a8d82f795b3e5580196ebbd82f93a89",
+                "8a8d82f795b3e5580196f21edd9d61c5",
+                "8a8d82f795b3e5580196f71ebbb20c7b",
+                "8a8d82f795b3e5580196fbc39ea04116",
+                "8a8d82f795b3e5580196fca7692d6931",
+                "8a8d82f795b3e558019702a834f22855",
+                "8a8d82f795b3e558019707e5def55b8c",
+                "8a8d82f795b3e55801970ce7e46309d6",
+                "8a8d82f795b3e55801970f5bf39e0276",
+                "8a8d82f795b3e5580197159bd932533c",
+                "8a8d82f795b3e558019717141e4825df",
+                "8a8d82f795b3e558019719ff86183a21",
+                "8a8d82f795b3e55801971ab96c8f4a52",
+                "8a8d82f795b3e55801971be994ad3620",
+                "8a8d82f795b3e55801971bfc799057f9",
+                "8a8d82f795b3e5580197201a1aa075c1",
+                "8a8d82f795b3e558019720bf43023cb4",
+                "8a8dbf2a9729365101972974eb6a4012",
+                "8a8dbf2a9729365101972a8ff2775fc5",
+                "8a8dbf2a972936510197338290d451b2",
+                "8a8dbf2a9729365101973489aacc6e4a",
+                "8a8dbf2a9729365101973499165333e8",
+                "8a8dbf2a9729365101973a5909b72c13",
+                "8a8dbf2a9729365101973b766ffb23fd",
+                "8a8dbf2a9729365101973de183db22f1",
+                "8a8dbf2a9729365101973de5e5bd2cb0",
+                "8a8dbf2a9729365101973f4be45f33ff",
+                "8a8dbf2a972936510197434868e86b19",
+                "8a8dbf2a97293651019744b857c478ed",
+                "8a8dbf2a972936510197452612833d9f",
+                "8a8dbf2a972936510197549e643c583a",
+                "8a8dbf2a97293651019754a0762d5b29",
+                "8a8dbf2a97293651019757cecd3a64a0",
+                "8a8dbf2a9729365101975c9f16244c79",
+                "8a8dbf2a97293651019762c04cd60f2e",
+                "8a8dbf2a9729365101976391b5d30f77",
+                "8a8dbf2a97293651019764bd60a3093f",
+                "8a8dbf2a97293651019764c8ead30bf5",
+                "8a8dbf2a9729365101976726566b6590",
+                "8a8dbf2a972936510197672c248e00b7",
+                "8a8dbf2a97293651019768966906705e",
+                "8a8dbf2a972936510197766c56b001c6",
+                "8a8dbf2a972936510197783a36b43fed",
+                "8a8dbf2a9729365101977bb0fff51756",
+                "8a8dbf2a9729365101977bc0e8775749",
+                "8a8dbf2a9729365101977bed261c03a1",
+                "8a8dbf2a97293651019781130e4c1eac",
+                "8a8dbf2a97293651019781226223662e",
+                "8a8dbf2a972936510197826f686d4c8f",
+                "8a8dbf2a97293651019785fb1aad2533",
+                "8a8dbf2a97293651019786d3ad472a6c",
+                "8a8dbf2a97293651019786fb2f9f3940",
+                "8a8dbf2a972936510197887537824837",
+                "8a8dbf2a9729365101978cd5229049b3",
+                "8a8dbf2a972936510197908d54d81ff9",
+                "8a8dbf2a972936510197913588403ead",
+                "8a8dbf2a9729365101979be9f0b752e8",
+                "8a8dbf2a972936510197a4f486206bf9",
+                "8a8dbf2a972936510197a4fadb3b2075",
+                "8a8dbf2a972936510197a50731246846",
+                "8a8dbf2a972936510197a515fe4f0d50",
+                "8a8dbf2a972936510197a7449c575d5d",
+                "8a8dbf2a972936510197ab3faca609a5"
+        );
+        String cookie = "gr_user_id=8065e17c-9fe0-4464-be05-cc8651fce673; b322f7b164f88f10_gr_last_sent_cs1=8a81c08a7965a66b01798247b8c04c33; b322f7b164f88f10_gr_cs1=8a81c08a7965a66b01798247b8c04c33; eSafety5_unblind_warn=true; Hm_lvt_88897af8840c3689db7cb8c0886b1026=1748600945,1750993244; HMACCOUNT=04F024FD93C91795; acw_tc=0a472f8917510045153796299e006b1d144827203e3a46d570a5dece56fe15; Hm_lpvt_88897af8840c3689db7cb8c0886b1026=1751005138; token=abcdd2e3aba14bd5be92d2e50ca19421";
+        Map<String, String> result = QueryDBHelper.getDbReportCheckError(restTemplate, cookie, reportIds);
+        /*for (int i = 0; i < reportIds.size(); i++) {
+            String reportId = reportIds.get(i);
+            result.putAll(QueryDBHelper.getDbReportCheckError(restTemplate, cookie, reportId));
+            log.info("处理进度:[{}-{}]", i, reportIds.size());
+        }*/
+        System.out.println();
+    }
+
+    @ApiOperation("genReportExcel")
+    @PostMapping(value = "genReportExcel")
+    public void genReportExcel(@RequestBody QueryDBReq req) {
+        // 用文件信息的
+        Map<String, String> errorMap = req.getFileInfoMap();
+        // 查询报告信息
+        String sql = String.format("select id, IF(versions is null or versions = '', Safetyreportid, CONCAT(Safetyreportid, '-', versions)) as report_no from report_value where id in ('%s');", String.join("','", errorMap.keySet()));
+        req.setSqlContent(sql);
+        req.setInstanceName("prod-mysql-pv-ro");
+        req.setDbName("pv");
+        req.setLimitNum("0");
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        // 查询
+        List<Map<String, String>> rows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("id", "report_no"));
+        // 转成报告信息
+        Map<String, String> reportNoMap = Maps.newHashMap();
+        rows.forEach(row -> {
+            String id = row.get("id");
+            String reportNo = row.get("report_no");
+            reportNoMap.put(id, reportNo);
+        });
+        List<String> headers = Lists.newArrayList("报告编号", "错误信息");
+        List<List<String>> table = Lists.newArrayList();
+        // 组装数据
+        errorMap.forEach((reportId, error) -> {
+            if (!StringUtils.equals(error, "查询失败")) {
+                table.add(Lists.newArrayList(reportNoMap.get(reportId), error));
+            }
+        });
+        QueryDBHelper.exportExcel2(headers, table, "报告校验信息");
+    }
 
 
     @ApiOperation("导出线上数据到本地,传入搜索条件")
@@ -1237,6 +1785,85 @@ public class TestController {
         //instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_middle_data", v -> Lists.newArrayList()).add("item_class");
         // instanceDbTablesMap.computeIfAbsent("prod-mysql-pvscommon-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_common", v -> Lists.newArrayList()).add("email_template");
         exportDbTables(req, instanceDbTablesMap);
+    }
+
+    @ApiOperation("获取线上所有的表的建表语句")
+    @PostMapping(value = "getAllTables")
+    public void getAllTables(@RequestBody QueryDBReq req) {
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        // 需要处理的数据库
+        Map<String, List<String>> dbMap = Maps.newHashMap();
+        dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all", "gvp_workbench"));
+        // 实例下所有的表和建表语句
+        Map<String, Map<String, Map<String, String>>> instanceCreateTableSqlMap = Maps.newHashMap();
+        dbMap.forEach((instanceName, dbs) -> dbs.forEach(db -> {
+            // 设置实例
+            req.setInstanceName(instanceName);
+            log.info("导出数据库[{}]表结构和数据开始==================================", db);
+            // 设置当前数据库
+            req.setDbName(db);
+            // 设置limit,设置成最大,0现在就是默认的最大
+            req.setLimitNum("0");
+            // 获取数据库下所有的表
+            List<String> dbTables = showAllTables(req);
+            // 输出所有的表的建表语句
+            instanceCreateTableSqlMap.computeIfAbsent(instanceName, v -> Maps.newHashMap())
+                    .computeIfAbsent(db, v -> Maps.newHashMap())
+                    .putAll(dbTables.stream().collect(Collectors.toMap(table -> table, table -> showCreateTableSql(req, table))));
+            log.info("导出数据库[{}]表结构和数据结束==================================", db);
+        }));
+        String tenantId = "4028e4be6ae84aeb016ae84aeb300000";
+        // 判断建表语句里包含租户id的
+        Map<String, Map<String, Map<String, List<String>>>> hasTenantIdTableMap = Maps.newHashMap();
+        List<String> deleteSql = Lists.newArrayList();
+        instanceCreateTableSqlMap.forEach((instanceName, dbTableInfo) -> dbTableInfo.forEach((db, tableInfos) -> tableInfos.forEach((table, createTableSql) -> {
+            if (StringUtils.equals(table, "signal_report_snapshoot")) {
+                // 信号报告表单独处理
+                // 先查询信号
+                String querySignalDetailIdSql = String.format("select id from signal_statistics_detail where tenant_id = '%s';", tenantId);
+                String countSignalDetailIdSql = String.format("select count(1) from signal_statistics_detail where tenant_id = '%s';", tenantId);
+                req.setInstanceName(instanceName);
+                req.setDbName(db);
+                // 查询所有数据
+                List<Map<String, String>> rows = QueryDBHelper.extractColumnValues(getAllData(req, countSignalDetailIdSql, querySignalDetailIdSql), Lists.newArrayList("id"));
+                // 循环处理
+                ListUtils.partition(rows, 200).forEach(part -> {
+                    String ids = part.stream().map(row -> row.get("id")).collect(Collectors.joining("','"));
+                    // 删除SQL
+                    deleteSql.add(String.format("delete from signal_report_snapshoot where signal_statistics_detail_id in ('%s')", ids));
+                });
+            } else {
+                if (StringUtils.contains(createTableSql, "`tenant_id`")) {
+                    req.setInstanceName(instanceName);
+                    req.setDbName(db);
+                    String countSql = String.format("select count(1) from %s where tenant_id = '%s'", table, tenantId);
+                    req.setSqlContent(countSql);
+                    Integer count = countSql(req);
+                    if (count != 0) {
+                        hasTenantIdTableMap.computeIfAbsent(instanceName, v -> Maps.newHashMap())
+                                .computeIfAbsent(db, v -> Maps.newHashMap())
+                                .computeIfAbsent("tenantId", v -> Lists.newArrayList()).add(table);
+                        // 删除SQL
+                        deleteSql.add(String.format("delete from %s.%s where tenant_id = '%s'", db, table, tenantId));
+                    }
+                } else if (StringUtils.contains(createTableSql, "`company_id`")) {
+                    req.setInstanceName(instanceName);
+                    req.setDbName(db);
+                    String countSql = String.format("select count(1) from %s where company_id = '%s'", table, tenantId);
+                    req.setSqlContent(countSql);
+                    Integer count = countSql(req);
+                    if (count != 0) {
+                        hasTenantIdTableMap.computeIfAbsent(instanceName, v -> Maps.newHashMap())
+                                .computeIfAbsent(db, v -> Maps.newHashMap())
+                                .computeIfAbsent("companyId", v -> Lists.newArrayList()).add(table);
+                        // 删除SQL
+                        deleteSql.add(String.format("delete from %s.%s where company_id = '%s'", db, table, tenantId));
+                    }
+                }
+            }
+        })));
+        System.out.println();
     }
 
     @ApiOperation("导出线上表结构和数据,所有的")
@@ -1634,6 +2261,35 @@ public class TestController {
     }
 
     @SneakyThrows
+    @ApiOperation("读取excel获取文件")
+    @PostMapping(value = "readExcelAndDownloadProdFiles")
+    public void readExcelAndDownloadProdFiles() {
+        //
+        ExcelData excelData = ExcelDataHelper.readExcelData(new FileInputStream("C:\\Users\\shunjian.hu\\Desktop\\下载文件\\复旦张江原始资料.xls"));
+        //
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+        //
+        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\excel_download";
+        // 创建目录
+        mkdir(baseFolderPath);
+        //
+        Map<String, List<Map<String, String>>> fileNameGroup = rows.stream().collect(Collectors.groupingBy(row -> row.get("FileName")));
+        fileNameGroup.forEach((fileName, fileRows) -> {
+            fileRows.sort(Comparator.comparing(row -> row.get("CreateTime")));
+            int i = fileName.lastIndexOf(".");
+            String substring = fileName.substring(0, i);
+            String substring1 = fileName.substring(i + 1);
+            for (int i1 = 0; i1 < fileRows.size(); i1++) {
+                Map<String, String> row = fileRows.get(i1);
+                String finalFileName = String.format("%s(%d).%s", substring, i1 + 1, substring1);
+                String fileId = row.get("ObjectId");
+                QueryDBHelper.download(fileId, finalFileName, restTemplate, baseFolderPath, QueryDBHelper.DOWNLOAD_FILE_COOKIE);
+                log.info("导出进度:[{}-{}],fileId:[{}],fileName:[{}]", i, rows.size(), fileId, fileName);
+            }
+        });
+    }
+
+    @SneakyThrows
     @ApiOperation("下载线上文件")
     @PostMapping(value = "downloadProdFiles")
     public void downloadProdFiles(@RequestBody QueryDBReq req) {
@@ -1651,6 +2307,166 @@ public class TestController {
     @PostMapping(value = "fixProdData")
     public void fixProdData(@RequestBody QueryDBReq req) {
         QueryDBHelper.fixHomePageTaskData(req, restTemplate);
+    }
+
+    @SneakyThrows
+    @ApiOperation("移动文件")
+    @PostMapping(value = "moveFile")
+    public void moveFile() {
+        // 源文件夹路径列表
+        List<String> sourceFolders = Lists.newArrayList(
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\0",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\1",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\2",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\3",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\4",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\5",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\6",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\7"
+        );
+
+        // 目标文件夹路径
+        String targetFolder = "C:\\Users\\shunjian.hu\\Desktop\\export_file\\all";
+        // 移动文件
+        moveFilesConcurrently(sourceFolders, targetFolder);
+        System.out.println("文件移动完成！");
+    }
+
+    public static void moveFilesConcurrently(List<String> sourceFolders, String targetFolder) throws IOException, InterruptedException, ExecutionException {
+        // 确保目标文件夹存在
+        Path targetPath = Paths.get(targetFolder);
+        if (!Files.exists(targetPath)) {
+            Files.createDirectories(targetPath);
+        }
+
+        // 创建线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+
+        CompletionService<Void> completionService = new ExecutorCompletionService<>(executorService);
+
+        for (String sourceFolder : sourceFolders) {
+            Path sourcePath = Paths.get(sourceFolder);
+
+            if (!Files.exists(sourcePath) || !Files.isDirectory(sourcePath)) {
+                System.err.println("源文件夹不存在或不是目录: " + sourceFolder);
+                continue;
+            }
+
+            // 遍历源文件夹中的所有文件和子文件夹
+            Files.walk(sourcePath)
+                    .filter(Files::isRegularFile) // 只处理普通文件
+                    .forEach(file -> {
+                        try {
+                            // 获取文件的相对路径
+                            Path relativePath = sourcePath.relativize(file);
+
+                            // 构造目标文件路径
+                            Path targetFilePath = targetPath.resolve(relativePath);
+
+                            // 提交任务到线程池
+                            completionService.submit(() -> {
+                                try {
+                                    // 确保目标文件的父目录存在
+                                    Files.createDirectories(targetFilePath.getParent());
+
+                                    // 移动文件到目标文件夹
+                                    Files.move(file, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+                                    System.out.println("移动文件: " + file + " -> " + targetFilePath);
+                                } catch (IOException e) {
+                                    System.err.println("移动文件失败: " + file);
+                                    e.printStackTrace();
+                                }
+                                return null;
+                            });
+                        } catch (Exception e) {
+                            System.err.println("准备移动文件时出错: " + file);
+                            e.printStackTrace();
+                        }
+                    });
+        }
+
+        // 等待所有任务完成
+        int totalTasks = sourceFolders.stream().mapToInt(sourceFolder -> {
+            try {
+                return (int) Files.walk(Paths.get(sourceFolder)).filter(Files::isRegularFile).count();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }).sum();
+
+        for (int i = 0; i < totalTasks; i++) {
+            Future<Void> future = completionService.take(); // Wait for a task to complete
+            future.get(); // Check for exceptions
+        }
+
+        // 关闭线程池
+        executorService.shutdown();
+    }
+
+    @SneakyThrows
+    @ApiOperation("诺和诺德导出递交文件")
+    @PostMapping(value = "exportNuoHeSubmitFiles")
+    public void exportNuoHeSubmitFiles(@RequestBody QueryDBReq req) {
+        req.setInstanceName("prod-mysql-pv-ro");
+        req.setDbName("pv");
+        req.setLimitNum("0");
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        req.setDownloadFileCookie(QueryDBHelper.DOWNLOAD_FILE_COOKIE);
+        long start = System.currentTimeMillis();
+        // 查询数据
+        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-04-21 10:00:00' order by t.update_time asc";
+        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-04-21 10:00:00' order by t.update_time asc;";
+        Pair<List<List<String>>, List<List<String>>> result = getPageData(req, countSql, querySql);
+        // 导出数据
+        List<List<String>> data = result.getValue();
+        log.info("导出总条数:[{}]", data.size());
+        // 数据按照报告编号和接收方,取最后一个
+        Map<String, List<String>> reportSenderRowMap = data.stream().collect(Collectors.toMap(row -> String.format("%s-%s", row.get(2), row.get(3)), row -> row, (o, n) -> n));
+        data = Lists.newArrayList(reportSenderRowMap.values());
+        log.info("根据报告和发送者信息去重后总条数:[{}]", data.size());
+        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\export_file";
+        // 创建目录
+        mkdir(baseFolderPath);
+        // 10000个一个文件夹
+        List<List<List<String>>> partition = ListUtils.partition(data, 10000);
+        for (int a = 5; a < partition.size(); a++) {
+            List<List<String>> part = partition.get(a);
+            // 创建文件夹
+            String partFolderPath = baseFolderPath + "\\" + a;
+            mkdir(partFolderPath);
+            // 循环处理数据
+            for (int i = 0; i < part.size(); i++) {
+                List<String> row = part.get(i);
+                String ackFileId = row.get(0);
+                String xmlFileId = row.get(1);
+                String reportNo = row.get(2);
+                String sender = row.get(3);
+                String receiver;
+                switch (sender) {
+                    case "NOVOPRODAS2":
+                        receiver = "CDE";
+                        break;
+                    case "novo5899":
+                        receiver = "CDR";
+                        break;
+                    default:
+                        receiver = sender;
+                        log.info("发送文件id:[{}]出现其他情况", xmlFileId);
+                        break;
+                }
+                // 导出递交的xml文件
+                QueryDBHelper.download(xmlFileId, String.format("%s-%s.xml", reportNo, receiver), restTemplate, partFolderPath, req.getDownloadFileCookie());
+                // 导出收到的ack文件
+                QueryDBHelper.download(ackFileId, String.format("%s-%sack.xml", reportNo, receiver), restTemplate, partFolderPath, req.getDownloadFileCookie());
+                log.info("导出进度:[{}-{}]", i, part.size());
+                System.out.println();
+            }
+            Thread.sleep(10000);
+            log.info("分文件夹处理进度:[{}-{}]", a, partition.size());
+        }
+        log.info("总耗时:[{}]", System.currentTimeMillis() - start);
     }
 
     @SneakyThrows
@@ -1910,6 +2726,29 @@ public class TestController {
         return Pair.of(headers, allData);
     }
 
+    private D getAllData(QueryDBReq req, String countSql, String querySql) {
+        req.setSqlContent(countSql);
+        Integer count = countSql(req);
+        log.info("总数:[{}]", count);
+        // 总页数
+        int totalPage = totalPage(count, 5000);
+        // 所有数据
+        List<List<String>> allData = Lists.newArrayList();
+        // 页数据
+        D pageData = null;
+        // 分页查询
+        for (int i = 0; i < totalPage; i++) {
+            log.info("分页进度:[{}-{}]", i, totalPage);
+            // 当前页数据
+            pageData = findPageDate(req, querySql, i * 5000, 5000);
+            // 追加行数据
+            allData.addAll(pageData.getData().getRows().stream().map(Lists::newArrayList).collect(Collectors.toList()));
+        }
+        D res = new D();
+        res.setData(new DData(pageData.getData().getColumn_list(), allData));
+        return res;
+    }
+
     private static int totalPage(int totalCount, int pageSize) {
         if (pageSize == 0) {
             return 0;
@@ -1940,6 +2779,148 @@ public class TestController {
 
 
     private static final List<String> errors = Lists.newArrayList();
+
+    @SneakyThrows
+    @ApiOperation("修复租户的Meddra信息")
+    @PostMapping(value = "fixTenantMeddra")
+    public void fixTenantMeddra() {
+        List<String> tenantIds = Lists.newArrayList(
+                "fa0bbb299b0f4c6d82f6a76f0094406d",
+                "59a16a8889a7431382b9a8490057be0f",
+                "PVS64",
+                "37cb9ef0-6347-11e9-b21d-ef616d53ac34",
+                "9137130072755352X1",
+                "2018CQTJ0001",
+                "adb0ac3bf54b4f199de4a6e9006815b0",
+                "561a1ad0-6347-11e9-b21d-ef616d53ac34",
+                "54759290-6347-11e9-b21d-ef616d53ac34",
+                "2018WEM0001",
+                "63a825b0-6348-11e9-b21d-ef616d53ac34",
+                "2018PVS011",
+                "60029d50-6348-11e9-b21d-ef616d53ac34",
+                "42a6b440-6347-11e9-b21d-ef616d53ac34",
+                "55791fe0-6347-11e9-b21d-ef616d53ac34",
+                "YBYE201896",
+                "52fb3220-6348-11e9-b21d-ef616d53ac34",
+                "5088f9a0-6348-11e9-b21d-ef616d53ac34",
+                "f9762c50-6347-11e9-b21d-ef616d53ac34",
+                "26565ce0-6348-11e9-b21d-ef616d53ac34",
+                "574a40f0-6348-11e9-b21d-ef616d53ac34",
+                "d4bdbea0-634c-11e9-b8fa-6fbfe9591074",
+                "cf349410-634a-11e9-b21d-ef616d53ac34",
+                "75f5a9cdab534fb7ae8ea75c00984956",
+                "9fdd2950-6347-11e9-b21d-ef616d53ac34",
+                "8a8181276c335a2d016c5f62dd2e6c2f",
+                "4e36a530-6348-11e9-b21d-ef616d53ac34",
+                "abb4c710-6347-11e9-b21d-ef616d53ac34",
+                "9113000023565800XC",
+                "d65f39a0-634c-11e9-b8fa-6fbfe9591074",
+                "8a8181e07a288e03017a377bc4bc0af4",
+                "8a8181276be11a45016bf38a73ac627d",
+                "fec1c6c0-634b-11e9-b8fa-6fbfe9591074",
+                "91330100609120766P",
+                "8b68c9d3-afe5-4996-a237-83e54ae299bc",
+                "2018HZMS",
+                "91371524706276068X",
+                "eSafety2023031",
+                "cb7f019c508d43a0997ca855006b10c8",
+                "1110",
+                "fd6a35caab9a71c54c9d4727b378ea17",
+                "ed16ea26-16fd-465f-a94d-adf449fec06e",
+                "eSafety20230626",
+                "SHXDHP2018910",
+                "2018SCBLYY",
+                "pv-esae",
+                "cbf6768cf1234a76aa15a807009d6ead",
+                "2018btyy0001"
+        );
+        // 循环租户
+        tenantIds.forEach(tenantId -> {
+            QueryDBReq req = new QueryDBReq();
+            req.setTenantId(tenantId);
+            fixMeddra(req);
+        });
+    }
+
+    @SneakyThrows
+    @ApiOperation("修复Meddra")
+    @PostMapping(value = "fixMeddra")
+    public void fixMeddra(@RequestBody QueryDBReq req) {
+        String tenantId = req.getTenantId();
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        req.setLimitNum("0");
+        req.setInstanceName("prod-mysql-pvcaps-ro");
+        req.setDbName("pvs_report_all");
+        // 需要查询的表
+        List<String> tables = Lists.newArrayList("drug", "drug_dose", "drug_reason");
+        // 查出来的所有数据,每个id在哪个表出现
+        Map<String, List<String>> idTablesMap = Maps.newHashMap();
+        // 循环表查询
+        tables.forEach(table -> {
+            // count
+            String countSql = String.format("select count(1) from %s where tenant_id = '%s' and is_deleted = 0", table, tenantId);
+            // 查询
+            String querySql = String.format("select id from %s where tenant_id = '%s' and is_deleted = 0", table, tenantId);
+            // 分页查数据
+            List<List<String>> rows = getPageData(req, countSql, querySql).getValue();
+            // 提取数据
+            rows.forEach(row -> idTablesMap.computeIfAbsent(row.get(0), v -> Lists.newArrayList()).add(table));
+        });
+        // 移除掉只有一个的
+        idTablesMap.entrySet().removeIf(entry -> entry.getValue().size() == 1);
+        // 在查询这些里面有meddra信息的
+        List<String> needCheckIds = Lists.newArrayList(idTablesMap.keySet());
+        // 所有有meddra信息的itemIds
+        Set<String> hasMeddraItemIds = Sets.newHashSet();
+        // 每200个查询一次
+        ListUtils.partition(needCheckIds, 500).forEach(partIds -> {
+            String getItemIds = String.format("select distinct item_id from meddra_field_info where tenant_id = '%s' and item_id in ('%s')", tenantId, String.join("','", partIds));
+            req.setSqlContent(getItemIds);
+            // 有信息的
+            QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("item_id")).forEach(row -> hasMeddraItemIds.add(row.get("item_id")));
+        });
+        Map<String, String> tableIdReNameMap = Maps.newHashMap();
+        tableIdReNameMap.put("drug_dose", "dose");
+        tableIdReNameMap.put("drug_reason", "reason");
+        List<String> fixSql = Lists.newArrayList();
+        // 查询meddra信息
+        ListUtils.partition(Lists.newArrayList(hasMeddraItemIds), 500).forEach(part -> {
+            String queryMeddraSql = String.format("select * from meddra_field_info where item_id in ('%s')", String.join("','", part));
+            req.setSqlContent(queryMeddraSql);
+            D res = QueryDBHelper.getRes(req, restTemplate);
+            // 提取信息
+            List<Map<String, String>> meddraInfos = QueryDBHelper.extractColumnValues(res, Lists.newArrayList("id", "field_name"));
+            // 循环信息判断
+            meddraInfos.forEach(meddraInfo -> {
+                // 根据字段名称判断
+                String fieldName = meddraInfo.get("field_name");
+                switch (fieldName) {
+                    case "reason":
+                        String newId = meddraInfo.get("id") + "_reason";
+                        // 换掉meddra里的itemId
+                        fixSql.add(String.format("update meddra_field_info set item_id = '%s' where id = '%s'", newId, meddraInfo.get("id")));
+                        break;
+                    case "A":
+                    case "B":
+                    default:
+                        throw new RuntimeException();
+                }
+            });
+        });
+        // 找出所有id有多个的
+        for (Entry<String, List<String>> entry : idTablesMap.entrySet()) {
+            entry.getValue().forEach(table -> {
+                String reName = tableIdReNameMap.get(table);
+                if (StringUtils.isNotBlank(reName)) {
+                    fixSql.add(String.format("update %s set id = '%s_%s' where id = '%s';", table, entry.getKey(), reName, entry.getKey()));
+                }
+            });
+        }
+        System.out.println();
+        // 生成修复SQL
+        exportFixSQLFile(fixSql);
+    }
 
     @SneakyThrows
     @ApiOperation("导出字典项错误的数据")
@@ -2233,9 +3214,8 @@ public class TestController {
     @ApiOperation("读取文件夹下")
     @GetMapping(value = "readFolderExcel")
     public void readFolderExcel() {
-        String folderPath = "C:\\Users\\shunjian.hu\\Desktop\\错误数据";
-        List<List<String>> headers = Lists.newArrayList();
-        List<List<String>> table = Lists.newArrayList();
+        String folderPath = "C:\\Users\\shunjian.hu\\Desktop\\文件";
+        List<ExportInfoDTO> all = Lists.newArrayList();
         try (Stream<Path> stream = Files.walk(Paths.get(folderPath), 1)) {
             for (Path path : stream
                     .filter(Files::isRegularFile)
@@ -2243,16 +3223,49 @@ public class TestController {
                             path.toString().toLowerCase().endsWith(".xlsx")).collect(Collectors.toList())) {
                 // 文件名
                 System.out.println(path.getFileName());
-                ExcelData excelData = readExcelData(folderPath, path.getFileName().toString());
-                headers = excelData.getSheetHeadValues().get("Sheet1").stream().map(Lists::newArrayList).collect(Collectors.toList());
-                table.addAll(excelData.getTable("Sheet1"));
-                System.out.println();
+                String fileName = path.getFileName().toString();
+                // 批号
+                String batchNo = fileName.split("批")[0].replace("第", "");
+                // 总数
+                String total = fileName.split("共")[1];
+                // 读取信息
+                String totalNum;
+                String fileType;
+                if (fileName.endsWith("行数据.xlsx")) {
+                    // 导出数据
+                    totalNum = total.replace("行数据.xlsx", "");
+                    fileType = "导出行数据";
+                } else {
+                    // 报告id
+                    totalNum = total.replace("个报告id.xlsx", "");
+                    fileType = "报告id";
+                }
+                all.add(ExportInfoDTO.builder()
+                        .batchNo(Integer.valueOf(batchNo))
+                        .total(Integer.valueOf(totalNum))
+                        .fileName(fileName)
+                        .fileType(fileType)
+                        .build());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        all.sort(Comparator.comparing(ExportInfoDTO::getBatchNo));
         System.out.println();
-        QueryDBHelper.exportExcel(headers, table, "结果");
+        //QueryDBHelper.exportExcel(headers, table, "结果");
+        all.stream().collect(Collectors.groupingBy(ExportInfoDTO::getBatchNo)).forEach((batchNo, batchNoFiles) -> {
+            if (batchNoFiles.size() != 2) {
+                log.info("批号导出有问题:[{}]", batchNo);
+            }
+            batchNoFiles.forEach(batchNoFile -> {
+                // 读取文件信息
+                ExcelData excelData = readExcelData(folderPath, batchNoFile.getFileName());
+                List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+                if (rows.size() != batchNoFile.getTotal()) {
+                    log.info("批号导出文件有问题:[{}],总数:[{}],实际总数:[{}]", batchNoFile.getFileName(), batchNoFile.getTotal(), rows.size());
+                }
+            });
+        });
     }
 
     @ApiOperation("替换configMap数据")
@@ -2619,6 +3632,24 @@ public class TestController {
         }
 
         return result.toString();
+    }
+
+    @ApiOperation("testNum")
+    @GetMapping(value = "testNum")
+    public void testNum() {
+        String folderPath = "C:\\Users\\shunjian.hu\\Desktop";
+        List<String> fileNames = Lists.newArrayList("Listing.xlsx");
+        Map<String, List<String>> reportNoFileNameMap = Maps.newHashMap();
+        fileNames.forEach(fileName -> {
+            ExcelData excelData = readExcelData(folderPath, fileName);
+            List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+            rows.forEach(row -> reportNoFileNameMap.computeIfAbsent(row.get("报告编号"), v -> Lists.newArrayList()).add(fileName));
+        });
+        reportNoFileNameMap.forEach((reportNo, reportFileNames) -> {
+            if (reportFileNames.size() != fileNames.size()) {
+                System.out.println(reportNo);
+            }
+        });
     }
 
     @ApiOperation("读取Excel数据")

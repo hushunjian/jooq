@@ -35,6 +35,9 @@ public class FieldChekConfigDTO {
     @ApiModelProperty(value = "说明")
     private String describe;
 
+    @ApiModelProperty(value = "说明")
+    private String describeEng;
+
     @ApiModelProperty(value = "配置的字典class")
     private String itemClassId;
 
