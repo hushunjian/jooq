@@ -7,11 +7,10 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.hushunjian.jooq.req.QueryDBReq;
-import com.hushunjian.jooq.req.QueryLogEventReq;
-import com.hushunjian.jooq.req.RefreshReportEsReq;
+import com.hushunjian.jooq.req.*;
 import com.hushunjian.jooq.res.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -43,11 +42,11 @@ import static com.alibaba.excel.EasyExcelFactory.writerSheet;
 @Slf4j
 public class QueryDBHelper {
 
-    public static final String DB_COOKIE = "csrftoken=GEt6qytlkvw2GnI8qZFOnF4fB2ot8Ey8; sessionid=w3qp8y3a7yg5t0bd0h71h232vsn73cvc";
+    public static final String DB_COOKIE = "csrftoken=awdklOstvSgIm9ovq6krPDIzcttONIu8; sessionid=u5l7l7cn4a2dzeeuhs04b9cwadwpkshz";
 
-    public static final String DB_CSRF_TOKEN = "GEt6qytlkvw2GnI8qZFOnF4fB2ot8Ey8";
+    public static final String DB_CSRF_TOKEN = "awdklOstvSgIm9ovq6krPDIzcttONIu8";
 
-    public static final String DOWNLOAD_FILE_COOKIE = "gr_user_id=8065e17c-9fe0-4464-be05-cc8651fce673; b322f7b164f88f10_gr_last_sent_cs1=8a81c08a7965a66b01798247b8c04c33; b322f7b164f88f10_gr_cs1=8a81c08a7965a66b01798247b8c04c33; token=9454171be51b4a31bff9f222b5707c65";
+    public static final String DOWNLOAD_FILE_COOKIE = "token=9b4e7aacbcc14b398723737f5780fe5a";
 
     //public static final String ESAFETY_5_COOKIE = "gr_user_id=8065e17c-9fe0-4464-be05-cc8651fce673; b322f7b164f88f10_gr_last_sent_cs1=8a81c08a7965a66b01798247b8c04c33; b322f7b164f88f10_gr_cs1=8a81c08a7965a66b01798247b8c04c33; Hm_lvt_88897af8840c3689db7cb8c0886b1026=1742551743; acw_tc=0aef82e417472741608807780e0072a6d10e6c312e7a2fa1fb59fafcc48159; token=9b3a912254c04039b92368a5eac0145c";
 
@@ -97,6 +96,17 @@ public class QueryDBHelper {
                         .companyId("6edc1973f7a24c65a305a6db001f52d0")
                         .password("8402965bb392bdab9d96b6428e342103")
                         .cookie("gr_user_id=b490a001-5850-4a2e-9ba4-c0b6fbfc2285; Hm_lvt_88897af8840c3689db7cb8c0886b1026=1745741540,1747290496; 99fe3e6894ec3188_gr_last_sent_cs1=8a8181f07d712e67017d754391ab2002; eSafety5_unblind_warn=true; 99fe3e6894ec3188_gr_cs1=8a8181f07d712e67017d754391ab2002; acw_tc=0a472f8d17512754652872121e0056a247e4acd2ba0c641633b48ac80b4c17; token=4d66b041b47643e4b33bb25c038f0b9e")
+                        .study(false)
+                        .build()
+        );
+
+        study_info.add(
+                UserStudyInfo.builder()
+                        .userName("123")
+                        .userId("8a8181f07d0f0fbc017d12015a0738a0")
+                        .companyId("6edc1973f7a24c65a305a6db001f52d0")
+                        .password("591aa56b9305a8ccbd895e5036ffc939")
+                        .cookie("eSafety5_unblind_warn=true; acw_tc=0a47308217642999660583666ededb2ddc16a931656d102c6d22afcbb89c40; 7f96b84d7942c5921d2c23d03b1f4e59=7f96b84d7942c5921d2c23d03b1f4e59; token=d150c83d773343b884a01f2d2f3e7668")
                         .study(true)
                         .build()
         );
@@ -144,8 +154,20 @@ public class QueryDBHelper {
         headers.add("Cookie", req.getCookie());
         headers.add("Authorization", req.getAuthorization());
         headers.add("Content-Type", "application/json;charset=UTF-8");
-        ResponseEntity<LogEventRes> res = restTemplate.exchange(req.getUrl(), HttpMethod.GET, new HttpEntity<>(headers), LogEventRes.class);
-        return res.getBody();
+        int size = 5;
+        for (int i = 0; i < size; i++) {
+            try {
+                ResponseEntity<LogEventRes> res = restTemplate.exchange(req.getUrl(), HttpMethod.GET, new HttpEntity<>(headers), LogEventRes.class);
+                if (res.getBody() != null && CollectionUtils.isNotEmpty(res.getBody().getQuery())) {
+                    return res.getBody();
+                }
+            } catch (Exception ex) {
+                sleep(2000);
+            }
+            log.info("进行次数查询:[{}-{}]", i, size);
+        }
+        log.info("查询失败URL：[{}]", req.getUrl());
+        return null;
     }
     @SneakyThrows
     public static D getRes(QueryDBReq req, RestTemplate restTemplate) {
@@ -433,6 +455,20 @@ public class QueryDBHelper {
         System.out.println();
     }
 
+
+    public static void test(RestTemplate restTemplate, String cookie, IntakeTemplateDTO intakeTemplateDTO) {
+        // headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", cookie);
+        headers.add("tm-header-tenantid", "esafety-test2");
+        String url = "http://trialos.test.com/api/pvs-report/intake/template?operationKey=INTAKE_AI_WORKFLOW";
+        // 入参
+        HttpEntity<IntakeTemplateDTO> requestEntity = new HttpEntity<>(intakeTemplateDTO, headers);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, ActionResult.class);
+        System.out.println();
+    }
+
     public static Map<String, String> getDbReportCheckError(RestTemplate restTemplate, String cookie, String reportId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cookie", cookie);
@@ -456,6 +492,18 @@ public class QueryDBHelper {
         HttpEntity<List<String>> requestEntity = new HttpEntity<>(reportIds, headers);
         ResponseEntity<Map<String, String>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, String>>() {});
         return response.getBody();
+    }
+
+    public static ActionResult<List<JSONObject>> getV4Report(RestTemplate restTemplate, String cookie, List<String> reportIds) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", cookie);
+        StringBuilder builder = new StringBuilder();
+        reportIds.forEach(reportId -> builder.append("reportIds=").append(reportId).append("&"));
+        //
+        String url = "https://www.trialos.com.cn/api/pv-web/report/list";
+        String finalUrl = String.format("%s?%s", url, builder.substring(0, builder.length() - 1));
+        ResponseEntity<ActionResult<List<JSONObject>>> res = restTemplate.exchange(finalUrl, HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<ActionResult<List<JSONObject>>>() {});
+        return res.getBody();
     }
 
     public static void finishTask(RestTemplate restTemplate) {
@@ -514,7 +562,7 @@ public class QueryDBHelper {
         List<QueryMyStudyTaskRes.MyStudyTaskDetail> data1 = getTaskList(restTemplate, sourceFrom, trainMatrixId).getData();
         data1.forEach(taskDetail -> {
             // 如果这个是完成就跳过 20 已完成  30进行中  10 未开始
-            if (taskDetail.getCompleteStateId() == 20 || taskDetail.getOverdueState() != null) {
+            if (taskDetail.getCompleteStateId() == 20) {
                 // 已完成
             } else {
                 GetTaskDetailInfoRes res = getTaskDetailInfo(restTemplate, GetTaskDetailInfoReq.builder().courseId(taskDetail.getId()).employeeCoursePlanId(taskDetail.getEmployeeCoursePlanId()).build());
@@ -529,7 +577,7 @@ public class QueryDBHelper {
                         studyFileRes = getStudyFiles(restTemplate, taskDetail.getEmployeeCoursePlanId(), "2");
                     }
                     // 筛选出没有完成最小学时的
-                    List<GetFileInfoRes.FileInfo> needLearnFileInfos = studyFileRes.getData().stream().filter(fileInfo -> fileInfo.getLearnedTime() == null || fileInfo.getLearnedTime() < fileInfo.getMinLearningTime()).collect(Collectors.toList());
+                    List<GetFileInfoRes.FileInfo> needLearnFileInfos = studyFileRes.getData().stream().filter(fileInfo -> fileInfo.getLearnedTime() == null || fileInfo.getMinLearningTime() == null || fileInfo.getLearnedTime() < fileInfo.getMinLearningTime()).collect(Collectors.toList());
                     if (CollectionUtils.isEmpty(needLearnFileInfos)) {
                         // 所有的都完成了最小学时,就直接验证密码
                         checkTestPassword(restTemplate, taskDetail.getId(), taskDetail.getEmployeeCoursePlanId());
@@ -537,7 +585,7 @@ public class QueryDBHelper {
                         // 这些在继续学习
                         needLearnFileInfos.forEach(needLearnFileInfo -> {
                             // 根据最小学习时长,分钟为单位 * 60s 换成秒的
-                            int minLearningTime = needLearnFileInfo.getMinLearningTime() * 60;
+                            int minLearningTime = (needLearnFileInfo.getMinLearningTime() == null ? 10 : needLearnFileInfo.getMinLearningTime()) * 60;
                             // 每隔30s调一次,除以30
                             int total = (minLearningTime / 30) + 1;
                             for (int i = 0; i < total; i++) {
@@ -561,6 +609,9 @@ public class QueryDBHelper {
     private static void doAnswer(RestTemplate restTemplate, QueryMyStudyTaskRes.MyStudyTaskDetail taskDetail) {
         // 查询问题
         AnswerInfo answerInfo = loadQuestion(restTemplate, taskDetail.getId(), taskDetail.getEmployeeCoursePlanId());
+        if (answerInfo == null || answerInfo.getData() == null) {
+            return;
+        }
         // 获取结果集
         answerInfo.getData().forEach(answerDetail -> {
             List<String> an = Lists.newArrayList();
@@ -750,6 +801,9 @@ public class QueryDBHelper {
 
 
     public static List<Map<String, String>> extractColumnValues(D res, List<String> extractColumns) {
+        if (res.getData() == null) {
+            return Lists.newArrayList();
+        }
         return extractColumnValues(res.getData().getColumn_list(), res.getData().getRows(), extractColumns);
     }
 
@@ -766,5 +820,77 @@ public class QueryDBHelper {
             rowValues.add(rowValueMap);
         });
         return rowValues;
+    }
+
+    public static List<ApmTraceDetailRes> apmQuery(ApmQueryReq apmQueryReq, RestTemplate restTemplate) {
+        // 先查询总数
+        ApmRes totalApm = getPageApm(apmQueryReq, restTemplate);
+        // 分页大小
+        int pageSize = apmQueryReq.getVariables().getCondition().getPaging().getPageSize();
+        // 算分页
+        int totalPage = totalPage(totalApm.getTraces().getTotal(), pageSize);
+        // 所有数据
+        List<ApmTraceDetailRes> all = Lists.newArrayList();
+        // 循环查询每一页的次数
+        for (int i = 0; i < totalPage; i++) {
+            log.info("查询页数据:[{}-{}]", i, totalPage);
+            // 修改分页
+            apmQueryReq.getVariables().getCondition().getPaging().setPageNum(i + 1);
+            // 查询当前页数据
+            all.addAll(getPageApm(apmQueryReq, restTemplate).getTraces().getData());
+        }
+        return all;
+    }
+
+    public static ApmTraceInfoRes getApmTraceInfo(ApmQueryDetailReq apmQueryDetailReq, RestTemplate restTemplate) {
+        // headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", apmQueryDetailReq.getCookie());
+        String url = "http://apm.taimei.com/graphql";
+        // 入参
+        HttpEntity<ApmQueryDetailReq> requestEntity = new HttpEntity<>(apmQueryDetailReq, headers);
+        int size = 100;
+        for (int i = 0; i < size; i++) {
+            try {
+                ResponseEntity<ActionResult<ApmTraceInfoRes>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<ApmTraceInfoRes>>() {});
+                if (response.getBody().getData() != null && response.getBody().getData().getTrace() != null) {
+                    return response.getBody().getData();
+                }
+            } catch (Exception ex) {
+                sleep(2000);
+            }
+            log.info("进行次数查询:[{}-{}]", i, size);
+        }
+        throw new RuntimeException();
+    }
+
+    private static int totalPage(int totalCount, int pageSize) {
+        if (pageSize == 0) {
+            return 0;
+        } else {
+            return totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+        }
+    }
+
+    private static ApmRes getPageApm(ApmQueryReq apmQueryReq, RestTemplate restTemplate) {
+        // headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", apmQueryReq.getCookie());
+        String url = "http://apm.taimei.com/graphql";
+        // 入参
+        HttpEntity<ApmQueryReq> requestEntity = new HttpEntity<>(apmQueryReq, headers);
+        int size = 100;
+        for (int i = 0; i < size; i++) {
+            try {
+                ResponseEntity<ActionResult<ApmRes>> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<ApmRes>>() {});
+                if (response.getBody().getData() != null && response.getBody().getData().getTraces() != null) {
+                    return response.getBody().getData();
+                }
+            } catch (Exception ex) {
+                sleep(2000);
+            }
+            log.info("进行次数查询:[{}-{}]", i, size);
+        }
+        throw new RuntimeException();
     }
 }

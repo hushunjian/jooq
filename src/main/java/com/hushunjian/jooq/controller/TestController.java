@@ -1,24 +1,21 @@
 package com.hushunjian.jooq.controller;
 
+import com.alibaba.excel.util.DateUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.hushunjian.jooq.dao.SchemaDao;
-import com.hushunjian.jooq.dao.XianShenReportNoDao;
-import com.hushunjian.jooq.generator.tables.records.SchemaFieldRecord;
-import com.hushunjian.jooq.generator.tables.records.SchemaModuleRecord;
-import com.hushunjian.jooq.generator.tables.records.XianShenReportNoRecord;
+import com.hushunjian.jooq.dao.*;
+import com.hushunjian.jooq.generator.tables.records.*;
 import com.hushunjian.jooq.helper.ExcelAnalysisModel;
 import com.hushunjian.jooq.helper.ExcelData;
 import com.hushunjian.jooq.helper.ExcelDataHelper;
 import com.hushunjian.jooq.helper.QueryDBHelper;
-import com.hushunjian.jooq.req.ConfigMapReq;
-import com.hushunjian.jooq.req.QueryDBReq;
-import com.hushunjian.jooq.req.QueryLogEventReq;
+import com.hushunjian.jooq.req.*;
 import com.hushunjian.jooq.res.*;
 import com.hushunjian.jooq.service.fix.XianShenBase;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +28,6 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +42,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.UserPrincipalLookupService;
+import java.nio.file.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
@@ -76,6 +68,21 @@ public class TestController {
 
     @Resource
     private RestTemplate restTemplate;
+
+    @Resource
+    private ApmDao apmDao;
+
+    @Resource
+    private ApmDetailDao apmDetailDao;
+
+    @Resource
+    private ReportDao reportDao;
+
+    @Resource
+    private LineListingDao lineListingDao;
+
+    @Resource
+    private DictionaryDao dictionaryDao;
 
     private static final List<String> v4_services = Lists.newArrayList("esae-template-service");
 
@@ -124,6 +131,11 @@ public class TestController {
     private static final Map<String, Map<String, Pair<String, String>>> V4_V5_REPLACE_PART_VALUE_MAP = Maps.newHashMap();
 
     private static final List<String> ignoreKeys = Lists.newArrayList();
+
+    private static final String apm_query_list_str = "query queryTraces($condition: TraceQueryCondition) {\n  traces: queryBasicTraces(condition: $condition) {\n    data: traces {\n      key: segmentId\n      endpointNames\n      duration\n      start\n      isError\n      traceIds\n    }\n    total\n  }}";
+
+    private static final String apm_query_detail_str = "query queryTraceFast($traceId: ID!, $queryDuration: Duration!) {\n  trace: queryTraceFast(traceId: $traceId, queryDuration: $queryDuration) {\n    spans {\n      traceId\n      segmentId\n      spanId\n      parentSpanId\n      refs {\n        traceId\n        parentSegmentId\n        parentSpanId\n        type\n      }\n      serviceCode\n      startTime\n      endTime\n      endpointName\n      type\n      peer\n      component\n      isError\n      layer\n      tags {\n        key\n        value\n      }\n      logs {\n        time\n        data {\n          key\n          value\n        }\n      }\n    }\n  }\n  }";
+
     static {
         // 全部替换的
         REPLACE_VALUE_MAP.put("spring.redis.host", "spring.redis.host=192.168.132.57");
@@ -199,6 +211,172 @@ public class TestController {
         return lines;
     }
 
+
+
+    @SneakyThrows
+    @ApiOperation("getProdMeddraAndWhoDrugVersion")
+    @PostMapping(value = "getProdMeddraAndWhoDrugVersion")
+    public void getProdMeddraAndWhoDrugVersion(@RequestBody QueryDBReq req) {
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        req.setLimitNum("0");
+        req.setInstanceName("prod-mysql-pvcaps-ro");
+        req.setDbName("pvs_report_all");
+        // 租户,编码版本数据
+        Map<String, Map<String, Set<String>>> prodTenantMeddraAndWhoDrugVersionsMap = Maps.newHashMap();
+        // 查询meddra版本数据
+        String queryMeddraVersionSql = "select tenant_id, meddra_version from meddra_field_info where tenant_id is not null  group by tenant_id, meddra_version;";
+        req.setSqlContent(queryMeddraVersionSql);
+        // 查询
+        List<Map<String, String>> tenantMeddraVersions = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("tenant_id", "meddra_version"));
+        // 循环填充租户信息
+        tenantMeddraVersions.forEach(row -> {
+            String tenantId = row.get("tenant_id");
+            String meddraVersion = row.get("meddra_version");
+            if (StringUtils.isNotBlank(meddraVersion)) {
+                prodTenantMeddraAndWhoDrugVersionsMap.computeIfAbsent(tenantId, v -> Maps.newHashMap()).computeIfAbsent("meddra", v -> Sets.newHashSet()).add(meddraVersion);
+            }
+        });
+        // 查询whoDrug版本数据
+        String queryWhoDrugVersionSql = "select tenant_id, dictionary_version, dictionary_type, dictionary_format from whodrug_field_info where tenant_id is not null group by tenant_id, dictionary_version, dictionary_type, dictionary_format;";
+        req.setSqlContent(queryWhoDrugVersionSql);
+        // 查询
+        List<Map<String, String>> tenantWhoDrugs = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("tenant_id", "dictionary_version", "dictionary_type", "dictionary_format"));
+        // 循环填充租户信息
+        tenantWhoDrugs.forEach(row -> {
+            String tenantId = row.get("tenant_id");
+            String dictionaryVersion = row.get("dictionary_version");
+            String dictionaryType = row.get("dictionary_type");
+            String dictionaryFormat = row.get("dictionary_format");
+            if (StringUtils.isNotBlank(dictionaryVersion)) {
+                prodTenantMeddraAndWhoDrugVersionsMap.computeIfAbsent(tenantId, v -> Maps.newHashMap()).computeIfAbsent("whoDrug", v -> Sets.newHashSet()).add(String.format("%s|%s|%s", dictionaryVersion, dictionaryType, dictionaryFormat));
+            }
+        });
+        // MCS授权信息
+        Map<String, Map<String, Set<String>>> prodMcsAuthTenantMeddraAndWhoDrugVersionsMap = Maps.newHashMap();
+        // 读取excel数据
+        ExcelData excelData = readExcelData("授权数据.xlsx");
+        // Sheet2的数据
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet2");
+        // 循环提取信息
+        rows.forEach(row -> {
+            String tenantId = row.get("authed_id");
+            String dictionaryFormat = row.get("dictionary_format");
+            String dictionaryVersion = row.get("dictionary_version");
+            String dictionaryType = row.get("dictionary_type");
+            if (StringUtils.isNotBlank(dictionaryFormat)) {
+                // whoDrug
+                dictionaryVersion = String.format("%s|%s|%s", dictionaryVersion, dictionaryType, dictionaryFormat);
+            } else {
+                // meddra
+                if (!dictionaryVersion.contains(".")) {
+                    // 没有小数位
+                    dictionaryVersion = dictionaryVersion + ".0";
+                }
+            }
+            prodMcsAuthTenantMeddraAndWhoDrugVersionsMap.computeIfAbsent(tenantId, v -> Maps.newHashMap())
+                    .computeIfAbsent(StringUtils.isBlank(dictionaryFormat) ? "meddra" : "whoDrug",  v -> Sets.newHashSet()).add(dictionaryVersion);
+        });
+        // 开始比对数据
+        System.out.println();
+        List<List<String>> missAuthInfos = Lists.newArrayList();
+        // 循环线上租户数据
+        prodTenantMeddraAndWhoDrugVersionsMap.forEach((tenantId, meddraAndWhoDrugVersionsMap) -> meddraAndWhoDrugVersionsMap.forEach((meddraOrWhoDrugType, versions) -> {
+            // 从mcs授权里找信息
+            Set<String> authVersions = prodMcsAuthTenantMeddraAndWhoDrugVersionsMap.getOrDefault(tenantId, Maps.newHashMap()).getOrDefault(meddraOrWhoDrugType, Sets.newHashSet());
+            // 循环租户有数据的,判断授权里是否有
+            versions.forEach(version -> {
+                if (!authVersions.contains(version)) {
+                    log.info("租户:[{}],类型:[{}],缺少版本:[{}]授权", tenantId, meddraOrWhoDrugType, version);
+                    missAuthInfos.add(Lists.newArrayList(tenantId, meddraOrWhoDrugType, version));
+                }
+            });
+        }));
+        // 导出excel
+        QueryDBHelper.exportExcel2(Lists.newArrayList("租户id", "版本类型", "版本"), missAuthInfos, "租户缺少授权信息");
+        System.out.println();
+    }
+
+    @ApiOperation("dictionarySort")
+    @PostMapping(value = "dictionarySort")
+    private void dictionarySort(@RequestBody Map<String, List<DictionaryDTO>> inputDictionaryMap) {
+        List<DictionaryEntryRecord> dictionaryEntryRecords = dictionaryDao.findSystem();
+        // 按照字典分组
+        Map<String, List<DictionaryEntryRecord>> dbDictionaryMap = dictionaryEntryRecords.stream().collect(Collectors.groupingBy(DictionaryEntryRecord::getDictionaryId));
+        // 调整排序SQL
+        List<String> fixSql = Lists.newArrayList();
+        // 循环输入的
+        inputDictionaryMap.forEach((dictionaryId, inputDictionaries) -> {
+            if (dictionaryId.startsWith("APP_") || StringUtils.equalsAny(dictionaryId,
+                    "819e258a-03ee-11ec-ad65-0050568ea815", "4028c09b88af2a940188af2a948c0000", "d18e012f-03fb-11ec-ad65-0050568ea815")) {
+                return;
+            }
+            // 获取数据库的
+            List<DictionaryEntryRecord> dbDictionaryEntries = dbDictionaryMap.get(dictionaryId);
+            // 输入的字典顺序
+            List<String> inputDictionaryEntries = inputDictionaries.stream().map(DictionaryDTO::getUniqueCode).collect(Collectors.toList());
+            if (CollectionUtils.isEmpty(dbDictionaryEntries)) {
+                log.info("问题字典:[{}],字典不存在", dictionaryId);
+                return;
+            }
+            // 判断长度
+            if (dbDictionaryEntries.size() != inputDictionaryEntries.size()) {
+                log.info("问题字典:[{}],长度不一致", dictionaryId);
+                return;
+            }
+            // 重新调整顺序
+            dbDictionaryEntries.sort((o1, o2) -> {
+                int idx1 = inputDictionaryEntries.indexOf(o1.getUniqueCode());
+                int idx2 = inputDictionaryEntries.indexOf(o2.getUniqueCode());
+                return Integer.compare(idx1, idx2);
+            });
+            // 调整顺序
+            AtomicInteger atomicInteger = new AtomicInteger(10);
+            dbDictionaryEntries.forEach(entry -> {
+                Integer oldSortIndex = entry.getSortIndex();
+                int newSortIndex = atomicInteger.getAndAdd(10);
+                log.info("字典[{}]调整顺序:[{}=>{}]", entry.getId(), oldSortIndex, newSortIndex);
+                fixSql.add(String.format("update dictionary_entry set sort_index = %d where id = '%s';", newSortIndex, entry.getId()));
+            });
+            //
+            List<String> dbUniqueCodes = dbDictionaryEntries.stream().map(DictionaryEntryRecord::getUniqueCode).collect(Collectors.toList());
+            System.out.println();
+        });
+        System.out.println();
+        // 导出修复SQL
+        exportFixSQLFile(fixSql);
+    }
+
+    @ApiOperation("lineListingProcess")
+    @PostMapping(value = "lineListingProcess")
+    private void lineListingProcess() {
+        List<LineListingMappingRecord> all = lineListingDao.findAll();
+        // 移除掉字段code是空的
+        all.removeIf(field -> StringUtils.isBlank(field.getFieldUniqueCode()));
+        // 循环字段配置,处理更新
+        all.removeIf(field -> {
+            // 获取最后一个字段
+            String fieldKey = field.getFieldUniqueCode().substring(field.getFieldUniqueCode().lastIndexOf(".") + 1);
+            if (StringUtils.equalsAny(fieldKey, "lltName", "ptName", "hltName", "hlgtName", "socName")) {
+                String fieldUniqueCode = field.getFieldUniqueCode().replace(fieldKey, String.format("zh_CN|%s", fieldKey));
+                log.info("配置:[{}]从[{}]更新成[{}]", field.getId(), field.getFieldUniqueCode(), fieldUniqueCode);
+                // 中文meddraName
+                field.setFieldUniqueCode(fieldUniqueCode);
+                return false;
+            } else if (StringUtils.equalsAny(fieldKey, "lltNameEn", "ptNameEn", "hltNameEn", "hlgtNameEn", "socNameEn")) {
+                String fieldUniqueCode = field.getFieldUniqueCode().replace(fieldKey, String.format("en_US|%s", fieldKey.replace("En", "")));
+                log.info("配置:[{}]从[{}]更新成[{}]", field.getId(), field.getFieldUniqueCode(), fieldUniqueCode);
+                // 英文meddraName
+                field.setFieldUniqueCode(fieldUniqueCode);
+                return false;
+            } else {
+                return true;
+            }
+        });
+        // 批量更新
+        lineListingDao.batchUpdate(all);
+    }
+
     @SneakyThrows
     @ApiOperation("genFixSql")
     @PostMapping(value = "genFixSql")
@@ -216,6 +394,56 @@ public class TestController {
         });
         //
         exportFixSQLFile(fixSql);
+    }
+
+    @SneakyThrows
+    @ApiOperation("genValidException")
+    @PostMapping(value = "genValidException")
+    public void genValidException() {
+        // 读取excel
+        ExcelData excelData = readExcelData("data elements需求(1)(1).xlsx");
+        //
+        System.out.println();
+        // 处理行记录
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+        // 不需要校验的
+        List<String> unCheckFields = Lists.newArrayList();
+        // 需要校验的
+        List<String> checkFields = Lists.newArrayList();
+        // 异常信息
+        List<String> errorInfos = Lists.newArrayList();
+        // 循环处理
+        rows.forEach(row -> {
+            // 校验类型
+            String checkTypeStr = row.get("实现逻辑");
+            // 校验字段
+            String checkField = row.get("数据项目（R3）");
+            if (StringUtils.isBlank(checkTypeStr)) {
+                // 不需要处理的
+                unCheckFields.add(checkField);
+            } else {
+                // 校验字段转下划线
+                String finalCheckField = checkField.replaceAll("\\.", "_").toUpperCase();
+                // 需要校验的
+                if (checkTypeStr.contains("必填校验")) {
+                    String fieldCheckInfo = String.format("PMDA_%s_MUST_NOT_BLANK", finalCheckField);
+                    // 必填校验
+                    checkFields.add(String.format("%s(%s_ERROR, \"\", \"\", \"\", \"%s\"),", fieldCheckInfo, fieldCheckInfo, checkField));
+                    errorInfos.add(String.format("public static final ErrorInfo %s_ERROR = new ErrorInfo(\"%s_ERROR\", \"%s不可为空\");", fieldCheckInfo, fieldCheckInfo, checkField));
+                }
+                if (checkTypeStr.contains("必须为空校验")) {
+                    String fieldCheckInfo = String.format("PMDA_%s_MUST_BLANK", finalCheckField);
+                    // 必须为空校验
+                    checkFields.add(String.format("%s(%s_ERROR, \"\", \"\", \"\", \"%s\"),", fieldCheckInfo, fieldCheckInfo, checkField));
+                    errorInfos.add(String.format("public static final ErrorInfo %s_ERROR = new ErrorInfo(\"%s_ERROR\", \"%s必须为空\");", fieldCheckInfo, fieldCheckInfo, checkField));
+                }
+            }
+        });
+        System.out.println();
+        // 输出
+        errorInfos.forEach(System.out::println);
+        System.out.println();
+        checkFields.forEach(System.out::println);
     }
 
     @SneakyThrows
@@ -611,16 +839,16 @@ public class TestController {
     @GetMapping(value = "readConfigMapFile")
     public void readConfigMapFile(@RequestParam String filePath) {
         List<String> projects = Lists.newArrayList();
-        //projects.add("D:\\project\\service\\pvs-report\\pvs-report-pipeline\\config");
-        //projects.add("D:\\project\\service\\pvs-report\\pvs-report-service\\config");
-        //projects.add("D:\\project\\service\\pvs-report\\pvs-report-convert\\config");
-        projects.add(filePath);
+        projects.add("D:\\project\\service\\pvs-report\\pvs-report-pipeline\\config");
+        projects.add("D:\\project\\service\\pvs-report\\pvs-report-service\\config");
+        projects.add("D:\\project\\service\\pvs-report\\pvs-report-convert\\config");
+        //projects.add(filePath);
         projects.forEach(project -> {
             log.info("项目:[{}]对比=============================开始", project);
             // 读取prod配置信息
             Properties prodProperties = readProperties(String.format("%s\\%s", project, "prod.properties"));
             // 读取qilu配置信息
-            Properties qiluProperties = readProperties(String.format("%s\\%s", project, "qilu-local.properties"));
+            Properties qiluProperties = readProperties(String.format("%s\\%s", project, "cttq-local.properties"));
             // 比对线上有的,本地没有的
             log.info("比对线上有的,本地没有的============================开始");
             compare(prodProperties, qiluProperties);
@@ -1524,6 +1752,168 @@ public class TestController {
         QueryDBHelper.exportExcel2(headers, table, "报告校验信息");
     }
 
+    @ApiOperation("获取跟权限有关的SQL")
+    @GetMapping(value = "reportAuthSql")
+    public void reportAuthSql() {
+        Map<String, List<Pair<String, String>>> urlSqlMap = Maps.newHashMap();
+        // 查询所有
+        List<ApmRecord> apmRecords = apmDao.findAll();
+        // 循环处理
+        apmRecords.stream()
+                .filter(apmRecord -> StringUtils.equals(apmRecord.getId(), "28980025-9646-426a-9171-2ad0ce33bbd1"))
+                .filter(apmRecord -> StringUtils.containsAny(apmRecord.getActualUrl(), "/rawdata/page", "/submitTask/submitReports")).forEach(apmRecord -> {
+            // 生成SQL
+            genReportAuthSqlMap(apmRecord, urlSqlMap);
+        });
+        System.out.println();
+        // 生成excel
+        List<List<String>> table = Lists.newArrayList();
+        // 循环map
+        urlSqlMap.forEach((url, sqlMappings) -> sqlMappings.forEach(sqlMapping -> table.add(Lists.newArrayList(url, sqlMapping.getKey(), sqlMapping.getValue()))));
+        // 表头
+        List<String> headers = Lists.newArrayList("接口", "原始SQL", "替换后SQL");
+        // 生成excel
+        //QueryDBHelper.exportExcel2(headers, table, "待执行SQL");
+    }
+
+    private void genReportAuthSqlMap(ApmRecord apmRecord, Map<String, List<Pair<String, String>>> urlSqlMap) {
+        // 查询详情
+        List<ApmDetailRecord> details = apmDetailDao.findByApmId(apmRecord.getId());
+        // 找跟权限有关的
+        List<ApmDetailRecord> authDetails = details.stream().filter(detail -> detail.getTags().toString().contains("LEFT JOIN drug")).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(authDetails)) {
+            return;
+        }
+        // 处理权限SQL
+        authDetails.forEach(authDetail -> {
+            List<ApmTraceDetailInfoSpanTagRes> tags = JSONArray.parseArray(authDetail.getTags().toString(), ApmTraceDetailInfoSpanTagRes.class);
+            // 取SQL
+            String sql = tags.get(2).getValue();
+            // 取SQL值
+            ApmTraceDetailInfoSpanTagRes paramTag = tags.get(3);
+            // 参数信息
+            List<String> params = Lists.newArrayList(paramTag.getValue().substring(1, paramTag.getValue().length() - 1).split(","));
+            // 循环参数
+            for (int i = 0; i < params.size(); i++) {
+                String param = String.format("'%s'", params.get(i));
+                if (i == 1 && StringUtils.equals(apmRecord.getActualUrl(), "/rawdata/page")) {
+                    param = params.get(i);
+                }
+                if (i == params.size() - 1 && StringUtils.equals(apmRecord.getActualUrl(), "/submitTask/submitReports") && !sql.contains("table_count")) {
+                    param = params.get(i);
+                }
+                sql = sql.replaceFirst("\\?", param);
+            }
+            System.out.println();
+            String newAuthSql = "";
+            if (StringUtils.equals(apmRecord.getActualUrl(), "/rawdata/page")) {
+                newAuthSql = sql.replaceFirst(
+                        "LEFT JOIN report_project rap ON rap.report_id = raw.report_id AND rap.is_deleted = 0 AND rap.project_id IS NOT NULL AND rap.project_id != '' LEFT JOIN drug rad ON rad.report_id = raw.report_id AND rad.is_deleted = 0 AND rad.psur_drug_id IS NOT NULL AND rad.psur_drug_id != '' AND rad.company_drug_product = '3464e6b0-358a-4ef5-911c-c2b7cd438ae0'",
+                        "LEFT JOIN report_auth reportAuth ON raw.report_id = reportAuth.report_id")
+                        .replaceAll("rap.", "reportAuth.")
+                        .replaceAll("rad.", "reportAuth.");
+            } else if (StringUtils.equals(apmRecord.getActualUrl(), "/submitTask/submitReports")) {
+                newAuthSql = sql.replaceFirst(
+                        "LEFT JOIN drug AS t2 ON t2.report_id = t1.report_id AND t2.is_deleted = 0 AND t2.psur_drug_id IS NOT NULL AND t2.psur_drug_id != '' AND t2.company_drug_product = '3464e6b0-358a-4ef5-911c-c2b7cd438ae0'",
+                        "LEFT JOIN report_auth reportAuth ON reportAuth.report_id = t1.report_id")
+                        .replaceFirst(
+                                "LEFT JOIN drug as t2 on t2.report_id=t1.report_id and t2.is_deleted = 0 and t2.psur_drug_id is not null and t2.psur_drug_id != '' and t2.company_drug_product='3464e6b0-358a-4ef5-911c-c2b7cd438ae0'",
+                                "LEFT JOIN report_auth reportAuth ON reportAuth.report_id = t1.report_id")
+                        .replace("t2", "reportAuth");
+                System.out.println();
+            }
+            // 查询SQL
+            urlSqlMap.computeIfAbsent(apmRecord.getActualUrl(), v -> Lists.newArrayList()).add(Pair.of(sql, newAuthSql));
+            System.out.println();
+        });
+    }
+
+
+    @ApiOperation("清洗报告权限")
+    @GetMapping(value = "reportAuth")
+    public void reportAuth() {
+        // 查询所有的主语言
+        List<ReportLanguageRecord> reportLanguages = reportDao.findAllReportLanguage();
+        // 循环租户处理
+        reportLanguages.forEach(reportLanguage -> {
+            // 查询数据
+            List<ReportValueRecord> reportValues = reportDao.findTenantReportValues(reportLanguage.getTenantId(), reportLanguage.getLanguage());
+            // 循环报告处理
+            reportValues.forEach(reportValue -> {
+                // 查询项目
+                List<ReportProjectRecord> reportProjects = reportDao.findReportProjectByReportId(reportValue.getId());
+                // 未删除的,项目id不为空的
+                Optional<ReportProjectRecord> any = reportProjects.stream().filter(reportProject -> StringUtils.isNotBlank(reportProject.getProjectId()) && reportProject.getIsDeleted() == 0).findAny();
+                // 查询产品
+                List<DrugRecord> drugs = reportDao.findDrugByReportId(reportValue.getId());
+                // 未删除的,psurDrugId不为空的,本公司的
+                List<DrugRecord> authDrugs = drugs.stream().filter(drug -> drug.getIsDeleted() == 0 && StringUtils.isNotBlank(drug.getPsurDrugId()) && StringUtils.equals(drug.getCompanyDrugProduct(), "3464e6b0-358a-4ef5-911c-c2b7cd438ae0")).collect(Collectors.toList());
+                // 报告权限数据
+                List<ReportAuthRecord> reportAuthRecords = Lists.newArrayList();
+                // 有符合的产品
+                if (CollectionUtils.isNotEmpty(authDrugs)) {
+                    authDrugs.forEach(drug -> {
+                        ReportAuthRecord reportAuthRecord = defaultReportAuthRecord(reportValue);
+                        reportAuthRecord.setPsurDrugId(drug.getPsurDrugId());
+                        reportAuthRecords.add(reportAuthRecord);
+                    });
+                }
+                // 有项目
+                if (any.isPresent()) {
+                    // 判断是否有权限数据
+                    if (CollectionUtils.isNotEmpty(reportAuthRecords)) {
+                        // 循环填充项目id
+                        reportAuthRecords.forEach(reportAuthRecord -> reportAuthRecord.setProjectId(any.get().getProjectId()));
+                    } else {
+                        // 没有的,说明只有项目
+                        ReportAuthRecord reportAuthRecord = defaultReportAuthRecord(reportValue);
+                        reportAuthRecord.setProjectId(any.get().getProjectId());
+                        reportAuthRecords.add(reportAuthRecord);
+                    }
+                }
+                // 保存
+                if (CollectionUtils.isNotEmpty(reportAuthRecords)) {
+                    reportDao.batchReportAuthInsert(reportAuthRecords);
+                } else {
+                    log.info("报告：[{}]没有产品，没有项目", reportValue.getId());
+                }
+            });
+        });
+    }
+
+    private ReportAuthRecord defaultReportAuthRecord(ReportValueRecord reportValueRecord) {
+        ReportAuthRecord reportAuthRecord = new ReportAuthRecord();
+        reportAuthRecord.setId(UUID.randomUUID().toString());
+        reportAuthRecord.setReportId(reportValueRecord.getId());
+        reportAuthRecord.setTenantId(reportValueRecord.getTenantId());
+        return reportAuthRecord;
+    }
+
+    @ApiOperation("过期接口检查")
+    @PostMapping(value = "deprecatedApiCheck")
+    public void deprecatedApiCheck(@RequestBody Map<String, Map<String, ApiInfo>> req) {
+        System.out.println();
+        // 标记过期的注解
+        List<String> deprecatedApis = Lists.newArrayList();
+        req.forEach((url, urlInfoMap) -> urlInfoMap.forEach((method, urlMethodConfig) -> {
+            if (BooleanUtils.isTrue(urlMethodConfig.getDeprecated())) {
+                deprecatedApis.add(url);
+            }
+        }));
+        // 读取文件
+        ExcelData excelData = readExcelData("notDeprecateApis.xlsx");
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+        // 文件里的没有打标签的
+        List<String> inputNotDeprecatedApis = Lists.newArrayList();
+        rows.forEach(row -> inputNotDeprecatedApis.add(row.get("sourceName")));
+        // 比较
+        deprecatedApis.forEach(deprecatedApi -> {
+            if (inputNotDeprecatedApis.contains(deprecatedApi)) {
+                System.out.println("错误标记|" + deprecatedApi);
+            }
+        });
+    }
+
 
     @ApiOperation("导出线上数据到本地,传入搜索条件")
     @PostMapping(value = "test3")
@@ -1790,8 +2180,8 @@ public class TestController {
     @ApiOperation("获取线上所有的表的建表语句")
     @PostMapping(value = "getAllTables")
     public void getAllTables(@RequestBody QueryDBReq req) {
-        req.setCookie(QueryDBHelper.DB_COOKIE);
-        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        //req.setCookie(QueryDBHelper.DB_COOKIE);
+        //req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
         // 需要处理的数据库
         Map<String, List<String>> dbMap = Maps.newHashMap();
         dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all", "gvp_workbench"));
@@ -1813,7 +2203,8 @@ public class TestController {
                     .putAll(dbTables.stream().collect(Collectors.toMap(table -> table, table -> showCreateTableSql(req, table))));
             log.info("导出数据库[{}]表结构和数据结束==================================", db);
         }));
-        String tenantId = "4028e4be6ae84aeb016ae84aeb300000";
+        //String tenantId = "4028e4be6ae84aeb016ae84aeb300000";
+        String tenantId = "eSafety20250814_TEST";
         // 判断建表语句里包含租户id的
         Map<String, Map<String, Map<String, List<String>>>> hasTenantIdTableMap = Maps.newHashMap();
         List<String> deleteSql = Lists.newArrayList();
@@ -2315,14 +2706,17 @@ public class TestController {
     public void moveFile() {
         // 源文件夹路径列表
         List<String> sourceFolders = Lists.newArrayList(
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\0",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\1",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\2",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\3",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\4",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\5",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\6",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\7"
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_1",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_2",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_3",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_4",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_5",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_6",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_7",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_8",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_9",
+                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_10"
+
         );
 
         // 目标文件夹路径
@@ -2330,6 +2724,29 @@ public class TestController {
         // 移动文件
         moveFilesConcurrently(sourceFolders, targetFolder);
         System.out.println("文件移动完成！");
+    }
+
+    @SneakyThrows
+    @ApiOperation("自动合并batch文件夹")
+    @PostMapping(value = "mergeBatchFolders")
+    public void mergeBatchFolders() {
+        String basePath = "D:\\export\\export_file";
+        String targetFolder = "D:\\export\\export_file\\merged";
+        
+        // 自动扫描以batch_开头的文件夹
+        List<String> batchFolders = scanBatchFolders(basePath);
+        
+        if (batchFolders.isEmpty()) {
+            System.out.println("未找到任何batch_开头的文件夹");
+            return;
+        }
+        
+        System.out.println("找到 " + batchFolders.size() + " 个batch文件夹:");
+        batchFolders.forEach(System.out::println);
+        
+        // 合并文件夹内容
+        mergeBatchFoldersWithStructure(batchFolders, targetFolder);
+        System.out.println("batch文件夹合并完成！");
     }
 
     public static void moveFilesConcurrently(List<String> sourceFolders, String targetFolder) throws IOException, InterruptedException, ExecutionException {
@@ -2404,6 +2821,273 @@ public class TestController {
         executorService.shutdown();
     }
 
+    /**
+     * 扫描指定路径下所有以batch_开头的文件夹
+     */
+    public static List<String> scanBatchFolders(String basePath) throws IOException {
+        List<String> batchFolders = new ArrayList<>();
+        Path basePathObj = Paths.get(basePath);
+        
+        if (!Files.exists(basePathObj) || !Files.isDirectory(basePathObj)) {
+            System.err.println("基础路径不存在或不是目录: " + basePath);
+            return batchFolders;
+        }
+        
+        // 遍历基础路径，找到所有以batch_开头的目录
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(basePathObj)) {
+            for (Path entry : stream) {
+                if (Files.isDirectory(entry)) {
+                    String folderName = entry.getFileName().toString();
+                    if (folderName.startsWith("batch_")) {
+                        batchFolders.add(entry.toString());
+                    }
+                }
+            }
+        }
+        
+        // 按名称排序
+        batchFolders.sort(String::compareTo);
+        return batchFolders;
+    }
+
+    /**
+     * 合并batch文件夹内容，保留目录结构，相同文件夹自动合并
+     */
+    public static void mergeBatchFoldersWithStructure(List<String> sourceFolders, String targetFolder) 
+            throws IOException, InterruptedException, ExecutionException {
+        
+        // 确保目标文件夹存在
+        Path targetPath = Paths.get(targetFolder);
+        if (!Files.exists(targetPath)) {
+            Files.createDirectories(targetPath);
+        }
+
+        // 创建线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+        CompletionService<Void> completionService = new ExecutorCompletionService<>(executorService);
+        
+        AtomicInteger taskCount = new AtomicInteger(0);
+
+        for (String sourceFolder : sourceFolders) {
+            Path sourcePath = Paths.get(sourceFolder);
+
+            if (!Files.exists(sourcePath) || !Files.isDirectory(sourcePath)) {
+                System.err.println("源文件夹不存在或不是目录: " + sourceFolder);
+                continue;
+            }
+
+            System.out.println("正在处理batch文件夹: " + sourceFolder);
+
+            // 遍历源文件夹中的所有文件和子文件夹
+            Files.walk(sourcePath)
+                    .filter(Files::isRegularFile) // 只处理普通文件
+                    .forEach(file -> {
+                        try {
+                            // 获取文件的相对路径
+                            Path relativePath = sourcePath.relativize(file);
+
+                            // 构造目标文件路径
+                            Path targetFilePath = targetPath.resolve(relativePath);
+
+                            // 提交任务到线程池
+                            completionService.submit(() -> {
+                                try {
+                                    // 确保目标文件的父目录存在
+                                    Files.createDirectories(targetFilePath.getParent());
+
+                                    // 如果目标文件已存在，生成新的文件名避免覆盖
+                                    Path finalTargetPath = targetFilePath;
+                                    if (Files.exists(targetFilePath)) {
+                                        String fileName = targetFilePath.getFileName().toString();
+                                        String nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+                                        String extension = fileName.substring(fileName.lastIndexOf('.'));
+                                        
+                                        int counter = 1;
+                                        do {
+                                            String newFileName = nameWithoutExt + "_" + counter + extension;
+                                            finalTargetPath = targetFilePath.getParent().resolve(newFileName);
+                                            counter++;
+                                        } while (Files.exists(finalTargetPath));
+                                    }
+
+                                    // 移动文件到目标文件夹
+                                    Files.move(file, finalTargetPath, StandardCopyOption.REPLACE_EXISTING);
+                                    System.out.println("移动文件: " + file + " -> " + finalTargetPath);
+                                } catch (IOException e) {
+                                    System.err.println("移动文件失败: " + file);
+                                    e.printStackTrace();
+                                }
+                                return null;
+                            });
+                            taskCount.incrementAndGet();
+                        } catch (Exception e) {
+                            System.err.println("准备移动文件时出错: " + file);
+                            e.printStackTrace();
+                        }
+                    });
+        }
+
+        // 等待所有任务完成
+        int totalTasks = taskCount.get();
+        System.out.println("总计需要处理 " + totalTasks + " 个文件");
+        
+        for (int i = 0; i < totalTasks; i++) {
+            Future<Void> future = completionService.take(); // Wait for a task to complete
+            future.get(); // Check for exceptions
+        }
+
+        // 关闭线程池
+        executorService.shutdown();
+        
+        // 删除空的源文件夹
+        for (String sourceFolder : sourceFolders) {
+            try {
+                deleteEmptyDirectories(Paths.get(sourceFolder));
+            } catch (IOException e) {
+                System.err.println("删除空目录失败: " + sourceFolder);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 递归删除空目录
+     */
+    private static void deleteEmptyDirectories(Path directory) throws IOException {
+        if (!Files.exists(directory) || !Files.isDirectory(directory)) {
+            return;
+        }
+        
+        // 先删除子目录中的空目录
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
+            for (Path entry : stream) {
+                if (Files.isDirectory(entry)) {
+                    deleteEmptyDirectories(entry);
+                }
+            }
+        }
+        
+        // 如果当前目录为空，则删除它
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
+            if (!stream.iterator().hasNext()) {
+                Files.delete(directory);
+                System.out.println("删除空目录: " + directory);
+            }
+        }
+    }
+
+    @SneakyThrows
+    @ApiOperation("读取文件,导出诺和文件")
+    @PostMapping(value = "readExcelAndExportNuoHeSubmitFiles")
+    public void readExcelAndExportNuoHeSubmitFiles(@RequestBody QueryDBReq req) {
+        req.setDownloadFileCookie(QueryDBHelper.DOWNLOAD_FILE_COOKIE);
+        // 读取文件
+        List<List<String>> data = readExcelData("诺和导出数据.xlsx").getTable("Sheet1");
+        log.info("导出总条数:[{}]", data.size());
+        // 数据按照报告编号和接收方,取最后一个
+        Map<String, List<String>> reportSenderRowMap = data.stream().collect(Collectors.toMap(row -> String.format("%s-%s", row.get(2), row.get(3)), row -> row, (o, n) -> n));
+        data = Lists.newArrayList(reportSenderRowMap.values());
+        // 按照报告编号排序
+        data.sort(Comparator.comparing(row -> row.get(2), Comparator.nullsFirst(String::compareTo)));
+        log.info("根据报告和发送者信息去重后总条数:[{}]", data.size());
+
+        String baseFolderPath = "D:\\export\\export_file";
+        // 创建目录
+        mkdir(baseFolderPath);
+
+        // 数据分批处理，每批10000条
+        List<List<List<String>>> batches = Lists.partition(data, 10000);
+        log.info("数据分为 [{}] 个批次，每批最多10000条", batches.size());
+
+        // 创建线程池
+        int threadCount = Math.min(batches.size(), Runtime.getRuntime().availableProcessors() * 2);
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CompletionService<Void> completionService = new ExecutorCompletionService<>(executorService);
+
+        // 为每个批次创建处理任务
+        for (int batchIndex = 0; batchIndex < batches.size(); batchIndex++) {
+            final int currentBatchIndex = batchIndex;
+            final List<List<String>> batchData = batches.get(batchIndex);
+            final int batchNum = currentBatchIndex + 1;
+
+            completionService.submit(() -> {
+                try {
+                    log.info("批次 [{}] 开始处理，包含 [{}] 条数据", batchNum, batchData.size());
+
+                    // 创建批次文件夹
+                    String batchFolderPath = baseFolderPath + "\\batch_" + batchNum;
+                    mkdir(batchFolderPath);
+
+                    // 处理批次内的每条数据
+                    for (int i = 0; i < batchData.size(); i++) {
+                        List<String> row = batchData.get(i);
+                        String ackFileId = row.get(0);
+                        String xmlFileId = row.get(1);
+                        String reportNo = row.get(2);
+                        String sender = row.get(3);
+                        String receiver;
+
+                        switch (sender) {
+                            case "NOVOPRODAS2":
+                                receiver = "CDE";
+                                break;
+                            case "novo5899":
+                                receiver = "CDR";
+                                break;
+                            default:
+                                receiver = sender;
+                                log.info("发送文件id:[{}]出现其他情况", xmlFileId);
+                                break;
+                        }
+
+                        // 在批次文件夹下创建报告编号文件夹
+                        String partFolderPath = batchFolderPath + "\\" + reportNo.split("-")[0];
+                        mkdir(partFolderPath);
+
+                        // 导出递交的xml文件
+                        QueryDBHelper.download(xmlFileId, String.format("%s-%s.xml", reportNo, receiver), restTemplate, partFolderPath, req.getDownloadFileCookie());
+                        // 导出收到的ack文件
+                        QueryDBHelper.download(ackFileId, String.format("%s-%sack.xml", reportNo, receiver), restTemplate, partFolderPath, req.getDownloadFileCookie());
+
+                        // 批次内进度日志
+                        if ((i + 1) % 1000 == 0 || i == batchData.size() - 1) {
+                            log.info("批次 [{}] 处理进度: [{}/{}]", batchNum, i + 1, batchData.size());
+                        }
+
+                        // 适当延迟，避免请求过于密集
+                        Thread.sleep(100);
+                    }
+
+                    log.info("批次 [{}] 处理完成", batchNum);
+                    return null;
+
+                } catch (Exception e) {
+                    log.error("批次 [{}] 处理出现异常", batchNum, e);
+                    throw new RuntimeException("批次 " + batchNum + " 处理失败", e);
+                }
+            });
+        }
+
+        // 等待所有批次处理完成
+        log.info("等待所有批次处理完成...");
+        int completedBatches = 0;
+        for (int i = 0; i < batches.size(); i++) {
+            try {
+                completionService.take().get(); // 等待任务完成并检查异常
+                completedBatches++;
+                log.info("已完成批次数: [{}/{}]", completedBatches, batches.size());
+            } catch (Exception e) {
+                log.error("批次处理出现异常", e);
+                // 继续等待其他批次完成
+            }
+        }
+
+        // 关闭线程池
+        executorService.shutdown();
+
+        log.info("导出结束，共处理 [{}] 个批次，总计 [{}] 条数据", batches.size(), data.size());
+    }
+
     @SneakyThrows
     @ApiOperation("诺和诺德导出递交文件")
     @PostMapping(value = "exportNuoHeSubmitFiles")
@@ -2416,8 +3100,8 @@ public class TestController {
         req.setDownloadFileCookie(QueryDBHelper.DOWNLOAD_FILE_COOKIE);
         long start = System.currentTimeMillis();
         // 查询数据
-        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-04-21 10:00:00' order by t.update_time asc";
-        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-04-21 10:00:00' order by t.update_time asc;";
+        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc";
+        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc;";
         Pair<List<List<String>>, List<List<String>>> result = getPageData(req, countSql, querySql);
         // 导出数据
         List<List<String>> data = result.getValue();
@@ -2431,11 +3115,8 @@ public class TestController {
         mkdir(baseFolderPath);
         // 10000个一个文件夹
         List<List<List<String>>> partition = ListUtils.partition(data, 10000);
-        for (int a = 5; a < partition.size(); a++) {
+        for (int a = 0; a < partition.size(); a++) {
             List<List<String>> part = partition.get(a);
-            // 创建文件夹
-            String partFolderPath = baseFolderPath + "\\" + a;
-            mkdir(partFolderPath);
             // 循环处理数据
             for (int i = 0; i < part.size(); i++) {
                 List<String> row = part.get(i);
@@ -2456,6 +3137,8 @@ public class TestController {
                         log.info("发送文件id:[{}]出现其他情况", xmlFileId);
                         break;
                 }
+                String partFolderPath = baseFolderPath + "\\" + reportNo.split("-")[0];
+                mkdir(partFolderPath);
                 // 导出递交的xml文件
                 QueryDBHelper.download(xmlFileId, String.format("%s-%s.xml", reportNo, receiver), restTemplate, partFolderPath, req.getDownloadFileCookie());
                 // 导出收到的ack文件
@@ -2468,6 +3151,8 @@ public class TestController {
         }
         log.info("总耗时:[{}]", System.currentTimeMillis() - start);
     }
+
+
 
     @SneakyThrows
     @ApiOperation("华东医药集团导出递交文件")
@@ -2505,28 +3190,59 @@ public class TestController {
     @PostMapping(value = "getReportId")
     public void getReportId(@RequestBody QueryDBReq req) {
         // 读取文件
-        ExcelData excelData = readExcelData("update-基于昨日诉求，匹配逻辑去掉版本号.xlsx");
+        ExcelData excelData = readExcelData("迁移的报告明细表-0120.xlsx");
         // 获取报告编号
         List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
         // 报告编号
         List<String> reportNos = Lists.newArrayList();
         rows.forEach(row -> {
-            String reportNo1 = row.get("报告编号");
+            String reportNo1 = row.get("报告编号（中文）");
             if (StringUtils.isNotBlank(reportNo1)) {
                 reportNos.add(reportNo1);
             }
         });
-        String tenantId = "2018SCBLYY";
+        String tenantId = "8a8181e07a8600ce017a9ec29e08189d";
+        String locale = "zh_CN";
         // 查询这些编号的报告
         // String queryReportInfoSql = String.format("select id AS 'reportId', IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) AS 'reportNo', locale, safety_report_unique_identifier, world_unique_num, project_id from report_value where tenant_id = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, String.join("','", reportNos));
         // String queryReportInfoSql = String.format("select id AS 'reportId', IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) AS 'reportNo', locale from report_value where tenant_id = '%s' and locale = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, "zh_CN", String.join("','", reportNos));
-        String queryReportInfoSql = String.format("select IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) AS '报告编号', report_status as '报告状态' from report_value where tenant_id = '%s' and locale = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, "zh_CN", String.join("','", reportNos));
+        String queryReportInfoSql = String.format("select id as 'reportId', IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) AS '报告编号', report_status as '报告状态' from report_value where tenant_id = '%s' and locale = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, locale, String.join("','", reportNos));
         req.setSqlContent(queryReportInfoSql);
         // String countSql = String.format("select count(1) from report_value where tenant_id = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, String.join("','", reportNos));
-        String countSql = String.format("select count(1) from report_value where tenant_id = '%s' and locale = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, "zh_CN", String.join("','", reportNos));
+        String countSql = String.format("select count(1) from report_value where tenant_id = '%s' and locale = '%s' and IF(versions is null or versions = '', safety_report_id, CONCAT(safety_report_id, '-', versions)) in ('%s');", tenantId, locale, String.join("','", reportNos));
         // 导出所有
         exportPageData(req, countSql, queryReportInfoSql);
 
+    }
+
+    @SneakyThrows
+    @ApiOperation("根据报告编号查询报告V4id")
+    @PostMapping(value = "getV4ReportId")
+    public void getV4ReportId(@RequestBody QueryDBReq req) {
+        req.setInstanceName("prod-mysql-pv-ro");
+        req.setDbName("pv");
+        req.setLimitNum("0");
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
+        // 读取文件
+        ExcelData excelData = readExcelData("需导出的安慰剂报告-20250919-1758507355.xlsx");
+        // 报告编号集合
+        Set<String> reportNos = Sets.newHashSet();
+        // 获取报告编号
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("sheet");
+        rows.forEach(row -> {
+            String reportNo = row.get("报告编号");
+            if (StringUtils.isNotBlank(reportNo)) {
+                reportNos.add(reportNo);
+            }
+        });
+        String tenantId = "251ca460-6348-11e9-b21d-ef616d53ac34";
+        // 查询SQL
+        String querySql = String.format("select id, IF(versions is null or versions = '', Safetyreportid, CONCAT(Safetyreportid, '-', versions)) as report_no from report_value where tenant_id = '%s' and IF(versions is null or versions = '', Safetyreportid, CONCAT(Safetyreportid, '-', versions)) in ('%s');", tenantId, String.join("','", reportNos));
+        //
+        String countSql = String.format("select count(1) from report_value where tenant_id = '%s' and IF(versions is null or versions = '', Safetyreportid, CONCAT(Safetyreportid, '-', versions)) in ('%s');", tenantId, String.join("','", reportNos));
+        // 导出所有
+        exportPageData(req, countSql, querySql);
     }
 
     @SneakyThrows
@@ -2693,19 +3409,29 @@ public class TestController {
         //String countSql = "";
         //String querySql = "";
 
+        req.setInstanceName("prod-mysql-pv-ro");
+        req.setDbName("pv");
+        req.setLimitNum("0");
+        req.setCookie(QueryDBHelper.DB_COOKIE);
+        req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
 
-        String countSql = "select count(1) from drug  where tenant_id = 'eSafety20241216' and create_time = '1970-01-01 00:00:00';";
-        String querySql = "";
+        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc";
+        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc;";
+
 
         exportPageData(req, countSql, querySql);
     }
 
     private Pair<List<List<String>>, List<List<String>>> getPageData(QueryDBReq req, String countSql, String querySql) {
+        return getPageSizePageData(req, countSql, querySql, 5000);
+    }
+
+    private Pair<List<List<String>>, List<List<String>>> getPageSizePageData(QueryDBReq req, String countSql, String querySql, int pageSize) {
         req.setSqlContent(countSql);
         Integer count = countSql(req);
         log.info("总数:[{}]", count);
         // 总页数
-        int totalPage = totalPage(count, 5000);
+        int totalPage = totalPage(count, pageSize);
         // 所有数据
         List<List<String>> allData = Lists.newArrayList();
         // 页数据
@@ -2714,7 +3440,7 @@ public class TestController {
         for (int i = 0; i < totalPage; i++) {
             log.info("分页进度:[{}-{}]", i, totalPage);
             // 当前页数据
-            pageData = findPageDate(req, querySql, i * 5000, 5000);
+            pageData = findPageDate(req, querySql, i * pageSize, pageSize);
             // 追加行数据
             allData.addAll(pageData.getData().getRows().stream().map(Lists::newArrayList).collect(Collectors.toList()));
         }
@@ -2745,7 +3471,9 @@ public class TestController {
             allData.addAll(pageData.getData().getRows().stream().map(Lists::newArrayList).collect(Collectors.toList()));
         }
         D res = new D();
-        res.setData(new DData(pageData.getData().getColumn_list(), allData));
+        if (pageData != null) {
+            res.setData(new DData(pageData.getData().getColumn_list(), allData));
+        }
         return res;
     }
 
@@ -2979,6 +3707,360 @@ public class TestController {
             }
         });
         System.out.println();
+    }
+
+    @SneakyThrows
+    @ApiOperation("getMissReportIds")
+    @PostMapping(value = "getMissReportIds")
+    public void getMissReportIds() {
+        QueryDBReq req = new QueryDBReq();
+        req.setCookie("csrftoken=hViu7nMon3oDRjQH9U2Mm0j33IjPfllI; sessionid=gurscxyezlqakzcay89ysrir5j9sr05v");
+        req.setCsrfToken("hViu7nMon3oDRjQH9U2Mm0j33IjPfllI");
+        req.setLimitNum("0");
+        // 4.0
+        req.setInstanceName("prod-mysql-pv-ro");
+        req.setDbName("pv");
+        String countSql = "SELECT count(0) FROM report_value AS t1 WHERE t1.tenant_id = 'f4879a30a68f4289a583a7bc001d4aa5' AND ((t1.ReportStatus = 5 AND t1.is_deleted = 0) OR t1.is_deleted = 1 OR t1.IsInvalid = true) order by t1.create_time asc";
+        String querySql = "SELECT t1.id FROM report_value AS t1 WHERE t1.tenant_id = 'f4879a30a68f4289a583a7bc001d4aa5' AND ((t1.ReportStatus = 5 AND t1.is_deleted = 0) OR t1.is_deleted = 1 OR t1.IsInvalid = true) order by t1.create_time asc";
+        //
+        Pair<List<List<String>>, List<List<String>>> oldPageData = getPageData(req, countSql, querySql);
+        // ids
+        List<String> oldReportIds = oldPageData.getValue().stream().map(row -> row.get(0)).collect(Collectors.toList());
+
+
+        // 5.0
+        req.setInstanceName("prod-mysql-pvcaps-ro");
+        req.setDbName("pvs_report_all");
+        countSql = "select count(1) from report_value where tenant_id='f4879a30a68f4289a583a7bc001d4aa5' and locale='zh_CN';";
+        querySql = "select report_id from report_value where tenant_id='f4879a30a68f4289a583a7bc001d4aa5' and locale='zh_CN';";
+        //
+        Pair<List<List<String>>, List<List<String>>> newPageData = getPageData(req, countSql, querySql);
+        // ids
+        List<String> newReportIds = newPageData.getValue().stream().map(row -> row.get(0)).collect(Collectors.toList());
+
+        //
+        List<String> missReportIds = ListUtils.removeAll(oldReportIds, newReportIds);
+
+        List<List<String>> all = ListUtils.partition(oldReportIds, 20);
+        // 按照20分list
+        for (int i = 0; i < all.size(); i++) {
+            List<String> part = all.get(i);
+            if (CollectionUtils.containsAny(part, missReportIds)) {
+                System.out.println("=======错误页" + i);
+            }
+        }
+        //
+        // String v4Cookie = "gr_user_id=b490a001-5850-4a2e-9ba4-c0b6fbfc2285; 99fe3e6894ec3188_gr_last_sent_cs1=8a8181f07d712e67017d754391ab2002; eSafety5_unblind_warn=true; 99fe3e6894ec3188_gr_cs1=8a8181f07d712e67017d754391ab2002; Hm_lvt_a6a71cf5f4147c04a5189490b5c31160=1751964599; Hm_lvt_88897af8840c3689db7cb8c0886b1026=1752636241,1752725185; HMACCOUNT=F7DB9E90B0F2A0E7; acw_tc=0aef832317527382674946422e007743307c788413ac62c4f4caec06db2e88; token=ccbda5969199413c96cf9a0dfb92fd0b; Hm_lpvt_88897af8840c3689db7cb8c0886b1026=1752738292";
+        // ActionResult<List<JSONObject>> actionResult = QueryDBHelper.getV4Report(restTemplate, v4Cookie, missReportIds);
+        // List<JSONObject> reports = actionResult.getData();
+        System.out.println();
+    }
+
+    @SneakyThrows
+    @ApiOperation("查询线上索引信息")
+    @PostMapping(value = "getProdTableIndex")
+    public void getProdTableIndex(@RequestBody QueryDBReq req) {
+        req.setLimitNum("0");
+        req.setDbName("pvs_report_all");
+        // 查询PROD的索引信息
+        req.setInstanceName("prod-mysql-pvcaps-ro");
+        // 获取线上索引信息
+        Map<String, Map<String, String>> prodIndexInfoMap = toIndexInfoMap(req, true);
+        // 获取UAT索引信息
+        req.setInstanceName("uat-mysql-pvcaps-rw");
+        Map<String, Map<String, String>> uatIndexInfoMap = toIndexInfoMap(req, true);
+
+        List<String> uatAllNewIndexInfos = Lists.newArrayList();
+
+        // 循环线上的
+        prodIndexInfoMap.forEach((table, tableIndexInfoMap) -> {
+            // 获取UAT的
+            Map<String, String> uatTableIndexInfoMap = uatIndexInfoMap.getOrDefault(table, Maps.newHashMap());
+            // 循环线上的索引
+            tableIndexInfoMap.forEach((indexName, createIndexSql) -> {
+                // UAT这个索引的SQL
+                String uatCreateIndexSql = uatTableIndexInfoMap.get(indexName);
+                if (StringUtils.isBlank(uatCreateIndexSql)) {
+                    // UAT没有这个索引,需要新建的
+                    uatAllNewIndexInfos.add(createIndexSql);
+                } else {
+                    // 有这个索引,在判断索引列是否一致
+                    if (StringUtils.equals(createIndexSql, uatCreateIndexSql)) {
+                        // 一致的不管了
+                        log.info("表:[{}]索引:[{}]一致,不需要处理", table, indexName);
+                    } else {
+                        // 不一致的,删除掉在新建
+                        uatAllNewIndexInfos.add(String.format("ALTER TABLE %s DROP INDEX %s;", table, indexName));
+                        // 新建
+                        uatAllNewIndexInfos.add(createIndexSql);
+                    }
+                }
+            });
+            // UAT有的,线上没有的,全部删掉
+            ListUtils.removeAll(uatTableIndexInfoMap.keySet(), tableIndexInfoMap.keySet()).forEach(needRemoveIndexName -> {
+                uatAllNewIndexInfos.add(String.format("ALTER TABLE %s DROP INDEX %s;", table, needRemoveIndexName));
+            });
+        });
+        System.out.println();
+
+
+
+    }
+
+
+    private Map<String, Map<String, String>> toIndexInfoMap(QueryDBReq req, boolean query) {
+        String queryIndexSql = "SELECT\n" +
+                "\ts.TABLE_NAME,\n" +
+                "\ts.INDEX_NAME,\n" +
+                "\tCONCAT(\n" +
+                "\tCASE\n" +
+                "\t\t\t\n" +
+                "\t\t\tWHEN s.NON_UNIQUE = 0 THEN\n" +
+                "\t\t\t'CREATE UNIQUE INDEX ' ELSE 'CREATE INDEX ' \n" +
+                "\t\tEND,\n" +
+                "\t\ts.INDEX_NAME,\n" +
+                "\t\t' ON ',\n" +
+                "\t\ts.TABLE_NAME,\n" +
+                "\t\t' (',\n" +
+                "\t\tGROUP_CONCAT( s.COLUMN_NAME ORDER BY s.SEQ_IN_INDEX ASC SEPARATOR ', ' ),\n" +
+                "\t\t');' \n" +
+                ") AS CreateIndexStatement \n" +
+                "FROM\n" +
+                "\tinformation_schema.STATISTICS s \n" +
+                "WHERE\n" +
+                "\ts.TABLE_SCHEMA = 'pvs_report_all' \n" +
+                "\tAND s.INDEX_NAME != 'PRIMARY' \n" +
+                "GROUP BY\n" +
+                "\ts.TABLE_NAME,\n" +
+                "\ts.INDEX_NAME,\n" +
+                "\ts.NON_UNIQUE \n" +
+                "ORDER BY\n" +
+                "\ts.TABLE_NAME \n" +
+                "\tLIMIT 5000;";
+        // 设置查询SQL
+        req.setSqlContent(queryIndexSql);
+        // 获取索引信息
+        List<Map<String, String>> prodIndexInfos;
+        if (query) {
+            prodIndexInfos = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("TABLE_NAME", "INDEX_NAME", "CreateIndexStatement"));
+        } else {
+            // 本地化的,从文件中读取
+            prodIndexInfos = readExcelData("无标题.xlsx", ExcelAnalysisModel.COLUMN_NAME).getSheetRowsMap().get("Sheet1");
+        }
+
+        // 转成map 表,索引名,创建索引语句
+        Map<String, Map<String, String>> prodIndexInfoMap = Maps.newLinkedHashMap();
+        // 分信息
+        prodIndexInfos.forEach(row -> {
+            String tableName = row.get("TABLE_NAME");
+            String indexName = row.get("INDEX_NAME");
+            String createIndexSql = row.get("CreateIndexStatement");
+            if (StringUtils.isBlank(createIndexSql)) {
+                switch (indexName) {
+                    case "funcidx_task_limit_date":
+                        createIndexSql = "CREATE INDEX funcidx_task_limit_date ON task_report_info ((cast(`task_limit_date` as date)));";
+                        break;
+                    case "idx_json_tid":
+                        createIndexSql = "CREATE INDEX idx_json_tid ON edi_receive_file (\n" +
+                                "    (\n" +
+                                "      cast(\n" +
+                                "        json_unquote(\n" +
+                                "          json_extract(`return_ack_json`, _utf8mb4 '$.ackTransactionId')\n" +
+                                "        ) as char(255) charset utf8mb4\n" +
+                                "      )\n" +
+                                "    )\n" +
+                                "  );";
+                        break;
+                    default:
+                        log.info("新加的不知道的索引");
+                        throw new RuntimeException();
+                }
+            }
+            prodIndexInfoMap.computeIfAbsent(tableName, v -> Maps.newHashMap()).put(indexName, createIndexSql);
+        });
+        // 移除掉多语言表
+        prodIndexInfoMap.entrySet().removeIf(entry -> StringUtils.startsWith(entry.getKey(), "multilingual_value_"));
+        return prodIndexInfoMap;
+    }
+
+    @SneakyThrows
+    @ApiOperation("testIntake")
+    @PostMapping(value = "testIntake")
+    public void testIntake(@RequestBody IntakeTemplateDTO intakeTemplateDTO) {
+        QueryDBHelper.test(restTemplate, "", intakeTemplateDTO);
+    }
+
+    @SneakyThrows
+    @ApiOperation("fillActualUrl")
+    @PostMapping(value = "fillActualUrl")
+    public void fillActualUrl(@RequestBody QueryLogEventReq req) {
+        // 查询所有的apm
+        List<ApmRecord> all = apmDao.findAll();
+        // 需要更新的
+        List<ApmRecord> needUpdateApmRecords = Lists.newArrayList();
+        /*all.forEach(apm -> {
+            if (StringUtils.startsWith(apm.getUrlInfo(), "/")) {
+                apm.setActualUrl(apm.getUrlInfo());
+                needUpdateApmRecords.add(apm);
+            } else {
+                if (StringUtils.isBlank(apm.getDescribe())) {
+                    String actualUrl = getLogMessageInfo(apm, req);
+                    if (StringUtils.isNotBlank(actualUrl)) {
+                        apm.setActualUrl(actualUrl);
+                        needUpdateApmRecords.add(apm);
+                    }
+                }
+            }
+        });*/
+        all.forEach(apm -> {
+            // 查询详情
+            if (StringUtils.equals(apm.getActualUrl(), "找不到对应的日志")) {
+                // 查询详情
+                List<ApmDetailRecord> apmDetailRecords = apmDetailDao.findByApmId(apm.getId());
+                // 判断是否包含MQ消息的表
+                boolean mq = apmDetailRecords.stream().anyMatch(apmDetailRecord -> apmDetailRecord.getTags().toString().contains("mq_message_info"));
+                if (mq) {
+                    apm.setActualUrl("pvsMq/deleteMonth");
+                    needUpdateApmRecords.add(apm);
+                }
+                boolean zhiYi = apmDetailRecords.stream().anyMatch(apmDetailRecord -> apmDetailRecord.getTags().toString().contains("http://zhiyi-app.fleming/sdk/project/pre-translate"));
+                // 判断是否是翻译超时
+                if (zhiYi) {
+                    apm.setActualUrl("/report/locale/refresh");
+                    needUpdateApmRecords.add(apm);
+                }
+            }
+            if (StringUtils.equals(apm.getDescribe(), "删除MQ持久化数据")) {
+                apm.setActualUrl("pvsMq/deleteMonth");
+                needUpdateApmRecords.add(apm);
+            }
+            if (StringUtils.isBlank(apm.getActualUrl())) {
+                String actualUrl = getLogMessageInfo(apm, req);
+                if (StringUtils.isNotBlank(actualUrl)) {
+                    apm.setActualUrl(actualUrl);
+                    needUpdateApmRecords.add(apm);
+                }
+            }
+        });
+        apmDao.batchUpdate(needUpdateApmRecords);
+    }
+
+    @SneakyThrows
+    private String getLogMessageInfo(ApmRecord apmRecord, QueryLogEventReq req) {
+        log.info("查询日志信息");
+        // 请求日期
+        Date date = DateUtils.parseDate(apmRecord.getUrlStartTime(), "yyyy-MM-dd HH:mm:ss");
+        // 开始时间
+        long startDate = org.apache.commons.lang3.time.DateUtils.addHours(date, -1).getTime();
+        // 结束时间
+        long endDate = org.apache.commons.lang3.time.DateUtils.addHours(date, 1).getTime();
+        // 设置请求URL
+        String url = String.format("http://logevent.taimei.com/prod/api/v1/loki/query_range?app=pvs-report&start=%s000000&end=%s000000&level=&limit=2000&size=20&all=true&dsc=false&filters[]=%s&filters[]=RequestLogAspect&filters[]=INFO", startDate, endDate, apmRecord.getTraceId());
+        // 设置请求
+        req.setUrl(url);
+        // 查询日志
+        LogEventRes res = QueryDBHelper.getRes(req, restTemplate);
+        if (res == null) {
+            return "找不到对应的日志";
+        }
+        return findGroup(Pattern.compile("request\\s+URI：([^ |]+)"), res.getQuery().get(0).getInfo().getMessage());
+    }
+
+    private void fillActualUrl(ApmRecord apmRecord, List<ApmTraceDetailInfoSpanRes> apmDetails, QueryLogEventReq req) {
+        // 判断是否包含MQ消息的表
+        boolean mq = apmDetails.stream().anyMatch(apmDetailRecord -> apmDetailRecord.getTags().toString().contains("mq_message_info"));
+        if (mq) {
+            //apmRecord.setActualUrl("pvsMq/deleteMonth");
+        }
+        boolean zhiYi = apmDetails.stream().anyMatch(apmDetailRecord -> apmDetailRecord.getTags().toString().contains("http://zhiyi-app.fleming/sdk/project/pre-translate"));
+        // 判断是否是翻译超时
+        if (zhiYi) {
+            apmRecord.setActualUrl("/report/locale/refresh");
+        }
+        if (StringUtils.isBlank(apmRecord.getActualUrl()) && StringUtils.startsWith(apmRecord.getUrlInfo(), "/")) {
+            apmRecord.setActualUrl(apmRecord.getUrlInfo());
+        }
+        // 如果还是空,就要查询logEvent了
+        if (StringUtils.isBlank(apmRecord.getActualUrl())) {
+            apmRecord.setActualUrl(getLogMessageInfo(apmRecord, req));
+        }
+    }
+
+    @SneakyThrows
+    @ApiOperation("apmQuery")
+    @PostMapping(value = "apmQuery")
+    public void apmQuery(@RequestBody ApmQueryReq apmQueryReq) {
+        // 查询日志用的
+        QueryLogEventReq req = new QueryLogEventReq();
+        req.setCookie(apmQueryReq.getLogEventCookie());
+        req.setAuthorization(apmQueryReq.getLogEventAuthorization());
+        apmQueryReq.setQuery(apm_query_list_str);
+        // apm日志保留7天,当前时间日期往前7天的
+        Date endDate = new Date();
+        int total = 1;
+        for (int i = 0; i < total; i++) {
+            List<ApmRecord> apmRecords = Lists.newArrayList();
+            List<ApmDetailRecord> apmDetailRecords = Lists.newArrayList();
+            log.info("开始查询[{}]超时接口,处理进度:[{}-{}]", DateUtils.format(endDate, "yyyy-MM-dd"), i, total);
+            // 修改查询里的开始时间和结束时间
+            ApmQueryDurationReq queryDuration = apmQueryReq.getVariables().getCondition().getQueryDuration();
+            // 修改开始时间
+            queryDuration.setStart(String.format("%s 00", DateUtils.format(endDate, "yyyy-MM-dd")));
+            // 修改结束时间
+            queryDuration.setEnd(String.format("%s 23", DateUtils.format(endDate, "yyyy-MM-dd")));
+            // 生成excel数据
+            List<ApmTraceDetailRes> details = QueryDBHelper.apmQuery(apmQueryReq, restTemplate);
+            for (int j = 0; j < details.size(); j++) {
+                log.info("生成apm详细数据进度:[{}-{}]", j, details.size());
+                ApmTraceDetailRes apmTraceDetail = details.get(j);
+                ApmRecord apmRecord = new ApmRecord();
+                apmRecord.setId(UUID.randomUUID().toString());
+                apmRecord.setUrlInfo(apmTraceDetail.getEndpointNames().get(0));
+                apmRecord.setUrlUseTime(String.valueOf(apmTraceDetail.getDuration()));
+                apmRecord.setTraceId(apmTraceDetail.getTraceIds().get(0));
+                apmRecord.setUrlStartTime(DateUtils.format(new Date(Long.parseLong(apmTraceDetail.getStart())), "yyyy-MM-dd HH:mm:ss"));
+                List<ApmTraceDetailInfoSpanRes> apmDetails = getApmDetail(queryDuration, apmTraceDetail.getTraceIds().get(0), apmQueryReq.getCookie());
+                //
+                fillActualUrl(apmRecord, apmDetails, req);
+                for (int e = 0; e < apmDetails.size(); e++) {
+                    ApmTraceDetailInfoSpanRes apmDetail = apmDetails.get(e);
+                    ApmDetailRecord apmDetailRecord = new ApmDetailRecord();
+                    apmDetailRecord.setId(UUID.randomUUID().toString());
+                    apmDetailRecord.setApmId(apmRecord.getId());
+                    apmDetailRecord.setLayer(apmDetail.getLayer());
+                    apmDetailRecord.setStartTime(DateUtils.format(new Date(apmDetail.getStartTime()), "yyyy-MM-dd HH:mm:ss"));
+                    apmDetailRecord.setEndTime(DateUtils.format(new Date(apmDetail.getEndTime()), "yyyy-MM-dd HH:mm:ss"));
+                    apmDetailRecord.setEndPointName(apmDetail.getEndpointName());
+                    apmDetailRecord.setActualUseTime(String.valueOf((apmDetail.getEndTime() - apmDetail.getStartTime())));
+                    apmDetailRecord.setTags(org.jooq.JSON.valueOf(JSON.toJSONString(apmDetail.getTags())));
+                    apmDetailRecord.setSortIndex(e);
+                    apmDetailRecords.add(apmDetailRecord);
+                }
+                apmRecords.add(apmRecord);
+            }
+            // 开始时间赋值给结束时间
+            endDate = org.apache.commons.lang3.time.DateUtils.addDays(endDate, -1);
+            // 数据入库
+            apmDao.batchInsert(apmRecords);
+            apmDetailDao.batchInsert(apmDetailRecords);
+        }
+    }
+
+
+
+
+    private List<ApmTraceDetailInfoSpanRes> getApmDetail(ApmQueryDurationReq queryDuration, String traceId, String cookie) {
+        ApmQueryDetailReq apmQueryDetailReq = ApmQueryDetailReq.builder()
+                .query(apm_query_detail_str)
+                .variables(ApmQueryDetailConditionReq.builder()
+                        .queryDuration(queryDuration)
+                        .traceId(traceId)
+                        .build())
+                .cookie(cookie)
+                .build();
+        // 查询返回
+        ApmTraceInfoRes apmTraceInfo = QueryDBHelper.getApmTraceInfo(apmQueryDetailReq, restTemplate);
+        return apmTraceInfo.getTrace().getSpans();
     }
 
 
