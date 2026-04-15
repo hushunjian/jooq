@@ -1,0 +1,4817 @@
+{
+    "rabbit_version": "3.8.16",
+    "rabbitmq_version": "3.8.16",
+    "product_name": "RabbitMQ",
+    "product_version": "3.8.16",
+    "users": [
+        {
+            "name": "pv",
+            "password_hash": "qCS3elB4B5KA4OXBHEmjDvrPSrrckeTvijwslMeXe36dxLhH",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "tmuser",
+            "password_hash": "3+wOjPSUDmT29XKumqr0AZsgunBllZvAMJYUIqdcitSOT/Oa",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "fs",
+            "password_hash": "nGG3M18ajtz9VPJagEcuOEmkUOGEDs7yjjLUAvC/Ratb/Oit",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "ccp",
+            "password_hash": "666fA+IuuJdVZ5RNlwP1hLYIfVgEY6pmZ64sONs5tk7wnf5L",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "etmf",
+            "password_hash": "5NwtH5JiDgUUQ6AhH5NJimCjTdDIUb070cqFhKwHT7g9Dx8P",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "mq_adminuser",
+            "password_hash": "S423+hWB7TrCzJfY6NLWshokiQ9Y5C5CQS98FZQ8oQnuDKkr",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator",
+            "limits": {}
+        },
+        {
+            "name": "datart",
+            "password_hash": "Qhn1/EYm4+h9S6SfP8oE35AqfFCxju8HwR7+pR0R/tayYmI6",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "admin",
+            "password_hash": "AfG5pC6g61p5rTL+dW++2GsUoYA5wgRNQemr5eLGhYQqeF2G",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator",
+            "limits": {}
+        },
+        {
+            "name": "itaimeiedc",
+            "password_hash": "y2ksmnL4bERmKuacp6ZwCw6TlYIr4Hq2EXIMQuGWGsI2uNKA",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "management",
+            "limits": {}
+        },
+        {
+            "name": "guest",
+            "password_hash": "/tdTTse3HVePXT4f5SMm90k9TaUNy6v6IjYEi6/wkdBPGELQ",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator",
+            "limits": {}
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "ccp",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "tmuser",
+            "vhost": "/",
+            "configure": "",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "etmf",
+            "vhost": "/",
+            "configure": "",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "datart",
+            "vhost": "/",
+            "configure": "",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "mq_adminuser",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "pv",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "itaimeiedc",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "admin",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "fs",
+            "vhost": "/",
+            "configure": "",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "cluster_name",
+            "value": "rabbit@uat-rabbitmq-node01"
+        },
+        {
+            "name": "internal_cluster_id",
+            "value": "rabbitmq-cluster-id-U1aKYmnwkZL52v0i2ukolw"
+        }
+    ],
+    "policies": [
+        {
+            "vhost": "/",
+            "name": "ha-all",
+            "pattern": "^",
+            "apply-to": "all",
+            "definition": {
+                "ha-mode": "all"
+            },
+            "priority": 0
+        }
+    ],
+    "queues": [
+        {
+            "name": "eArchiveGeneratePrompatEmailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "aiDvpResponseQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "word_template_plus_pdf_convert_fail_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveFolderDeleteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveApprovalSOPStatusAutoChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCspDelProjectExchangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.xpt.callback",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "report_edit_check_run_log_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportVersionQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUserAuthChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_tenant_notice_template_apply_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimeiExportSimpleQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "crf_monitor_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "patient_profile_response_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveSchedulePlanTemplateChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveAuthRoleUpdateQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.file.rebuild.archive.dead",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportProjectFolderPermissionQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveDeleteClientDownloadQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edcrDataMigrationTaskTest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccpCountryQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveSyncUserProjectQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "email_convert_html",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveTMSTrainingSetup",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.file.rebuild.archive",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "ccp.bus.dead.exchange",
+                "x-dead-letter-routing-key": "ccp.file.rebuild.archive.dead"
+            }
+        },
+        {
+            "name": "eArchiveInitFileTaskDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_file_md5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.rabbit.init.queue.test",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCreateSignFileBySopAutoChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveExportFileIntegrityReportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "migrationDiffQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.milestone.bus.exchange.ccp.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveEtmfClassifyQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "taskAutoCodingQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "imensa_ai_data_prepare_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "imensa_econfig_create_env_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateStatusQueueR",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFileTaskOwnerQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "file_es_add",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveSiteRecommandPathBindingQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_process_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edcSubjectUserLogQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveRestoreMistakenlyDeletedFilesQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveInitFileApprovalInfoQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.imap.requestqueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.sftp.file.subject.import",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccpAuth",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edcrDataMigrationNotifyTest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCspAddProjectExchangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "aiDraftQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_dock_third_edc",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_institution_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveSpaceFileAIQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edcProductivityQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveAuditFolderDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_file_copy_file_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveMappingUpdateFolderNameQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "etrialpro_aclsite",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateIndexStatisticQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveFsCompressTopicQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "doc_convert_test",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpInstitutionStatusQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ELEARNING_SERVICE_PDF_CONVERT_SUCCESS_QUEUE",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "publishSubjectCheckMqName",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateRejectReasonQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.finance.subject.enroll.date.change.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "IQ.test.edc",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.subject_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_es_delete",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveMoveInspectTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.taskcenter.taskoption.exchange.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "reportWeightQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveInitFileTaskOwnerQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveDownloadAuditCompressFilesQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_site_tenant_mapping_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCreateMigrationTaskDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "iq.test.edc",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "datart_merge_pdf_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_inspect_ontime_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.sftp.file.callback",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "aiCrfQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportCoding",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "sendgridEmailStatus",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.flexflow.task.end.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_operate_log",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCountryChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCompressFilesQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveInitMyApprovedQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "hls_transcode_after",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.finance.inspect.config.change.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "MDS_TO_ECONFIG_ENTERPRISE_CATEGORY",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveAuditFolderQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_5min",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.subject_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.archive.files.status.refresh",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveTimedTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "iTaimeiBatchUpdateStatusQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "mq.document.process.larger.file",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_service_job_message",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "sdtm_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveSiteChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei_create_sas_java_queue_gb2312",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveUpdateFileTaskDetailRedundantDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "imensa_download_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_delay_20min",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_1min",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs.pdf.compress.result",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "trailrecordStudyCompensateQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveExportFolderPermissionQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "exportTransferDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "doc_convert_test_larger_file",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_convert_failed_queue_private",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateRoleAuthTemplateFolderProjectSiteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_pvsaeconfig",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-message-ttl": 172800000
+            }
+        },
+        {
+            "name": "edc.rabbit.init.queue.test",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveSiteChangeNewQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveConvertPdfFailedQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveInitUpdateMyApprovedQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "publishCheckMqName",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCreateSignFileByFileRollBackQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edcrDataMigrationSandboxTest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveExportFolderQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.async.task.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edcr.coding.import.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "crf_app_auth_listen",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.sftp.file.reminder",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "com.taimei.bo.callback.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveFinishMigrationTaskDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_subject_uk",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_audit_success_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveSaveSystemTraceQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "MDS_TO_ECONFIG_ENTERPRISE",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "exportResponseSasQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.imap.responsequeue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_docking_task3_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edc_every_week_project_list",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccpSiteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFileMD5Queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "exportMaterialDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eport_edit_check_run_log_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_migrate",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei_send_iitedc_form_info_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.subject_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.examination.case_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFilePlanMainLeastFolderIdQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "datart_fs_zip_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-message-ttl": 60000
+            }
+        },
+        {
+            "name": "word_template_plus_pdf_convert_success_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportMigrationRecordQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_delay_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "email_process_exchange",
+                "x-dead-letter-routing-key": "email_delay"
+            }
+        },
+        {
+            "name": "ccp_subject_docking_task2_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "word_template_plus_request_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itm.edc.sas.request.queue.gb2312",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "trailrecordCompensateQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportLabRangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "migrationMainTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_report",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edc6_migration_send_ccp_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei_edc_fs_zip_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "alarmQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.irms.site.change.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.statistics.job.rabbit.mq.name",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveSubFolderSendQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_es_pdf_scanner_add_file",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_30min",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.report.bo.meta.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveInitFileInspectStatusQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "migrationSubTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.enterprise.chart.async.export.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "com.taimei.bo.init.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_pd_audit_ontime_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFileInspectStatusQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveDeleteAuditTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "aiDvpRequestQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveMigrationTaskPropertyFileDeleteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_comment_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveAddPrintTraceQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_project_report_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs.pdf.compress",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "labRefreshSubjectQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveFileChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edcrDataMigrationTest51",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_decom_failure",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCreateClientDownloadFolderDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "exportMigrationComparisonQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveCSPProjectDel",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_compress_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveConvertPdfSuccessQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.project.char.export.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.examination.case_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportWeightQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_mesh_send_delay_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "labCleanQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "supplyPlanFirstTriggerQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveMergedBusinessQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "clinicalPVDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportNormalDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "refreshSubjectSumStatusQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_fs_pdf_convert_fail_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_fs_pdf_convert_success_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "migrationPreMigrationQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_0",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateClientDownloadQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "MDS_TO_ECONFIG_ENTERPRISE_NAME",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveCreateSignFileQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ELEARNING_SERVICE_PDF_CONVERT_FAIL_QUEUE",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "autoTestResultQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportSubjectQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.tenant.notice.mail.storage.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveFileDeleteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "labCleanSubjectQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.refreshsubjectentrystatus",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "exportLightQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateMyApprovedQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "esae-ms.ccp.susar.task",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.examination.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpSsoSwitchQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei_edc_datacomparison_main_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportFileTimelinessReportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "patient_profile_create_file_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-message-ttl": 60000
+            }
+        },
+        {
+            "name": "exportDraftQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei_edc_datacomparison_sub_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp.finance.scheduleplan.change.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveInitFilePlanDetailAssignerQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveUpdateFileApprovalInfoQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_pdf_to_image",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveTranslationCallback",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.subject_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.enterprise.char.export.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.migration.subject_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.examination.case_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_10min",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_mesh_send_process_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "email_mesh_send_delay_exchange",
+                "x-dead-letter-routing-key": "email_mesh_send_routing_key",
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei_response_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.site.ethic.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "taskAutoApproveQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "msg_sync_send_delay_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "esae-ms.ccp.batch.save.sae",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateClientDownloadFolderDetailQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_subject_docking_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.publish-check.subject_7",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "reportLightQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFolderNameAndPathInfoQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_subject_enroll_inspect_task_strategy",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_project_site_ontime_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "file_es_add_large_file",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "coding.refresh.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "file_decom_success",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveExportFileQualityReportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "scanner_file_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "file_decompress",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itm.edc.sas.request.queue.utf8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.finance.scheduleplan.delete.queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFilePlanDetailAssignerQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.migration.subject_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "metahub_crf_create_from_chat",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_export_task_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "aiEcrfGunQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_sink",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "wps-web",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveAuditFolderDetailBeforeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportFileSearchListQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveMergePdfQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_delay_1hour",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportNormalReportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "exportNotificationRecordQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "labRefreshQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveInitFileMD5Queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.examination.case_9",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp-IQtest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_6",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveExportTraceQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportFileSearchListDataQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_convert_finish_queue_private",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.main",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "mq.document.process",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "autoTestCaseQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveProjectDetailChangeQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edc_lock_project_excel_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "sdtm_get_sas_result_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveCCPFilePlanChange",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edcEmailNotifier",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportAuditDataReportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "hls_transcode_before",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "hls_transcode_copy",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.examination.case_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.refreshSubjectData.case_10",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "edc.update.subject.info",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei_create_sas_java_queue_utf8",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edc6RefreshBackTaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveFolderTemplateSaveOrDeleteQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "ccp_project_cache_operation_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "boExportQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "migrationResultQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_5",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "edcrDataMigrationFailsTest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.exportSas.case_3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "itaimei.edc.export.subjectPdf.case_4",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "wps_failed_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveSchedulePlanQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "wps_success_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "datart_tenant_auth_queue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-message-ttl": 60000
+            }
+        },
+        {
+            "name": "eArchiveUpdateHistoryFilePathQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "cspAddProjectExchangeTest",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveUpdateFileCountQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName3",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveExportFolderZipQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "eArchiveInitHuaWeiAITaskQueue",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "fs_async_task",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "batchUpdateSubStatusQueueName1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "ccp_subject_docking_task_exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.taskcenter.taskoption.exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "userFreezeAppNotice",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "tenantAppProjectExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "sasRequestExchangeName",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_add_subject_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "irms.site.change.exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.taskcenter.websocket.exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_mesh_send_delay_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_comment",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.bus.exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "wps_web_direct",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "sendSmsReplyExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_copy_file_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "decompress_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.bus.dead.exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_async_task_exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_taskcenter_websocket_receive_exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_converter_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "aclProjectSite",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "eArchiveDatahandlingExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs.pdf.compress.exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "cspDelProjectExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "aiDvp",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_es",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpSchedulePlanDeleteExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "projectCountryChangeExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "materialization_status_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_md5",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "imensa_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "syncOrganExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "syncCreateCourse",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_report_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_project_report_task_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "authRoleChangeExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "flew_flow_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "tosProjectExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "institutionStatusExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_finance_exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_process_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ssoSwitchExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "userAuthChange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "cspSiteExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpSchedulePlanChangeExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "doc_convert_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "hls_topicExchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_migrate_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.taskcenter.taskinfo.change.exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "MDS_ENTERPRISE_SYNC_TO_ECONFIG_EXCHANGE",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "notify_convert_result",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "site_ethic_ccp_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_change_fanout_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp.milestone.bus.exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "msg_sync_send_delay_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_mesh_send_process_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "mds_audit_success_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "sendSmsStatusExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_internal_task_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "middle-subject-exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_subject_visit_exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpSchedulePlanUpdateExchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs.mp4.convert.notify",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "word_template_plus_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs_file_operate",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "fs",
+            "vhost": "/",
+            "type": "headers",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "email_delay_exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "sendgridEmailStatusExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_taskcenter_websocket_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccp_inspect_config_change_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "zt_econfig_auth_detail",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "cspAddProjectExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "operate_log_exchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "emailReceiveDataExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "ccpProjectDetailExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "envExchange",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "MDS_ENTERPRISE_SYNC_TO_ECONFIG_EXCHANGE",
+            "vhost": "/",
+            "destination": "MDS_TO_ECONFIG_ENTERPRISE",
+            "destination_type": "queue",
+            "routing_key": "t_md_enterprise",
+            "arguments": {}
+        },
+        {
+            "source": "MDS_ENTERPRISE_SYNC_TO_ECONFIG_EXCHANGE",
+            "vhost": "/",
+            "destination": "MDS_TO_ECONFIG_ENTERPRISE_CATEGORY",
+            "destination_type": "queue",
+            "routing_key": "t_md_enterprise_category",
+            "arguments": {}
+        },
+        {
+            "source": "MDS_ENTERPRISE_SYNC_TO_ECONFIG_EXCHANGE",
+            "vhost": "/",
+            "destination": "MDS_TO_ECONFIG_ENTERPRISE_NAME",
+            "destination_type": "queue",
+            "routing_key": "t_md_enterprise_name",
+            "arguments": {}
+        },
+        {
+            "source": "aclProjectSite",
+            "vhost": "/",
+            "destination": "etrialpro_aclsite",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "aiDvp",
+            "vhost": "/",
+            "destination": "aiDvpRequestQueue",
+            "destination_type": "queue",
+            "routing_key": "request",
+            "arguments": {}
+        },
+        {
+            "source": "authRoleChangeExchange",
+            "vhost": "/",
+            "destination": "eArchiveAuthRoleUpdateQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.dead.exchange",
+            "vhost": "/",
+            "destination": "ccp.file.rebuild.archive.dead",
+            "destination_type": "queue",
+            "routing_key": "ccp.file.rebuild.archive.dead",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.enterprise.chart.async.export.queue",
+            "destination_type": "queue",
+            "routing_key": "EnterpriseCharAsyncExportEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.enterprise.char.export.queue",
+            "destination_type": "queue",
+            "routing_key": "EnterpriseCharExportEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_pd_audit_ontime_queue",
+            "destination_type": "queue",
+            "routing_key": "PDAuditDateEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_project_cache_operation_queue",
+            "destination_type": "queue",
+            "routing_key": "ProjectCacheOperationEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.project.char.export.queue",
+            "destination_type": "queue",
+            "routing_key": "ProjectCharExportEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_project_site_ontime_queue",
+            "destination_type": "queue",
+            "routing_key": "ProjectSiteBiBuildEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_pvsaeconfig",
+            "destination_type": "queue",
+            "routing_key": "PvSaeConfigMqEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.archive.files.status.refresh",
+            "destination_type": "queue",
+            "routing_key": "RefreshArchiveFilesEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_inspect_ontime_queue",
+            "destination_type": "queue",
+            "routing_key": "ReportInspectTimingEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_uk",
+            "destination_type": "queue",
+            "routing_key": "SubjectUKConfigMqEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.tenant.notice.mail.storage.queue",
+            "destination_type": "queue",
+            "routing_key": "TenantNoticeMailStorageEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp_tenant_notice_template_apply_queue",
+            "destination_type": "queue",
+            "routing_key": "TenantNoticeTemplateApplyEvent",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.async.task.queue",
+            "destination_type": "queue",
+            "routing_key": "ccp.async.task.queue",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.file.rebuild.archive",
+            "destination_type": "queue",
+            "routing_key": "ccp.file.rebuild.archive",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.milestone.bus.exchange",
+            "vhost": "/",
+            "destination": "ccp.milestone.bus.exchange.ccp.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.milestone.bus.exchange",
+            "vhost": "/",
+            "destination": "eArchiveSchedulePlanTemplateChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp.taskcenter.taskoption.exchange",
+            "vhost": "/",
+            "destination": "ccp.taskcenter.taskoption.exchange.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccpProjectDetailExchange",
+            "vhost": "/",
+            "destination": "eArchiveProjectDetailChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccpSchedulePlanChangeExchange",
+            "vhost": "/",
+            "destination": "ccp.finance.scheduleplan.change.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccpSchedulePlanChangeExchange",
+            "vhost": "/",
+            "destination": "eArchiveSchedulePlanQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccpSchedulePlanDeleteExchange",
+            "vhost": "/",
+            "destination": "ccp.finance.scheduleplan.delete.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_inspect_config_change_exchange",
+            "vhost": "/",
+            "destination": "ccp.finance.inspect.config.change.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_project_report_task_exchange",
+            "vhost": "/",
+            "destination": "ccp_project_report_task_queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_docking_task_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_docking_task2_queue",
+            "destination_type": "queue",
+            "routing_key": "dockImmediately",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_docking_task_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_docking_task3_queue",
+            "destination_type": "queue",
+            "routing_key": "dockThirdEdc",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_docking_task_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_docking_task_queue",
+            "destination_type": "queue",
+            "routing_key": "dockTiming",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_finance_exchange",
+            "vhost": "/",
+            "destination": "ccp.finance.subject.enroll.date.change.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_finance_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_enroll_inspect_task_strategy",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_internal_task_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_dock_third_edc",
+            "destination_type": "queue",
+            "routing_key": "DockThirdEdcTask",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_migrate_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_migrate",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ccp_subject_report_exchange",
+            "vhost": "/",
+            "destination": "ccp_subject_report",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspAddProjectExchange",
+            "vhost": "/",
+            "destination": "ccp.rabbit.init.queue.test",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspAddProjectExchange",
+            "vhost": "/",
+            "destination": "eArchiveCspAddProjectExchangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspDelProjectExchange",
+            "vhost": "/",
+            "destination": "eArchiveCSPProjectDel",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspDelProjectExchange",
+            "vhost": "/",
+            "destination": "eArchiveCspDelProjectExchangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspSiteExchange",
+            "vhost": "/",
+            "destination": "ccpSiteQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspSiteExchange",
+            "vhost": "/",
+            "destination": "eArchiveSiteChangeNewQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "cspSiteExchange",
+            "vhost": "/",
+            "destination": "eArchiveSiteChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "decompress_exchange",
+            "vhost": "/",
+            "destination": "file_decompress",
+            "destination_type": "queue",
+            "routing_key": "decompress",
+            "arguments": {}
+        },
+        {
+            "source": "decompress_exchange",
+            "vhost": "/",
+            "destination": "file_decom_failure",
+            "destination_type": "queue",
+            "routing_key": "fail",
+            "arguments": {}
+        },
+        {
+            "source": "decompress_exchange",
+            "vhost": "/",
+            "destination": "file_decom_success",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "doc_convert_exchange",
+            "vhost": "/",
+            "destination": "fs_convert_failed_queue_private",
+            "destination_type": "queue",
+            "routing_key": "failed",
+            "arguments": {}
+        },
+        {
+            "source": "doc_convert_exchange",
+            "vhost": "/",
+            "destination": "wps_failed_queue",
+            "destination_type": "queue",
+            "routing_key": "failed",
+            "arguments": {}
+        },
+        {
+            "source": "doc_convert_exchange",
+            "vhost": "/",
+            "destination": "fs_convert_finish_queue_private",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "doc_convert_exchange",
+            "vhost": "/",
+            "destination": "wps_success_queue",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "eArchiveDatahandlingExchange",
+            "vhost": "/",
+            "destination": "eArchiveSiteRecommandPathBindingQueue",
+            "destination_type": "queue",
+            "routing_key": "site_recommand_path_binding",
+            "arguments": {}
+        },
+        {
+            "source": "email_delay_exchange",
+            "vhost": "/",
+            "destination": "email_delay_queue",
+            "destination_type": "queue",
+            "routing_key": "email_delay",
+            "arguments": {}
+        },
+        {
+            "source": "email_mesh_send_delay_exchange",
+            "vhost": "/",
+            "destination": "email_mesh_send_delay_queue",
+            "destination_type": "queue",
+            "routing_key": "email_mesh_send_routing_key",
+            "arguments": {}
+        },
+        {
+            "source": "email_mesh_send_process_exchange",
+            "vhost": "/",
+            "destination": "email_mesh_send_process_queue",
+            "destination_type": "queue",
+            "routing_key": "email_mesh_send_routing_key",
+            "arguments": {}
+        },
+        {
+            "source": "email_process_exchange",
+            "vhost": "/",
+            "destination": "email_process_queue",
+            "destination_type": "queue",
+            "routing_key": "email_delay",
+            "arguments": {}
+        },
+        {
+            "source": "envExchange",
+            "vhost": "/",
+            "destination": "imensa_econfig_create_env_queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "envExchange",
+            "vhost": "/",
+            "destination": "itaimei_response_queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "flew_flow_exchange",
+            "vhost": "/",
+            "destination": "ccp.flexflow.task.end.queue",
+            "destination_type": "queue",
+            "routing_key": "flex_flow_task_end_key",
+            "arguments": {}
+        },
+        {
+            "source": "fs.pdf.compress.exchange",
+            "vhost": "/",
+            "destination": "fs.pdf.compress",
+            "destination_type": "queue",
+            "routing_key": "pdf.compress.request",
+            "arguments": {}
+        },
+        {
+            "source": "fs.pdf.compress.exchange",
+            "vhost": "/",
+            "destination": "fs.pdf.compress.result",
+            "destination_type": "queue",
+            "routing_key": "pdf.compress.result",
+            "arguments": {}
+        },
+        {
+            "source": "fs_async_task_exchange",
+            "vhost": "/",
+            "destination": "fs_async_task",
+            "destination_type": "queue",
+            "routing_key": "fs_async_task",
+            "arguments": {}
+        },
+        {
+            "source": "fs_async_task_exchange",
+            "vhost": "/",
+            "destination": "eArchiveMergePdfQueue",
+            "destination_type": "queue",
+            "routing_key": "pdf_merge_task_007",
+            "arguments": {}
+        },
+        {
+            "source": "fs_async_task_exchange",
+            "vhost": "/",
+            "destination": "datart_merge_pdf_queue",
+            "destination_type": "queue",
+            "routing_key": "pdf_merge_task_davinci_container",
+            "arguments": {}
+        },
+        {
+            "source": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "destination": "eArchiveFsCompressTopicQueue",
+            "destination_type": "queue",
+            "routing_key": "007",
+            "arguments": {}
+        },
+        {
+            "source": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "destination": "datart_fs_zip_queue",
+            "destination_type": "queue",
+            "routing_key": "davinci_container",
+            "arguments": {}
+        },
+        {
+            "source": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "destination": "fs_compress_task_queue",
+            "destination_type": "queue",
+            "routing_key": "fs_compress_task_queue",
+            "arguments": {}
+        },
+        {
+            "source": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "destination": "fs_export_task_queue",
+            "destination_type": "queue",
+            "routing_key": "fs_export_task_queue",
+            "arguments": {}
+        },
+        {
+            "source": "fs_compress_topic_exchange",
+            "vhost": "/",
+            "destination": "itaimei_edc_fs_zip_queue",
+            "destination_type": "queue",
+            "routing_key": "itaimei-edc",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_change_fanout_exchange",
+            "vhost": "/",
+            "destination": "eArchiveFileChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_comment",
+            "vhost": "/",
+            "destination": "file_comment_queue",
+            "destination_type": "queue",
+            "routing_key": "comment",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_10min",
+            "destination_type": "queue",
+            "routing_key": "10min",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_1hour",
+            "destination_type": "queue",
+            "routing_key": "1hour",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_1min",
+            "destination_type": "queue",
+            "routing_key": "1min",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_20min",
+            "destination_type": "queue",
+            "routing_key": "20min",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_30min",
+            "destination_type": "queue",
+            "routing_key": "30min",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_delay_5min",
+            "destination_type": "queue",
+            "routing_key": "5min",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "email_convert_html",
+            "destination_type": "queue",
+            "routing_key": "email_convert",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "ELEARNING_SERVICE_PDF_CONVERT_FAIL_QUEUE",
+            "destination_type": "queue",
+            "routing_key": "fail",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "ccp_fs_pdf_convert_fail_queue",
+            "destination_type": "queue",
+            "routing_key": "fail",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "eArchiveConvertPdfFailedQueue",
+            "destination_type": "queue",
+            "routing_key": "fail",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "word_template_plus_pdf_convert_fail_queue",
+            "destination_type": "queue",
+            "routing_key": "fail",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "fs_pdf_to_image",
+            "destination_type": "queue",
+            "routing_key": "pdf_to_image",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "doc_convert_test",
+            "destination_type": "queue",
+            "routing_key": "safe_convert",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "doc_convert_test_larger_file",
+            "destination_type": "queue",
+            "routing_key": "safe_larger_file_convert",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "ELEARNING_SERVICE_PDF_CONVERT_SUCCESS_QUEUE",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "ccp_fs_pdf_convert_success_queue",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "eArchiveConvertPdfSuccessQueue",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "word_template_plus_pdf_convert_success_queue",
+            "destination_type": "queue",
+            "routing_key": "success",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "mq.document.process",
+            "destination_type": "queue",
+            "routing_key": "unsafe_convert",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_converter_exchange",
+            "vhost": "/",
+            "destination": "mq.document.process.larger.file",
+            "destination_type": "queue",
+            "routing_key": "unsafe_larger_file_convert",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_copy_file_exchange",
+            "vhost": "/",
+            "destination": "fs_file_copy_file_queue",
+            "destination_type": "queue",
+            "routing_key": "copy_file",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_es",
+            "vhost": "/",
+            "destination": "file_es_add",
+            "destination_type": "queue",
+            "routing_key": "add",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_es",
+            "vhost": "/",
+            "destination": "file_es_add_large_file",
+            "destination_type": "queue",
+            "routing_key": "add_large_file",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_es",
+            "vhost": "/",
+            "destination": "scanner_file_queue",
+            "destination_type": "queue",
+            "routing_key": "add_pdf_scanner",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_es",
+            "vhost": "/",
+            "destination": "file_es_delete",
+            "destination_type": "queue",
+            "routing_key": "delete",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_es",
+            "vhost": "/",
+            "destination": "file_es_pdf_scanner_add_file",
+            "destination_type": "queue",
+            "routing_key": "scanner_file",
+            "arguments": {}
+        },
+        {
+            "source": "fs_file_operate",
+            "vhost": "/",
+            "destination": "file_operate_log",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "fs_md5",
+            "vhost": "/",
+            "destination": "fs_file_md5",
+            "destination_type": "queue",
+            "routing_key": "fs_file_md5",
+            "arguments": {}
+        },
+        {
+            "source": "hls_topicExchange",
+            "vhost": "/",
+            "destination": "hls_transcode_copy",
+            "destination_type": "queue",
+            "routing_key": "copy",
+            "arguments": {}
+        },
+        {
+            "source": "hls_topicExchange",
+            "vhost": "/",
+            "destination": "hls_transcode_before",
+            "destination_type": "queue",
+            "routing_key": "hls_transcode-routing_before",
+            "arguments": {}
+        },
+        {
+            "source": "hls_topicExchange",
+            "vhost": "/",
+            "destination": "hls_transcode_after",
+            "destination_type": "queue",
+            "routing_key": "hls_transcode_routing_after",
+            "arguments": {}
+        },
+        {
+            "source": "imensa_exchange",
+            "vhost": "/",
+            "destination": "imensa_ai_data_prepare_task_queue",
+            "destination_type": "queue",
+            "routing_key": "ai_data_prepare_task_routing_key",
+            "arguments": {}
+        },
+        {
+            "source": "imensa_exchange",
+            "vhost": "/",
+            "destination": "imensa_download_task_queue",
+            "destination_type": "queue",
+            "routing_key": "dashboard_download_task_routing_key",
+            "arguments": {}
+        },
+        {
+            "source": "institutionStatusExchange",
+            "vhost": "/",
+            "destination": "ccpInstitutionStatusQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "irms.site.change.exchange",
+            "vhost": "/",
+            "destination": "ccp.irms.site.change.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "mds_audit_success_exchange",
+            "vhost": "/",
+            "destination": "ccp_audit_success_queue",
+            "destination_type": "queue",
+            "routing_key": "master-data-service",
+            "arguments": {}
+        },
+        {
+            "source": "middle-subject-exchange",
+            "vhost": "/",
+            "destination": "edc.update.subject.info",
+            "destination_type": "queue",
+            "routing_key": "subject.domain.base",
+            "arguments": {}
+        },
+        {
+            "source": "msg_sync_send_delay_exchange",
+            "vhost": "/",
+            "destination": "msg_sync_send_delay_queue",
+            "destination_type": "queue",
+            "routing_key": "msg_sync_send_delay",
+            "arguments": {}
+        },
+        {
+            "source": "notify_convert_result",
+            "vhost": "/",
+            "destination": "fs_delay_sink",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "operate_log_exchange",
+            "vhost": "/",
+            "destination": "eArchiveAddPrintTraceQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "projectCountryChangeExchange",
+            "vhost": "/",
+            "destination": "ccpCountryQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "projectCountryChangeExchange",
+            "vhost": "/",
+            "destination": "eArchiveCountryChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "sasRequestExchangeName",
+            "vhost": "/",
+            "destination": "itm.edc.sas.request.queue.gb2312",
+            "destination_type": "queue",
+            "routing_key": "GB2312",
+            "arguments": {}
+        },
+        {
+            "source": "sasRequestExchangeName",
+            "vhost": "/",
+            "destination": "itm.edc.sas.request.queue.utf8",
+            "destination_type": "queue",
+            "routing_key": "UTF-8",
+            "arguments": {}
+        },
+        {
+            "source": "sasRequestExchangeName",
+            "vhost": "/",
+            "destination": "itm.edc.sas.request.queue.gb2312",
+            "destination_type": "queue",
+            "routing_key": "gb2312",
+            "arguments": {}
+        },
+        {
+            "source": "sasRequestExchangeName",
+            "vhost": "/",
+            "destination": "itm.edc.sas.request.queue.utf8",
+            "destination_type": "queue",
+            "routing_key": "utf-8",
+            "arguments": {}
+        },
+        {
+            "source": "sendgridEmailStatusExchange",
+            "vhost": "/",
+            "destination": "sendgridEmailStatus",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "site_ethic_ccp_exchange",
+            "vhost": "/",
+            "destination": "ccp.site.ethic.queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "ssoSwitchExchange",
+            "vhost": "/",
+            "destination": "ccpSsoSwitchQueue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "syncCreateCourse",
+            "vhost": "/",
+            "destination": "eArchiveTMSTrainingSetup",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "userAuthChange",
+            "vhost": "/",
+            "destination": "eArchiveUserAuthChangeQueue",
+            "destination_type": "queue",
+            "routing_key": "007",
+            "arguments": {}
+        },
+        {
+            "source": "userAuthChange",
+            "vhost": "/",
+            "destination": "ccpAuth",
+            "destination_type": "queue",
+            "routing_key": "ccp",
+            "arguments": {}
+        },
+        {
+            "source": "word_template_plus_exchange",
+            "vhost": "/",
+            "destination": "word_template_plus_request_queue",
+            "destination_type": "queue",
+            "routing_key": "request",
+            "arguments": {}
+        },
+        {
+            "source": "wps_web_direct",
+            "vhost": "/",
+            "destination": "wps-web",
+            "destination_type": "queue",
+            "routing_key": "msg_in",
+            "arguments": {}
+        },
+        {
+            "source": "zt_econfig_auth_detail",
+            "vhost": "/",
+            "destination": "datart_tenant_auth_queue",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        }
+    ]
+}

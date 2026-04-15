@@ -24,16 +24,4 @@ public class ReportCommonQueryDao {
     public int batchInsert(List<ReportCommonQueryRecord> reportCommonQueryRecords) {
         return dslContext.batchInsert(reportCommonQueryRecords).execute().length;
     }
-
-    public int batchUpdate(List<ReportCommonQueryRecord> reportCommonQueryRecords) {
-        return dslContext.batchUpdate(reportCommonQueryRecords).execute().length;
-    }
-
-    public List<ReportCommonQueryRecord> getPage(int pageNo, int pageSize) {
-        return dslContext.selectFrom(reportCommonQueryTable).orderBy(reportCommonQueryTable.CREATE_TIME.asc()).limit(pageNo * pageSize, pageSize).fetchInto(ReportCommonQueryRecord.class);
-    }
-
-    public int count() {
-        return dslContext.fetchCount(reportCommonQueryTable);
-    }
 }

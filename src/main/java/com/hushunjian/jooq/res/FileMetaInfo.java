@@ -6,4 +6,7 @@ import lombok.Data;
 public class FileMetaInfo {
 
     private String fileId;
+
+
+    private String originFileName;
 }

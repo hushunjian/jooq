@@ -43,7 +43,7 @@ public class Field12Fix implements XianShenBase {
         for (List<String> row : res.getData().getRows()) {
             RelatedToCodeRecord relatedToCodeRecord = new RelatedToCodeRecord();
             relatedToCodeRecord.setId(row.get(0));
-            relatedToCodeRecord.setType(row.get(1));
+            //relatedToCodeRecord.setType(row.get(1));
             relatedToCodeRecord.setCode(row.get(2));
             relatedToCodeRecords.add(relatedToCodeRecord);
         }

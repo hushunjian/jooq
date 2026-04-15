@@ -9,13 +9,15 @@ import com.hushunjian.jooq.generator.tables.records.ReportCommonQueryRecord;
 import com.hushunjian.jooq.generator.tables.records.SchemaFieldRecord;
 import com.hushunjian.jooq.generator.tables.records.SchemaModuleRecord;
 import com.hushunjian.jooq.helper.QueryDBHelper;
-import com.hushunjian.jooq.req.*;
+import com.hushunjian.jooq.req.CommonSearchDTO;
+import com.hushunjian.jooq.req.CommonSearchItemDto;
+import com.hushunjian.jooq.req.QueryDBReq;
+import com.hushunjian.jooq.req.QueryLogEventReq;
 import com.hushunjian.jooq.res.LogEventRes;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -48,84 +53,6 @@ public class ReportCommonQueryController {
     @Resource
     private ReportCommonQueryDao reportCommonQueryDao;
 
-
-    @ApiOperation("获取所有标签信息")
-    @PostMapping(value = "getAll")
-    public void getAll(@RequestBody QueryDBReq req) {
-        // 查询esafety-test3租户的schemaField数据
-        List<SchemaFieldRecord> allSchemaFields = schemaDao.findAllSchemaFields();
-        // 按照报告字段id转map处理
-        Map<String, String> reportFieldIdMap = allSchemaFields.stream().collect(Collectors.toMap(SchemaFieldRecord::getReportFieldId, SchemaFieldRecord::getId));
-        // count所有
-        int total = reportCommonQueryDao.count();
-        // 页大小
-        int pageSize = 5000;
-        // 总页数
-        int totalPage = totalPage(total, pageSize);
-        // 所有字段id
-        Set<String> allSchemaFieldIds = Sets.newHashSet();
-        // 分页查询处理
-        for (int i = 0; i < totalPage; i++) {
-            // 查询当前页数据
-            List<ReportCommonQueryRecord> pageRecords = reportCommonQueryDao.getPage(i, pageSize);
-            // 字段id
-            Set<String> schemaFieldIds = Sets.newHashSet();
-            // 模块id
-            Set<String> moduleFieldIds = Sets.newHashSet();
-            // 当前页所有查询数据
-            List<CommonSearchItemDto> pageAllSearchItems = Lists.newArrayList();
-            // 收集所有的字段id,模块id
-            pageRecords.forEach(reportCommonQueryRecord -> {
-                // 转对象
-                AdvanceSearchDTO advanceSearch = parseObject(reportCommonQueryRecord.getQueryCondition().toString(), AdvanceSearchDTO.class);
-                // 获取所有的高级检索数据
-                advanceSearch.getCommonSearchDTO().getSearchItems().forEach(searchItem -> {
-                    schemaFieldIds.add(searchItem.getFieldId());
-                    moduleFieldIds.add(searchItem.getPageId());
-                    pageAllSearchItems.add(searchItem);
-                });
-                reportCommonQueryRecord.setVersion(reportCommonQueryRecord.getVersion() + 1);
-            });
-            // 查询字段信息
-            Pair<Map<String, Map<String, String>>, Map<String, Map<String, String>>> pair = getProdInfoMap(req, schemaFieldIds, moduleFieldIds);
-            // 在循环一次,转换成测试环境的字段id
-            pageAllSearchItems.forEach(searchItem -> {
-                // 测试环境schemaFieldId
-                String testSchemaFieldId = reportFieldIdMap.get(pair.getKey().get(searchItem.getFieldId()).get("report_field_id"));
-                if (StringUtils.isBlank(testSchemaFieldId)) {
-                    throw new RuntimeException();
-                }
-                allSchemaFieldIds.add(testSchemaFieldId);
-            });
-            // 更新version
-            reportCommonQueryDao.batchUpdate(pageRecords);
-        }
-        // 所有的字段id
-        log.info("所有用于查询的字段id:[{}]", String.join("','", allSchemaFieldIds));
-    }
-
-    private Pair<Map<String, Map<String, String>>, Map<String, Map<String, String>>> getProdInfoMap(QueryDBReq req, Collection<String> schemaFieldIds, Collection<String> moduleFieldIds) {
-        String queryFieldInfoSql = String.format("select * from schema_field where id in ('%s');", String.join("','", schemaFieldIds));
-        req.setSqlContent(queryFieldInfoSql);
-        List<Map<String, String>> schemaFieldRows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("id", "report_field_id", "module_id"));
-        // 根据id转map处理
-        Map<String, Map<String, String>> schemaFieldMap = schemaFieldRows.stream().collect(Collectors.toMap(row -> row.get("id"), row -> row));
-        // 查询模块信息
-        String queryModuleInfoSql = String.format("select * from schema_module where id in ('%s');", String.join("','", moduleFieldIds));
-        req.setSqlContent(queryModuleInfoSql);
-        List<Map<String, String>> schemaModuleRows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("id", "code"));
-        // 根据id转map处理
-        Map<String, Map<String, String>> schemaModuleMap = schemaModuleRows.stream().collect(Collectors.toMap(row -> row.get("id"), row -> row));
-        return Pair.of(schemaFieldMap, schemaModuleMap);
-    }
-
-    private static int totalPage(int totalCount, int pageSize) {
-        if (pageSize == 0) {
-            return 0;
-        } else {
-            return totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
-        }
-    }
 
     @ApiOperation("查询线上查询标签")
     @PostMapping(value = "queryReportCommonQuery")
@@ -159,9 +86,18 @@ public class ReportCommonQueryController {
                 });
             }
         });
-        Pair<Map<String, Map<String, String>>, Map<String, Map<String, String>>> pair = getProdInfoMap(req, schemaFieldIds, schemaModuleIds);
-        Map<String, Map<String, String>> schemaFieldMap = pair.getKey();
-        Map<String, Map<String, String>> schemaModuleMap = pair.getValue();
+        // 查询字段信息
+        String queryFieldInfoSql = String.format("select * from schema_field where id in ('%s');", String.join("','", schemaFieldIds));
+        req.setSqlContent(queryFieldInfoSql);
+        List<Map<String, String>> schemaFieldRows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("id", "report_field_id", "module_id"));
+        // 根据id转map处理
+        Map<String, Map<String, String>> schemaFieldMap = schemaFieldRows.stream().collect(Collectors.toMap(row -> row.get("id"), row -> row));
+        // 查询模块信息
+        String queryModuleInfoSql = String.format("select * from schema_module where id in ('%s');", String.join("','", schemaModuleIds));
+        req.setSqlContent(queryModuleInfoSql);
+        List<Map<String, String>> schemaModuleRows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("id", "code"));
+        // 根据id转map处理
+        Map<String, Map<String, String>> schemaModuleMap = schemaModuleRows.stream().collect(Collectors.toMap(row -> row.get("id"), row -> row));
         // 新增SQL
         List<String> insertSql = Lists.newArrayList();
         // 所有字段id

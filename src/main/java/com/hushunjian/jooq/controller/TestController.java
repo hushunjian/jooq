@@ -382,7 +382,7 @@ public class TestController {
     @PostMapping(value = "genFixSql")
     public void genFixSql() {
         // 读取excel
-        ExcelData excelData = readExcelData("C:\\Users\\shunjian.hu\\Desktop", "report_value.xlsx");
+        ExcelData excelData = readExcelData("D:\\download\\jooq\\Desktop", "report_value.xlsx");
         //
         List<String> fixSql = Lists.newArrayList();
         excelData.getSheetRowsMap().get("Sheet1").forEach(row -> {
@@ -512,7 +512,7 @@ public class TestController {
                 "8a8dbf2a972936510197913588403ead"
         );
         // 读excel
-        ExcelData excelData = readExcelData("C:\\Users\\shunjian.hu\\Desktop", "错误字段信息2.xlsx");
+        ExcelData excelData = readExcelData("D:\\download\\jooq\\Desktop", "错误字段信息2.xlsx");
         // 表列
         Map<String, Set<String>> tableColumnsMap = Maps.newHashMap();
         // 循环行处理
@@ -573,7 +573,7 @@ public class TestController {
     @ApiOperation("readTxt")
     @PostMapping(value = "readTxt")
     public void readTxt() {
-        List<String> paths = Lists.newArrayList("C:\\Users\\shunjian.hu\\Desktop\\下载文件\\20250625144145.log", "C:\\Users\\shunjian.hu\\Desktop\\下载文件\\20250625144023.log");
+        List<String> paths = Lists.newArrayList("D:\\download\\jooq\\Desktop\\下载文件\\20250625144145.log", "D:\\download\\jooq\\Desktop\\下载文件\\20250625144023.log");
         Pattern pattern = Pattern.compile("字段:\\[([^\\]]+)\\]");
         List<String> headers = Lists.newArrayList("字段", "错误信息", "字段描述", "表", "列");
         List<List<String>> table = Lists.newArrayList();
@@ -606,9 +606,9 @@ public class TestController {
         QueryDBHelper.exportExcel2(headers, table, "错误字段信息2");
 
 
-/*        List<String> inputs = readTxtLine("C:\\Users\\shunjian.hu\\Desktop\\入参文件.txt");
+/*        List<String> inputs = readTxtLine("D:\\download\\jooq\\Desktop\\入参文件.txt");
         // 替换为你自己的文件路径
-        List<V4V5FieldConfig> v4V5FieldConfigs = readTxtLine("C:\\Users\\shunjian.hu\\Desktop\\映射文件.txt").stream().map(line -> {
+        List<V4V5FieldConfig> v4V5FieldConfigs = readTxtLine("D:\\download\\jooq\\Desktop\\映射文件.txt").stream().map(line -> {
             String[] split = line.split("\\|");
             return V4V5FieldConfig.builder()
                     .v4FieldPath(split[1])
@@ -711,7 +711,7 @@ public class TestController {
     @GetMapping(value = "mergeReplaceInfo")
     public void mergeReplaceInfo() {
         // 指定bat文件所在的文件夹路径
-        String dirPath = "C:\\Users\\shunjian.hu\\Desktop\\下载文件\\bat";
+        String dirPath = "D:\\download\\jooq\\Desktop\\下载文件\\bat";
 
         try (Stream<Path> paths = Files.walk(Paths.get(dirPath))) {
             // 过滤出所有的.bat文件
@@ -747,7 +747,7 @@ public class TestController {
         QI_LU_REPLACE_INFO_MAP.forEach((folderName, infoMap) -> {
             File inputFile = filePath.toFile();
             // 根据输入文件名创建输出文件，但位于不同的目录
-            File outputFile = new File("C:\\Users\\shunjian.hu\\Desktop\\下载文件\\" + folderName, inputFile.getName());
+            File outputFile = new File("D:\\download\\jooq\\Desktop\\下载文件\\" + folderName, inputFile.getName());
             try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
@@ -782,7 +782,7 @@ public class TestController {
     @GetMapping(value = "mergeSql")
     public void mergeSql() {
         // 设置源目录路径
-        String sourceDirPath = "C:\\Users\\shunjian.hu\\Desktop\\flyway"; // 替换为你的flyway目录路径
+        String sourceDirPath = "D:\\download\\jooq\\Desktop\\flyway"; // 替换为你的flyway目录路径
 
         File sourceDir = new File(sourceDirPath);
 
@@ -1494,7 +1494,7 @@ public class TestController {
             ids.forEach(id -> fixSql.add(String.format("update meddra_field_info set meddra_version = '%s' where id = '%s';", meddraVersion, id)));
         });
         // 导出建表SQL
-        newFile(("C:\\Users\\shunjian.hu\\Desktop" + "\\" + "fixMeddraVersion.sql"), String.join("\n", fixSql));
+        newFile(("D:\\download\\jooq\\Desktop" + "\\" + "fixMeddraVersion.sql"), String.join("\n", fixSql));
     }
 
     @ApiOperation("pv数据库校验")
@@ -2114,7 +2114,7 @@ public class TestController {
     }
 
     private void exportFile(List<DbTable> all) {
-        String path = "C:\\Users\\shunjian.hu\\Desktop\\" + (new Date()).getTime();
+        String path = "D:\\download\\jooq\\Desktop\\" + (new Date()).getTime();
         // 创建一个临时文件夹
         mkdir(path);
         // 生成导出数据,按照实例分组
@@ -2286,14 +2286,8 @@ public class TestController {
             dbTables.forEach(table -> exportDbTable(table, instanceName, db, req, all));
             log.info("导出数据库[{}]表结构和数据结束==================================", db);
         }));
-        List<String> tables = Lists.newArrayList();
         // 导出文件
-        all.stream().filter(table -> StringUtils.containsAny(table.getCreateTableSql(), "tenant_id", "company_id")).forEach(table -> {
-            System.out.println(table.getTableName());
-            tables.add(table.getTableName());
-        });
-        //exportFile(all);
-        System.out.println();
+        exportFile(all);
         log.info("处理完成");
     }
 
@@ -2561,7 +2555,7 @@ public class TestController {
     }
 
     private ExcelData readExcelData(String fileName) {
-        String filePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\%s", fileName);
+        String filePath = String.format("D:\\download\\jooq\\Desktop\\%s", fileName);
         try {
             return ExcelDataHelper.readExcelData(new FileInputStream(filePath));
         } catch (FileNotFoundException exception) {
@@ -2582,7 +2576,7 @@ public class TestController {
 
 
     private ExcelData readExcelData(String fileName, ExcelAnalysisModel analysisModel) {
-        String filePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\%s", fileName);
+        String filePath = String.format("D:\\download\\jooq\\Desktop\\%s", fileName);
         try {
             return ExcelDataHelper.readExcelData(new FileInputStream(filePath), analysisModel);
         } catch (FileNotFoundException exception) {
@@ -2638,7 +2632,7 @@ public class TestController {
         req.setSqlContent(queryFileSql);
         // 查询
         D res = QueryDBHelper.getRes(req, restTemplate);
-        String feedbackFolder = "C:\\Users\\shunjian.hu\\Desktop\\feedback";
+        String feedbackFolder = "D:\\download\\jooq\\Desktop\\feedback";
         // 创建目录
         mkdir(feedbackFolder);
         Map<String, String> fileMap = Maps.newHashMap();
@@ -2656,11 +2650,11 @@ public class TestController {
     @PostMapping(value = "readExcelAndDownloadProdFiles")
     public void readExcelAndDownloadProdFiles() {
         //
-        ExcelData excelData = ExcelDataHelper.readExcelData(new FileInputStream("C:\\Users\\shunjian.hu\\Desktop\\下载文件\\复旦张江原始资料.xls"));
+        ExcelData excelData = ExcelDataHelper.readExcelData(new FileInputStream("D:\\download\\jooq\\Desktop\\下载文件\\复旦张江原始资料.xls"));
         //
         List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
         //
-        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\excel_download";
+        String baseFolderPath = "D:\\download\\jooq\\Desktop\\excel_download";
         // 创建目录
         mkdir(baseFolderPath);
         //
@@ -2684,7 +2678,7 @@ public class TestController {
     @ApiOperation("下载线上文件")
     @PostMapping(value = "downloadProdFiles")
     public void downloadProdFiles(@RequestBody QueryDBReq req) {
-        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\export_file_info";
+        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file_info";
         AtomicInteger index = new AtomicInteger(1);
         // 创建目录
         mkdir(baseFolderPath);
@@ -2706,21 +2700,21 @@ public class TestController {
     public void moveFile() {
         // 源文件夹路径列表
         List<String> sourceFolders = Lists.newArrayList(
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_1",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_2",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_3",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_4",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_5",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_6",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_7",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_8",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_9",
-                "C:\\Users\\shunjian.hu\\Desktop\\export_file\\batch_10"
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_1",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_2",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_3",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_4",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_5",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_6",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_7",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_8",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_9",
+                "D:\\download\\jooq\\Desktop\\export_file\\batch_10"
 
         );
 
         // 目标文件夹路径
-        String targetFolder = "C:\\Users\\shunjian.hu\\Desktop\\export_file\\all";
+        String targetFolder = "D:\\download\\jooq\\Desktop\\export_file\\all";
         // 移动文件
         moveFilesConcurrently(sourceFolders, targetFolder);
         System.out.println("文件移动完成！");
@@ -3110,7 +3104,7 @@ public class TestController {
         Map<String, List<String>> reportSenderRowMap = data.stream().collect(Collectors.toMap(row -> String.format("%s-%s", row.get(2), row.get(3)), row -> row, (o, n) -> n));
         data = Lists.newArrayList(reportSenderRowMap.values());
         log.info("根据报告和发送者信息去重后总条数:[{}]", data.size());
-        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\export_file";
+        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file";
         // 创建目录
         mkdir(baseFolderPath);
         // 10000个一个文件夹
@@ -3166,7 +3160,7 @@ public class TestController {
         // 导出数据
         List<List<String>> data = result.getValue();
         log.info("导出总条数:[{}]", data.size());
-        String baseFolderPath = "C:\\Users\\shunjian.hu\\Desktop\\export_file";
+        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file";
         // 创建目录
         mkdir(baseFolderPath);
         // 循环处理数据
@@ -4196,7 +4190,7 @@ public class TestController {
     }
 
     private void exportFixSQLFile(List<String> result) {
-        String updateSQLFilePath = String.format("C:\\Users\\shunjian.hu\\Desktop\\updateSql\\%s", System.nanoTime());
+        String updateSQLFilePath = String.format("D:\\download\\jooq\\Desktop\\updateSql\\%s", System.nanoTime());
         // 生成文件夹
         mkdir(updateSQLFilePath);
         // 生成更新文件
@@ -4252,7 +4246,7 @@ public class TestController {
     }
 
     private void writeFile(String serviceName, String properties) {
-        String serviceFolder = String.format("C:\\Users\\shunjian.hu\\Desktop\\configMap\\%s", serviceName);
+        String serviceFolder = String.format("D:\\download\\jooq\\Desktop\\configMap\\%s", serviceName);
         // 创建文件夹
         mkdir(serviceFolder);
         // 文件的完整路径
@@ -4296,7 +4290,7 @@ public class TestController {
     @ApiOperation("读取文件夹下")
     @GetMapping(value = "readFolderExcel")
     public void readFolderExcel() {
-        String folderPath = "C:\\Users\\shunjian.hu\\Desktop\\文件";
+        String folderPath = "D:\\download\\jooq\\Desktop\\文件";
         List<ExportInfoDTO> all = Lists.newArrayList();
         try (Stream<Path> stream = Files.walk(Paths.get(folderPath), 1)) {
             for (Path path : stream
@@ -4719,7 +4713,7 @@ public class TestController {
     @ApiOperation("testNum")
     @GetMapping(value = "testNum")
     public void testNum() {
-        String folderPath = "C:\\Users\\shunjian.hu\\Desktop";
+        String folderPath = "D:\\download\\jooq\\Desktop";
         List<String> fileNames = Lists.newArrayList("Listing.xlsx");
         Map<String, List<String>> reportNoFileNameMap = Maps.newHashMap();
         fileNames.forEach(fileName -> {
@@ -4739,8 +4733,14 @@ public class TestController {
     public void readExcel(@RequestParam String fileName,
                           @RequestParam ExcelAnalysisModel analysisModel) {
         ExcelData excelData = readExcelData(fileName, analysisModel);
+
+        List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+        //
+        List<String> names = rows.stream().filter(row -> StringUtils.equals(row.get("取消联动"), "是"))
+                .map(row -> row.get("i18n_key")).distinct().collect(Collectors.toList());
+
         //fdaError(excelData);
-        fda(excelData);
+        //fda(excelData);
 /*        List<String> insertSql = Lists.newArrayList();
         excelData.getSheetRowsMap().get("Sheet1").forEach(row -> {
             String date = row.get("时间");
@@ -4908,5 +4908,66 @@ public class TestController {
             }
             result.put(service, StringUtils.joinWith("\n", split));
         });
+    }
+
+    @ApiOperation("拆分线上租户")
+    @PostMapping(value = "splitTenantIds")
+    public void splitTenantIds(@RequestBody QueryDBReq req) {
+        // 查询每个租户主语言报告数量
+        String queryTenantLanguageTotalSql = "select t1.tenant_id, t2.total from report_language t1 left JOIN (select tenant_id, locale, count(1) as total from report_value group by tenant_id, locale) t2 ON t1.tenant_id = t2.tenant_id and t1.language = t2.locale WHERE t1.is_default = 1 AND t1.is_deleted = 0 order by IFNULL(t2.total, 0) ASC, t1.tenant_id ASC;";
+        // 设置数据库
+        req.setInstanceName("prod-mysql-pvcaps-ro");
+        req.setDbName("pvs_report_all");
+        req.setLimitNum("0");
+        req.setSqlContent(queryTenantLanguageTotalSql);
+        // 查询数据
+        List<Map<String, String>> tenantTotalRows = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("tenant_id", "total"));
+        // 获取数据
+        //List<Map<String, String>> tenantTotalRows = readExcelData("租户信息.xlsx").getSheetRowsMap().get("Sheet1");
+        // 租户总数map
+        Map<String, Integer> tenantTotalMap = tenantTotalRows.stream().collect(Collectors.toMap(row -> row.get("tenant_id"),
+                row -> StringUtils.isBlank(row.get("total")) ? 0 : Integer.parseInt(row.get("total")), (o, n) -> n, LinkedHashMap::new));
+        // 计算总数
+        AtomicInteger total = new AtomicInteger(0);
+        // 累加
+        tenantTotalMap.values().forEach(total::addAndGet);
+        log.info("报告总数:[{}]", total.get());
+        // 拆分总数：拆成 size 组，使每组 total 之和尽量均衡
+        int size = 4;
+        List<List<String>> splitGroups = splitTenantMapBalanced(tenantTotalMap, size);
+        //
+        // 输出每组租户及该组 total 汇总
+        for (int i = 0; i < splitGroups.size(); i++) {
+            int groupSum = splitGroups.get(i).stream().mapToInt(tenantTotalMap::get).sum();
+            List<String> tenantIds = splitGroups.get(i);
+            log.info("第{}组 租户数:[{}] 报告总数:[{}] tenantIds:{}", i + 1, splitGroups.get(i).size(), groupSum, tenantIds);
+            String curl = String.format("curl -X PUT \"http://localhost:8080/indices/reTenantsIndex\" -H \"accept: */*\" -H \"Content-Type: application/json\" -d '[\"%s\"]' -H \"CALL_PRIVATE_API_REASON: reTenantsIndex\" -H \"CALL_PRIVATE_API_USER_NAME: hsj\" -H \"TM-Header-ReTenantIndexOldIndexOperation: delete\"", String.join("\",\"", tenantIds));
+            System.out.println(curl);
+        }
+
+    }
+
+    private List<List<String>> splitTenantMapBalanced(Map<String, Integer> tenantTotalMap, int groupCount) {
+        if (groupCount <= 0) {
+            return Lists.newArrayList();
+        }
+        // 按 total 降序，优先分配大租户便于均衡
+        List<Map.Entry<String, Integer>> sorted = tenantTotalMap.entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).collect(Collectors.toList());
+        List<List<String>> groups = Lists.newArrayList();
+        int[] groupSums = new int[groupCount];
+        for (int i = 0; i < groupCount; i++) {
+            groups.add(Lists.newArrayList());
+        }
+        for (Map.Entry<String, Integer> entry : sorted) {
+            int minIdx = 0;
+            for (int i = 1; i < groupCount; i++) {
+                if (groupSums[i] < groupSums[minIdx]) {
+                    minIdx = i;
+                }
+            }
+            groups.get(minIdx).add(entry.getKey());
+            groupSums[minIdx] += entry.getValue();
+        }
+        return groups;
     }
 }

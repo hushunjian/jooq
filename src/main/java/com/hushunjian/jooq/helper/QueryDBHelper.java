@@ -20,12 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
@@ -107,10 +106,196 @@ public class QueryDBHelper {
                         .companyId("6edc1973f7a24c65a305a6db001f52d0")
                         .password("591aa56b9305a8ccbd895e5036ffc939")
                         .cookie("eSafety5_unblind_warn=true; acw_tc=0a47308217642999660583666ededb2ddc16a931656d102c6d22afcbb89c40; 7f96b84d7942c5921d2c23d03b1f4e59=7f96b84d7942c5921d2c23d03b1f4e59; token=d150c83d773343b884a01f2d2f3e7668")
+                        .study(false)
+                        .build()
+        );
+
+
+        study_info.add(
+                UserStudyInfo.builder()
+                        .userName("wanyue")
+                        .userId("8a81c08a7b0678ae017b286ddab20d15")
+                        .companyId("6edc1973f7a24c65a305a6db001f52d0")
+                        .password("6e90685578d9cfdfbcf461488e8ce035")
+                        .cookie("acw_tc=707c9f7717748523550164013e0d89b8da585714ddb548a71d888f231889ff; token=8e6e32692168445f90a7fd168dabedab")
                         .study(true)
                         .build()
         );
 
+    }
+
+    public static Boolean addScheduleTask(RestTemplate restTemplate, String cookie, ProdScheduleTaskDetail prodScheduleTaskDetail, String urlPrefix) {
+        String copyEnvConfigUrl = String.format("https://%s/api/omp-web/omp-web/forward/job-service/job/save", urlPrefix);
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<ProdScheduleTaskDetail> requestEntity = new HttpEntity<>(prodScheduleTaskDetail, headers);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(copyEnvConfigUrl, HttpMethod.POST, requestEntity, ActionResult.class);
+        if (response.getBody() == null) {
+            throw new RuntimeException();
+        }
+        //
+        System.out.println(response.getBody());
+        return response.getBody().isSuccess();
+    }
+
+    public static List<TemplateFileRes> getProdTemplateFile(RestTemplate restTemplate, QueryProdScheduleTaskReq req) {
+        String url = "https://omp.trialos.com.cn/api/omp-web/omp-web/forward/esae-template-service.pv/v2/template/page";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", req.getProdCookie());
+        headers.add("tm-header-tenantid", "system");
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<QueryProdScheduleTaskReq> requestEntity = new HttpEntity<>(req, headers);
+        // 调用
+        ResponseEntity<ActionResult<TemplateFilePageRes>> res = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<TemplateFilePageRes>>() {});
+        if (res.getBody() == null) {
+            throw new RuntimeException();
+        }
+        return res.getBody().getData().getRows();
+    }
+
+    public static FileMetaInfo exportProdTemplateFile(RestTemplate restTemplate, QueryProdScheduleTaskReq req, String templateId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cookie", req.getProdCookie());
+        String url = String.format("https://omp.trialos.com.cn/api/omp-web/omp-web/forward/esae-template-service.pv/template/data/sync/export/%s", templateId);
+        ResponseEntity<ActionResult<FileMetaInfo>> res = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<ActionResult<FileMetaInfo>>() {});
+        if (res.getBody() == null) {
+            throw new RuntimeException();
+        }
+        return res.getBody().getData();
+    }
+
+    public static boolean templateFileOverlayImport(RestTemplate restTemplate, String cookie, String fileId, String urlPrefix, boolean removeNameSpace) {
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 请求URL
+        String sonarScanUrl = String.format("https://%s/api/omp-web/omp-web/forward/esae-template-service%s/template/data/sync/overlayImport?fileId=%s", urlPrefix, removeNameSpace ? "" : ".pv", fileId);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(sonarScanUrl, HttpMethod.PUT, new HttpEntity<>(headers), ActionResult.class);
+        if (response.getBody() == null) {
+            throw new RuntimeException();
+        }
+        return response.getBody().isSuccess();
+    }
+
+
+    public static List<ProdScheduleTaskDetail> queryProdScheduleTask(RestTemplate restTemplate, QueryProdScheduleTaskReq req) {
+        String url = "https://omp.trialos.com.cn/api/omp-web/omp-web/forward/job-service/job/list";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", req.getProdCookie());
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<QueryProdScheduleTaskReq> requestEntity = new HttpEntity<>(req, headers);
+        // 调用
+        ResponseEntity<ActionResult<QueryProdScheduleTaskRes>> res = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<QueryProdScheduleTaskRes>>() {});
+        //
+        System.out.println(res.getBody());
+        if (res.getBody() != null && res.getBody().getData() != null && CollectionUtils.isNotEmpty(res.getBody().getData().getList())) {
+            return res.getBody().getData().getList();
+        }
+        throw new RuntimeException();
+    }
+
+
+
+    public static Boolean sonarScanStatusCheck(String cookie, RestTemplate restTemplate, SonarScanStatusCheckReq req) {
+        String url = "http://itaimei.in.taimei.com/api/cicd-service/cicd/searchScanHistory";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<SonarScanStatusCheckReq> requestEntity = new HttpEntity<>(req, headers);
+        // 调用
+        ResponseEntity<ActionResult<SonarScanStatusCheckRes>> res = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<SonarScanStatusCheckRes>>() {});
+        //
+        System.out.println(res.getBody());
+        // 获取第一个,查看状态
+        if (res.getBody() != null && res.getBody().getData() != null && CollectionUtils.isNotEmpty(res.getBody().getData().getList())) {
+            return StringUtils.equals(res.getBody().getData().getList().get(0).getJobStatus(), "success");
+        }
+        return false;
+    }
+
+    public static Boolean deployStatusCheck(String cookie, RestTemplate restTemplate, ServiceDeployStatusCheckReq req) {
+        String url = "http://itaimei.in.taimei.com/api/cicd-service/cicd/searchTriggerHistory";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<ServiceDeployStatusCheckReq> requestEntity = new HttpEntity<>(req, headers);
+        // 调用
+        ResponseEntity<ActionResult<DeployServiceStatusCheckRes>> res = restTemplate.exchange(url, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<ActionResult<DeployServiceStatusCheckRes>>() {});
+        //
+        System.out.println(res.getBody());
+        // 获取第一个,查看状态
+        if (res.getBody() != null && res.getBody().getData() != null && CollectionUtils.isNotEmpty(res.getBody().getData().getList())) {
+            return StringUtils.equals(res.getBody().getData().getList().get(0).getPipelineStatus(), "success");
+        }
+        return false;
+    }
+
+    public static void deployService(String cookie, RestTemplate restTemplate, ServiceDeployReq req) {
+        String copyEnvConfigUrl = "http://itaimei.in.taimei.com/api/cicd-service/cicd/trigger";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<ServiceDeployReq> requestEntity = new HttpEntity<>(req, headers);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(copyEnvConfigUrl, HttpMethod.POST, requestEntity, ActionResult.class);
+        //
+        System.out.println(response.getBody());
+    }
+
+    public static void sonarScan(String cookie, RestTemplate restTemplate, String appId, String branchName) {
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 请求URL
+        String sonarScanUrl = String.format("http://itaimei.in.taimei.com/api/cicd-service/cicd/scan?appId=%s&branchName=%s&skipTest=1&noCache=0&jdkVersion=1.8", appId, branchName);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(sonarScanUrl, HttpMethod.PUT, new HttpEntity<>(headers), ActionResult.class);
+        System.out.println(response.getBody());
+    }
+
+    public static void pushConfigMap(String cookie, RestTemplate restTemplate, PushConfigMapReq pushConfigMapReq) {
+        String copyEnvConfigUrl = "http://itaimei.in.taimei.com/api/cicd-service/configMap/create";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<PushConfigMapReq> requestEntity = new HttpEntity<>(pushConfigMapReq, headers);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(copyEnvConfigUrl, HttpMethod.POST, requestEntity, ActionResult.class);
+        //
+        System.out.println(response.getBody());
+    }
+
+    public static void copyEnvConfig(String cookie, RestTemplate restTemplate, CopyEnvConfigReq copyEnvConfigReq) {
+        String copyEnvConfigUrl = "http://itaimei.in.taimei.com/api/cicd-service/arrangement/copyAppArrangement";
+        HttpHeaders headers = new HttpHeaders();
+        // 头权限
+        headers.add("Cookie", cookie);
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        // 入参
+        HttpEntity<CopyEnvConfigReq> requestEntity = new HttpEntity<>(copyEnvConfigReq, headers);
+        // 调用
+        ResponseEntity<ActionResult> response = restTemplate.exchange(copyEnvConfigUrl, HttpMethod.POST, requestEntity, ActionResult.class);
+        //
+        System.out.println(response.getBody());
     }
 
     @SneakyThrows
@@ -295,7 +480,7 @@ public class QueryDBHelper {
     }
 
     private static File genTempFile(String fileName) {
-        return genTempFile("C:\\Users\\shunjian.hu\\Desktop", genName(fileName));
+        return genTempFile("D:\\download\\jooq\\Desktop", genName(fileName));
     }
 
     private static File genTempFile(String path, String fileName) {
@@ -359,6 +544,27 @@ public class QueryDBHelper {
             download(fileId, fileName, restTemplate, outFilePath, cookie);
             log.info("下载进度[{}-{}]", num.getAndIncrement(), fileMap.size());
         });
+    }
+
+    public static FileMetaInfo uploadFile(String localFilePath, RestTemplate restTemplate, String cookie, String urlPrefix) {
+        File file = new File(localFilePath);
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("不是有效文件: " + localFilePath);
+        }
+        String url = String.format("https://%s/api/omp-web/omp-web/stream/forward/fs-service/file/upload", urlPrefix);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", new FileSystemResource(file));
+        body.add("appId", "pv-esafety");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.add("Cookie", cookie);
+        headers.add("TM-Header-AppId", "pv-esafety");
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
+        ResponseEntity<ActionResult<FileMetaInfo>> res = restTemplate.exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<ActionResult<FileMetaInfo>>() {});
+        if (res.getBody() == null) {
+            throw new RuntimeException();
+        }
+        return res.getBody().getData();
     }
 
     @SneakyThrows
