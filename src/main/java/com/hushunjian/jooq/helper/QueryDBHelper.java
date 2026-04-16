@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.hushunjian.jooq.configuration.Constant;
 import com.hushunjian.jooq.req.*;
 import com.hushunjian.jooq.res.*;
 import lombok.SneakyThrows;
@@ -480,7 +481,7 @@ public class QueryDBHelper {
     }
 
     private static File genTempFile(String fileName) {
-        return genTempFile("D:\\download\\jooq\\Desktop", genName(fileName));
+        return genTempFile(Constant.baseFolderPath, genName(fileName));
     }
 
     private static File genTempFile(String path, String fileName) {

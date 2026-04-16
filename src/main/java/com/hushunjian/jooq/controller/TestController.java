@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hushunjian.jooq.configuration.Constant;
 import com.hushunjian.jooq.dao.*;
 import com.hushunjian.jooq.generator.tables.records.*;
 import com.hushunjian.jooq.helper.ExcelAnalysisModel;
@@ -382,7 +383,7 @@ public class TestController {
     @PostMapping(value = "genFixSql")
     public void genFixSql() {
         // 读取excel
-        ExcelData excelData = readExcelData("D:\\download\\jooq\\Desktop", "report_value.xlsx");
+        ExcelData excelData = readExcelData(Constant.baseFolderPath, "report_value.xlsx");
         //
         List<String> fixSql = Lists.newArrayList();
         excelData.getSheetRowsMap().get("Sheet1").forEach(row -> {
@@ -512,7 +513,7 @@ public class TestController {
                 "8a8dbf2a972936510197913588403ead"
         );
         // 读excel
-        ExcelData excelData = readExcelData("D:\\download\\jooq\\Desktop", "错误字段信息2.xlsx");
+        ExcelData excelData = readExcelData(Constant.baseFolderPath, "错误字段信息2.xlsx");
         // 表列
         Map<String, Set<String>> tableColumnsMap = Maps.newHashMap();
         // 循环行处理
@@ -573,7 +574,7 @@ public class TestController {
     @ApiOperation("readTxt")
     @PostMapping(value = "readTxt")
     public void readTxt() {
-        List<String> paths = Lists.newArrayList("D:\\download\\jooq\\Desktop\\下载文件\\20250625144145.log", "D:\\download\\jooq\\Desktop\\下载文件\\20250625144023.log");
+        List<String> paths = Lists.newArrayList(String.format("%s\\下载文件\\20250625144145.log", Constant.baseFolderPath), String.format("%s\\下载文件\\20250625144023.log", Constant.baseFolderPath));
         Pattern pattern = Pattern.compile("字段:\\[([^\\]]+)\\]");
         List<String> headers = Lists.newArrayList("字段", "错误信息", "字段描述", "表", "列");
         List<List<String>> table = Lists.newArrayList();
@@ -606,9 +607,9 @@ public class TestController {
         QueryDBHelper.exportExcel2(headers, table, "错误字段信息2");
 
 
-/*        List<String> inputs = readTxtLine("D:\\download\\jooq\\Desktop\\入参文件.txt");
+        /*List<String> inputs = readTxtLine(String.format("%s\\入参文件.txt", Constant.baseFolderPath));
         // 替换为你自己的文件路径
-        List<V4V5FieldConfig> v4V5FieldConfigs = readTxtLine("D:\\download\\jooq\\Desktop\\映射文件.txt").stream().map(line -> {
+        List<V4V5FieldConfig> v4V5FieldConfigs = readTxtLine(String.format("%s\\映射文件.txt", Constant.baseFolderPath)).stream().map(line -> {
             String[] split = line.split("\\|");
             return V4V5FieldConfig.builder()
                     .v4FieldPath(split[1])
@@ -711,7 +712,7 @@ public class TestController {
     @GetMapping(value = "mergeReplaceInfo")
     public void mergeReplaceInfo() {
         // 指定bat文件所在的文件夹路径
-        String dirPath = "D:\\download\\jooq\\Desktop\\下载文件\\bat";
+        String dirPath = String.format("%s\\下载文件\\bat", Constant.baseFolderPath);
 
         try (Stream<Path> paths = Files.walk(Paths.get(dirPath))) {
             // 过滤出所有的.bat文件
@@ -747,7 +748,7 @@ public class TestController {
         QI_LU_REPLACE_INFO_MAP.forEach((folderName, infoMap) -> {
             File inputFile = filePath.toFile();
             // 根据输入文件名创建输出文件，但位于不同的目录
-            File outputFile = new File("D:\\download\\jooq\\Desktop\\下载文件\\" + folderName, inputFile.getName());
+            File outputFile = new File(String.format("%s\\下载文件\\", Constant.baseFolderPath) + folderName, inputFile.getName());
             try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
@@ -782,7 +783,7 @@ public class TestController {
     @GetMapping(value = "mergeSql")
     public void mergeSql() {
         // 设置源目录路径
-        String sourceDirPath = "D:\\download\\jooq\\Desktop\\flyway"; // 替换为你的flyway目录路径
+        String sourceDirPath = String.format("%s\\flyway", Constant.baseFolderPath); // 替换为你的flyway目录路径
 
         File sourceDir = new File(sourceDirPath);
 
@@ -1494,7 +1495,7 @@ public class TestController {
             ids.forEach(id -> fixSql.add(String.format("update meddra_field_info set meddra_version = '%s' where id = '%s';", meddraVersion, id)));
         });
         // 导出建表SQL
-        newFile(("D:\\download\\jooq\\Desktop" + "\\" + "fixMeddraVersion.sql"), String.join("\n", fixSql));
+        newFile((Constant.baseFolderPath + "\\" + "fixMeddraVersion.sql"), String.join("\n", fixSql));
     }
 
     @ApiOperation("pv数据库校验")
@@ -2114,7 +2115,7 @@ public class TestController {
     }
 
     private void exportFile(List<DbTable> all) {
-        String path = "D:\\download\\jooq\\Desktop\\" + (new Date()).getTime();
+        String path = Constant.baseFolderPath + "\\" + (new Date()).getTime();
         // 创建一个临时文件夹
         mkdir(path);
         // 生成导出数据,按照实例分组
@@ -2555,7 +2556,7 @@ public class TestController {
     }
 
     private ExcelData readExcelData(String fileName) {
-        String filePath = String.format("D:\\download\\jooq\\Desktop\\%s", fileName);
+        String filePath = String.format("%s\\%s", Constant.baseFolderPath, fileName);
         try {
             return ExcelDataHelper.readExcelData(new FileInputStream(filePath));
         } catch (FileNotFoundException exception) {
@@ -2576,7 +2577,7 @@ public class TestController {
 
 
     private ExcelData readExcelData(String fileName, ExcelAnalysisModel analysisModel) {
-        String filePath = String.format("D:\\download\\jooq\\Desktop\\%s", fileName);
+        String filePath = String.format("%s\\%s", Constant.baseFolderPath, fileName);
         try {
             return ExcelDataHelper.readExcelData(new FileInputStream(filePath), analysisModel);
         } catch (FileNotFoundException exception) {
@@ -2632,7 +2633,7 @@ public class TestController {
         req.setSqlContent(queryFileSql);
         // 查询
         D res = QueryDBHelper.getRes(req, restTemplate);
-        String feedbackFolder = "D:\\download\\jooq\\Desktop\\feedback";
+        String feedbackFolder = Constant.baseFolderPath + "\\feedback";
         // 创建目录
         mkdir(feedbackFolder);
         Map<String, String> fileMap = Maps.newHashMap();
@@ -2650,11 +2651,11 @@ public class TestController {
     @PostMapping(value = "readExcelAndDownloadProdFiles")
     public void readExcelAndDownloadProdFiles() {
         //
-        ExcelData excelData = ExcelDataHelper.readExcelData(new FileInputStream("D:\\download\\jooq\\Desktop\\下载文件\\复旦张江原始资料.xls"));
+        ExcelData excelData = ExcelDataHelper.readExcelData(new FileInputStream(Constant.baseFolderPath + "\\下载文件\\复旦张江原始资料.xls"));
         //
         List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
         //
-        String baseFolderPath = "D:\\download\\jooq\\Desktop\\excel_download";
+        String baseFolderPath = Constant.baseFolderPath + "\\excel_download";
         // 创建目录
         mkdir(baseFolderPath);
         //
@@ -2678,7 +2679,7 @@ public class TestController {
     @ApiOperation("下载线上文件")
     @PostMapping(value = "downloadProdFiles")
     public void downloadProdFiles(@RequestBody QueryDBReq req) {
-        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file_info";
+        String baseFolderPath = Constant.baseFolderPath + "\\export_file_info";
         AtomicInteger index = new AtomicInteger(1);
         // 创建目录
         mkdir(baseFolderPath);
@@ -2700,21 +2701,21 @@ public class TestController {
     public void moveFile() {
         // 源文件夹路径列表
         List<String> sourceFolders = Lists.newArrayList(
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_1",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_2",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_3",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_4",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_5",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_6",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_7",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_8",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_9",
-                "D:\\download\\jooq\\Desktop\\export_file\\batch_10"
+                Constant.baseFolderPath + "\\export_file\\batch_1",
+                Constant.baseFolderPath + "\\export_file\\batch_2",
+                Constant.baseFolderPath + "\\export_file\\batch_3",
+                Constant.baseFolderPath + "\\export_file\\batch_4",
+                Constant.baseFolderPath + "\\export_file\\batch_5",
+                Constant.baseFolderPath + "\\export_file\\batch_6",
+                Constant.baseFolderPath + "\\export_file\\batch_7",
+                Constant.baseFolderPath + "\\export_file\\batch_8",
+                Constant.baseFolderPath + "\\export_file\\batch_9",
+                Constant.baseFolderPath + "\\export_file\\batch_10"
 
         );
 
         // 目标文件夹路径
-        String targetFolder = "D:\\download\\jooq\\Desktop\\export_file\\all";
+        String targetFolder = Constant.baseFolderPath + "\\export_file\\all";
         // 移动文件
         moveFilesConcurrently(sourceFolders, targetFolder);
         System.out.println("文件移动完成！");
@@ -3104,7 +3105,7 @@ public class TestController {
         Map<String, List<String>> reportSenderRowMap = data.stream().collect(Collectors.toMap(row -> String.format("%s-%s", row.get(2), row.get(3)), row -> row, (o, n) -> n));
         data = Lists.newArrayList(reportSenderRowMap.values());
         log.info("根据报告和发送者信息去重后总条数:[{}]", data.size());
-        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file";
+        String baseFolderPath = Constant.baseFolderPath + "\\export_file";
         // 创建目录
         mkdir(baseFolderPath);
         // 10000个一个文件夹
@@ -3160,7 +3161,7 @@ public class TestController {
         // 导出数据
         List<List<String>> data = result.getValue();
         log.info("导出总条数:[{}]", data.size());
-        String baseFolderPath = "D:\\download\\jooq\\Desktop\\export_file";
+        String baseFolderPath = Constant.baseFolderPath + "\\export_file";
         // 创建目录
         mkdir(baseFolderPath);
         // 循环处理数据
@@ -4190,7 +4191,7 @@ public class TestController {
     }
 
     private void exportFixSQLFile(List<String> result) {
-        String updateSQLFilePath = String.format("D:\\download\\jooq\\Desktop\\updateSql\\%s", System.nanoTime());
+        String updateSQLFilePath = String.format("%s\\updateSql\\%s", Constant.baseFolderPath, System.nanoTime());
         // 生成文件夹
         mkdir(updateSQLFilePath);
         // 生成更新文件
@@ -4246,7 +4247,7 @@ public class TestController {
     }
 
     private void writeFile(String serviceName, String properties) {
-        String serviceFolder = String.format("D:\\download\\jooq\\Desktop\\configMap\\%s", serviceName);
+        String serviceFolder = String.format("%s\\configMap\\%s", Constant.baseFolderPath, serviceName);
         // 创建文件夹
         mkdir(serviceFolder);
         // 文件的完整路径
@@ -4290,7 +4291,7 @@ public class TestController {
     @ApiOperation("读取文件夹下")
     @GetMapping(value = "readFolderExcel")
     public void readFolderExcel() {
-        String folderPath = "D:\\download\\jooq\\Desktop\\文件";
+        String folderPath = Constant.baseFolderPath + "\\文件";
         List<ExportInfoDTO> all = Lists.newArrayList();
         try (Stream<Path> stream = Files.walk(Paths.get(folderPath), 1)) {
             for (Path path : stream
@@ -4713,7 +4714,7 @@ public class TestController {
     @ApiOperation("testNum")
     @GetMapping(value = "testNum")
     public void testNum() {
-        String folderPath = "D:\\download\\jooq\\Desktop";
+        String folderPath = Constant.baseFolderPath;
         List<String> fileNames = Lists.newArrayList("Listing.xlsx");
         Map<String, List<String>> reportNoFileNameMap = Maps.newHashMap();
         fileNames.forEach(fileName -> {
@@ -4735,9 +4736,21 @@ public class TestController {
         ExcelData excelData = readExcelData(fileName, analysisModel);
 
         List<Map<String, String>> rows = excelData.getSheetRowsMap().get("Sheet1");
+
+        List<List<String>> table = Lists.newArrayList();
+        List<String> headers = Lists.newArrayList("uniqueCode", "中文", "英文");
+        rows.forEach(row -> {
+            String ch = row.get("中文");
+            String en = row.get("英文");
+            // en转字典
+            String uniqueCode = en.replace(" ", "_").replace("-", "_").toLowerCase();
+            table.add(Lists.newArrayList(String.format("download_type_%s", uniqueCode), ch, en));
+        });
+        QueryDBHelper.exportExcel2(headers, table, "字典数据");
+
         //
-        List<String> names = rows.stream().filter(row -> StringUtils.equals(row.get("取消联动"), "是"))
-                .map(row -> row.get("i18n_key")).distinct().collect(Collectors.toList());
+        /*List<String> names = rows.stream().filter(row -> StringUtils.equals(row.get("取消联动"), "是"))
+                .map(row -> row.get("i18n_key")).distinct().collect(Collectors.toList());*/
 
         //fdaError(excelData);
         //fda(excelData);

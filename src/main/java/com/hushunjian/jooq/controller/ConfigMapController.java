@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hushunjian.jooq.configuration.Constant;
 import com.hushunjian.jooq.helper.QueryDBHelper;
 import com.hushunjian.jooq.req.*;
 import com.hushunjian.jooq.res.*;
@@ -521,7 +522,7 @@ public class ConfigMapController {
         // 查询生产环境的模板
         List<TemplateFileRes> templateFiles = QueryDBHelper.getProdTemplateFile(restTemplate, req);
         // 导出目录
-        String baseFolderPath = "D:\\download\\jooq\\Desktop\\template_file";
+        String baseFolderPath = Constant.baseFolderPath + "\\template_file";
         // 循环下载到本地
         templateFiles.forEach(templateFile -> {
             // 点导出
