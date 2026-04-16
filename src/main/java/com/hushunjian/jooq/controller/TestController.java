@@ -2077,10 +2077,83 @@ public class TestController {
             "signature_log",
             "signature_log_detail",
             "schema_import_history",
-            "icsr_identification"
+            "icsr_identification",
+            "signal_report_snapshoot",
+            "t_id_mapping",
+            "retry_record",
+            "t_file",
+            "t_connection_error",
+            "center_transport_endpoint",
+            "async_task",
+            "meddra_language_info_detail",
+            "whodrug_language_info_detail",
+            "freemarker_template_version",
+            "init_company_task_detail",
+            "multilingual_migration_tenant_status",
+            "report_field_helper",
+            "report_language",
+            "report_number_index",
+            "async_task_220922",
+            "t_history",
+            "t_history_item",
+            "t_transaction_context",
+            "meddrafidldinfo",
+            "tm_adverseevent",
+            "tm_company_reporter",
+            "null_flavor_info",
+            "tm_othermedicalhistory",
+            "adrreporter",
+            "adrreportunit",
+            "ai_unit_transform",
+            "as2_ack_batch_header",
+            "as2_receive_file",
+            "as2_v2_transaction",
+            "drug_dictionary",
+            "e2brt_name_case_number",
+            "e2brt_mpid_mdfsid",
+            "pv_file_t",
+            "pv_psur_plan_permission",
+            "pv_psur_role",
+            "pv_psur_task_tree",
+            "pv_rule",
+            "pv_rulekey",
+            "pv_rulekeyoption",
+            "pv_rulenodevalue",
+            "system_config",
+            "tm_calagegroup",
+            "tm_causality",
+            "tm_causeofdeath",
+            "tm_drug",
+            "tm_labdata",
+            "tm_othermedicalhistory",
+            "tm_reporter",
+            "tm_task_extra",
+            "meddra_memory",
+            "adr_eap_org",
+            "adr_icd",
+            "adr_st_factory",
+            "as2_ack_ich_message",
+            "cdr_revise_record_drug",
+            "cdr_revise_record_meddra",
+            "cdr_revise_record_submit",
+            "drop_approvalprocessinstance",
+            "drop_tm_tracedetails",
+            "drop_tm_trace",
+            "drop_transconfigdtl",
+            "drop_whodrugdictionary",
+            "drop_transfieldinfo",
+            "file",
+            "imelist",
+            "pv_fs",
+            "pv_psur_plan_rolepermission",
+            "reporttask",
+            "research",
+            "researchdrug",
+            "t_account",
+            "tm_calagegroup"
     );
 
-    private void exportDbTables(QueryDBReq req, Map<String, Map<String, List<String>>> instanceDbTablesMap) {
+    private void exportDbTables(QueryDBReq req, Map<String, Map<String, List<String>>> instanceDbTablesMap, Boolean exportAll) {
         List<DbTable> all = Lists.newArrayList();
         instanceDbTablesMap.forEach((instanceName, dbs) -> dbs.forEach((db, tables) -> {
             // 设置实例
@@ -2090,14 +2163,14 @@ public class TestController {
             req.setDbName(db);
             // 设置limit,设置成最大,0现在就是默认的最大
             req.setLimitNum("0");
-            tables.forEach(table -> exportDbTable(table, instanceName, db, req, all));
+            tables.forEach(table -> exportDbTable(table, instanceName, db, req, all, exportAll));
             log.info("导出数据库[{}]表结构和数据结束==================================", db);
         }));
         // 导出
         exportFile(all);
     }
 
-    private void exportDbTable(String table, String instanceName, String db, QueryDBReq req, List<DbTable> all) {
+    private void exportDbTable(String table, String instanceName, String db, QueryDBReq req, List<DbTable> all, Boolean exportAll) {
         log.info("处理表:[{}]", table);
         // 库表信息
         DbTable.DbTableBuilder builder = DbTable.builder().instanceName(instanceName).db(db).tableName(table);
@@ -2107,7 +2180,7 @@ public class TestController {
         // 判断是否需要导出数据
         if (needExportData(req, table, createTableSql)) {
             // 查询数据
-            Pair<List<List<String>>, List<List<String>>> pair = findSystemData(req, table, createTableSql);
+            Pair<List<List<String>>, List<List<String>>> pair = findSystemData(req, table, createTableSql, exportAll);
             // 导出数据
             builder.tableExcelData(pair);
         }
@@ -2175,7 +2248,7 @@ public class TestController {
         //instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_middle_data", v -> Lists.newArrayList()).add("items");
         //instanceDbTablesMap.computeIfAbsent("prod-mysql-pvcaps-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_middle_data", v -> Lists.newArrayList()).add("item_class");
         // instanceDbTablesMap.computeIfAbsent("prod-mysql-pvscommon-ro", v -> Maps.newHashMap()).computeIfAbsent("pvs_common", v -> Lists.newArrayList()).add("email_template");
-        exportDbTables(req, instanceDbTablesMap);
+        exportDbTables(req, instanceDbTablesMap, true);
     }
 
     @ApiOperation("获取线上所有的表的建表语句")
@@ -2258,18 +2331,30 @@ public class TestController {
         System.out.println();
     }
 
-    @ApiOperation("导出线上表结构和数据,所有的")
-    @PostMapping(value = "exportProdTable")
-    public void exportProdTable(@RequestBody QueryDBReq req) {
+    @ApiOperation("导出线上表结构和数据,所有的,循环一个个生成")
+    @PostMapping(value = "exportProdTable2")
+    public void exportProdTable2(@RequestBody QueryDBReq req) {
         // 放到最大
         initCellMaxTextLength();
         // 需要处理的数据库
-        Map<String, List<String>> dbMap = Maps.newHashMap();
+        Map<String, List<String>> dbMap = Maps.newLinkedHashMap();
         // 默认的
-        // dbMap.putAll(dbMap());
-        // dbMap.put("prod-mysql-pvscommon-ro", Lists.newArrayList("pvs_common"));
-        // dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_middle_data"));
-        dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report"));
+        //dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all", "caps", "gvp", "gvp_workbench", "pvs_middle_data"));
+        //dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all"));
+        //dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("as2", "esae_ms", "esae_sponsor", "esae_template", "pv_dictionary", "pv_faq", "pv"));
+        dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("pv"));
+        //dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("pv"));
+        //dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("as2", ""));
+        // 循环处理
+        dbMap.forEach((instance, dbs) -> dbs.forEach(db -> {
+            Map<String, List<String>> oneDbMap = Maps.newLinkedHashMap();
+            oneDbMap.put(instance, Lists.newArrayList(db));
+            // 导出
+            export(req, oneDbMap, true);
+        }));
+    }
+
+    private void export(QueryDBReq req, Map<String, List<String>> dbMap, Boolean exportAll) {
         // 所有导出的数据
         List<DbTable> all = Lists.newArrayList();
         // 循环实例,处理实例下所有的数据库
@@ -2284,12 +2369,49 @@ public class TestController {
             // 获取数据库下所有的表
             List<String> dbTables = showAllTables(req);
             // 循环所有的表,输出建表语句和表里面的初始化数据
-            dbTables.forEach(table -> exportDbTable(table, instanceName, db, req, all));
+            dbTables.forEach(table -> exportDbTable(table, instanceName, db, req, all, exportAll));
             log.info("导出数据库[{}]表结构和数据结束==================================", db);
         }));
         // 导出文件
         exportFile(all);
         log.info("处理完成");
+    }
+
+    @ApiOperation("康源数据统计")
+    @PostMapping(value = "kangYuangDataCount")
+    public void kangYuangDataCount(@RequestBody QueryDBReq req) {
+        Date endDate = new Date();
+        // 总数据
+        List<List<String>> table = Lists.newArrayList();
+        for (int i = 0; i < 365; i++) {
+            Date date = org.apache.commons.lang3.time.DateUtils.addDays(endDate, -i);
+            String dateStr = DateUtils.format(date, "yyyy-MM-dd");
+            String startStr = DateUtils.format(org.apache.commons.lang3.time.DateUtils.addDays(date, -61), "yyyy-MM-dd");
+            String sql = "select count(1) as count from  (SELECT DISTINCT rv.id FROM report_value rv INNER JOIN drug d ON d.report_id = rv.id AND d.is_deleted = 0 and rv.tenant_id='9168e7b0-6347-11e9-b21d-ef616d53ac34' AND d.drug_type = 'aaa14e3d-053a-4bee-9c91-9da75b20b9e4' AND d.generic_name LIKE '%热毒宁%' WHERE rv.is_deleted = 0 AND rv.report_status = 'state_code_finish' AND rv.first_received_date between '" + startStr + "' and '" + dateStr + "') as t";
+            req.setSqlContent(sql);
+            // 查询
+            List<Map<String, String>> res = QueryDBHelper.extractColumnValues(QueryDBHelper.getRes(req, restTemplate), Lists.newArrayList("count"));
+            String count = res.get(0).get("count");
+            table.add(Lists.newArrayList(dateStr, count));
+        }
+        // 导出
+        QueryDBHelper.exportExcel2(Lists.newArrayList("date", "count"), table, "康源数据");
+    }
+
+
+    @ApiOperation("导出线上表结构和数据,所有的")
+    @PostMapping(value = "exportProdTable")
+    public void exportProdTable(@RequestBody QueryDBReq req) {
+        // 放到最大
+        initCellMaxTextLength();
+        // 需要处理的数据库
+        Map<String, List<String>> dbMap = Maps.newLinkedHashMap();
+        // 默认的
+        //dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all"));
+        //dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("esae_template", "pv", ""));
+        //dbMap.put("prod-mysql-pvcaps-ro", Lists.newArrayList("pvs_report_all", "caps", "gvp", "gvp_workbench", "pvs_middle_data"));
+        dbMap.put("prod-mysql-pv-ro", Lists.newArrayList("as2", "esae_ms", "esae_sponsor", "esae_template", "pv_dictionary", "pv_faq", "pv"));
+        export(req, dbMap, false);
     }
 
     private Pair<List<List<String>>, List<List<String>>> createTableSql(Map<String, String> createTableSqlMap) {
@@ -2310,7 +2432,7 @@ public class TestController {
         return file;
     }
 
-    private Pair<List<List<String>>, List<List<String>>> findSystemData(QueryDBReq req, String tableName, String createTableSql) {
+    private Pair<List<List<String>>, List<List<String>>> findSystemData(QueryDBReq req, String tableName, String createTableSql, Boolean exportAll) {
         String tenantColumn = null;
         if (StringUtils.contains(createTableSql, "`tenant_id`")) {
             // 包含tenant_id
@@ -2330,25 +2452,35 @@ public class TestController {
         // 查询总数
         int count = countSystemData(req, tableName, tenantColumn);
         log.info("处理表[{}]数据导出总条数:[{}]", tableName, count);
-        // 总页数
-        int totalPage = totalPage(count, 5000);;
-        // 分页查询
-        for (int i = 0; i < totalPage; i++) {
-            log.info("处理表[{}]数据导出,进度:[{}-{}]", tableName, i, totalPage);
-            // 当前页数据
-            pageSystemData = findPageSystemData(req, tableName, tenantColumn, i * 5000, 5000);
-            // 追加行数据
-            allSystemData.addAll(pageSystemData.getData().getRows().stream().map(Lists::newArrayList).collect(Collectors.toList()));
+        if (count == 0) {
+            return null;
         }
-        if (pageSystemData == null) {
-            throw new RuntimeException("查询失败");
+        if (BooleanUtils.isTrue(exportAll)) {
+            // 总页数
+            int totalPage = totalPage(count, 5000);
+            // 分页查询
+            for (int i = 0; i < totalPage; i++) {
+                log.info("处理表[{}]数据导出,进度:[{}-{}]", tableName, i, totalPage);
+                // 当前页数据
+                pageSystemData = findPageSystemData(req, tableName, tenantColumn, i * 5000, 5000);
+                // 追加行数据
+                allSystemData.addAll(pageSystemData.getData().getRows().stream().map(Lists::newArrayList).collect(Collectors.toList()));
+            }
+            if (pageSystemData == null) {
+                throw new RuntimeException("查询失败");
+            }
+            if (createTableSql.contains("bit") && CollectionUtils.isNotEmpty(allSystemData)) {
+                replaceBitValue(req, tableName, allSystemData, pageSystemData.getData().getColumn_list());
+            }
+            // 标题
+            List<List<String>> headers = pageSystemData.getData().getColumn_list().stream().map(Lists::newArrayList).collect(Collectors.toList());
+            return Pair.of(headers, allSystemData);
+        } else {
+            List<List<String>> headers = Lists.newArrayList();
+            headers.add(Lists.newArrayList("总数"));
+            allSystemData.add(Lists.newArrayList(String.valueOf(count)));
+            return Pair.of(headers, allSystemData);
         }
-        if (createTableSql.contains("bit") && CollectionUtils.isNotEmpty(allSystemData)) {
-            replaceBitValue(req, tableName, allSystemData, pageSystemData.getData().getColumn_list());
-        }
-        // 标题
-        List<List<String>> headers = pageSystemData.getData().getColumn_list().stream().map(Lists::newArrayList).collect(Collectors.toList());
-        return Pair.of(headers, allSystemData);
     }
 
     private void replaceBitValue(QueryDBReq req, String tableName, List<List<String>> allSystemData, List<String> columns) {
@@ -2436,8 +2568,20 @@ public class TestController {
                 || StringUtils.startsWith(tableName, "migration")
                 // 试用租户相关的
                 || StringUtils.startsWith(tableName, "trial_execute")
+                // 试用租户相关的
+                || StringUtils.startsWith(tableName, "drop_")
+                // 试用租户相关的
+                || StringUtils.startsWith(tableName, "edqm_")
+                || StringUtils.startsWith(tableName, "feedback_auto_download_task")
+                || StringUtils.startsWith(tableName, "monitor_")
+                || StringUtils.startsWith(tableName, "oppugn_")
+                || StringUtils.startsWith(tableName, "pv_drug_monitor_article")
+                || StringUtils.startsWith(tableName, "pv_psur_")
                 // 其他忽略的
-                || IGNORE_EXPORT_TABLES.contains(tableName)) {
+                || IGNORE_EXPORT_TABLES.contains(tableName)
+                //
+                || (StringUtils.equals(req.getDbName(), "as2") && !StringUtils.equals(tableName, "t_resend_rule"))
+                || (StringUtils.equals(req.getDbName(), "pv_faq") && StringUtils.startsWithAny(tableName, "t_pv_", "t_article_"))) {
             // mq相关的表忽略导出,迁移的表忽略导出
             return false;
         }
@@ -2471,6 +2615,8 @@ public class TestController {
         D res = QueryDBHelper.getRes(req, restTemplate);
         List<String> allTables = Lists.newArrayList();
         res.getData().getRows().forEach(tables -> allTables.add(tables.get(0)));
+        // 移除掉多语言的表
+        allTables.removeIf(table -> table.startsWith("multilingual_value"));
         return allTables;
     }
 
@@ -3095,8 +3241,8 @@ public class TestController {
         req.setDownloadFileCookie(QueryDBHelper.DOWNLOAD_FILE_COOKIE);
         long start = System.currentTimeMillis();
         // 查询数据
-        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc";
-        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc;";
+        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2026-04-15 23:59:59' order by t.update_time asc";
+        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2026-04-15 23:59:59' order by t.update_time asc;";
         Pair<List<List<String>>, List<List<String>>> result = getPageData(req, countSql, querySql);
         // 导出数据
         List<List<String>> data = result.getValue();
@@ -3220,7 +3366,7 @@ public class TestController {
         req.setCookie(QueryDBHelper.DB_COOKIE);
         req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
         // 读取文件
-        ExcelData excelData = readExcelData("需导出的安慰剂报告-20250919-1758507355.xlsx");
+        ExcelData excelData = readExcelData("需导出的安慰剂报告-20260415-1776308010.xlsx");
         // 报告编号集合
         Set<String> reportNos = Sets.newHashSet();
         // 获取报告编号
@@ -3410,8 +3556,8 @@ public class TestController {
         req.setCookie(QueryDBHelper.DB_COOKIE);
         req.setCsrfToken(QueryDBHelper.DB_CSRF_TOKEN);
 
-        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc";
-        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2025-12-16 23:59:59' order by t.update_time asc;";
+        String countSql = "select count(1) from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2026-04-15 23:59:59' order by t.update_time asc";
+        String querySql = "select arf.fs_file_id as 'ack_file_id',t.file_id as 'xml_file_id',t.report_no,t.sender,t.update_time from as2_transaction t left join as2_receive_file arf on arf.transaction_id = t.id where t.transaction_type = 0 and t.ack_status = 1 and t.tenant_id = '251ca460-6348-11e9-b21d-ef616d53ac34' and t.update_time <= '2026-04-15 23:59:59' order by t.update_time asc;";
 
 
         exportPageData(req, countSql, querySql);
@@ -3874,7 +4020,8 @@ public class TestController {
             prodIndexInfoMap.computeIfAbsent(tableName, v -> Maps.newHashMap()).put(indexName, createIndexSql);
         });
         // 移除掉多语言表
-        prodIndexInfoMap.entrySet().removeIf(entry -> StringUtils.startsWith(entry.getKey(), "multilingual_value_"));
+        prodIndexInfoMap.entrySet().removeIf(entry -> StringUtils.startsWith(entry.getKey(), "multilingual_value_")
+                && !StringUtils.equals(entry.getKey(), "multilingual_value_0"));
         return prodIndexInfoMap;
     }
 

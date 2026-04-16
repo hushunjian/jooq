@@ -136,9 +136,47 @@ public class ReportCommonQueryController {
         queryAll(req);
     }
 
+    @ApiOperation("日志里查询所有")
+    @PostMapping(value = "queryLogEventAll")
+    public void queryLogEventAll(@RequestBody QueryLogEventReq req) {
+        // 设置查询时间范围：2025年1月1日 00:00:00 开始
+        LocalDateTime startDateTime = LocalDateTime.of(2026, 1, 1, 0, 0, 0);
+        // 查询到当前时间
+        LocalDateTime endDateTime = LocalDateTime.now();
+        // 6小时间隔
+        Duration interval = Duration.ofHours(6);
+        List<String> allMessages = Lists.newArrayList();
+        // 开始时间
+        LocalDateTime currentStart = startDateTime;
+        while (currentStart.isBefore(endDateTime)) {
+            LocalDateTime currentEnd = currentStart.plus(interval);
+            if (currentEnd.isAfter(endDateTime)) {
+                currentEnd = endDateTime;
+            }
+            // 转换为纳秒级时间戳
+            long startTimestamp = currentStart.toEpochSecond(ZoneOffset.UTC) * 1_000_000_000L;
+            long endTimestamp = currentEnd.toEpochSecond(ZoneOffset.UTC) * 1_000_000_000L;
+            // 构建URL
+            String url = String.format(
+                    "http://logevent.taimei.com/prod/api/v1/loki/query_range?app=pvs-report&start=%d&end=%d&level=&limit=2000&size=20&middleStart=&middleEnd=&pod=&all=true&dsc=true&filters[]=/report/search/list,",
+                    startTimestamp, endTimestamp
+            );
+
+            req.setUrl(url);
+            LogEventRes res = QueryDBHelper.getRes(req, restTemplate);
+            if (res != null && res.getQuery() != null) {
+                // 获取信息
+                allMessages.addAll(res.getQuery().stream().map(info -> info.getInfo().getMessage()).collect(Collectors.toList()));
+            }
+            // 移动到下一个时间段
+            currentStart = currentEnd;
+        }
+        System.out.println();
+    }
+
     private void queryAll(QueryLogEventReq req) {
         // 设置查询时间范围：2025年1月1日 00:00:00 开始
-        LocalDateTime startDateTime = LocalDateTime.of(2025, 6, 5, 0, 0, 0);
+        LocalDateTime startDateTime = LocalDateTime.of(2026, 1, 1, 0, 0, 0);
         // 查询到当前时间
         LocalDateTime endDateTime = LocalDateTime.now();
         // 6小时间隔

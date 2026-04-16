@@ -8,6 +8,7 @@ import com.hushunjian.jooq.helper.QueryDBHelper;
 import com.hushunjian.jooq.req.QueryDBReq;
 import com.hushunjian.jooq.res.D;
 import com.hushunjian.jooq.res.FixData;
+import com.hushunjian.jooq.res.FixData;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -301,6 +302,20 @@ public class DeleteReportController {
         if (createTables.get(0).get(1).contains("trail_2728ac")) {
             columnValueMap.put("trail_2728ac", "null");
         }
+    }
+
+
+
+    @ApiOperation("test3")
+    @PostMapping(value = "test3")
+    public void test3(@RequestBody List<String> ids) {
+        List<FixData> result = Lists.newArrayList();
+        ids.forEach(id -> {
+            Map<String, String> columnValueMap = Maps.newHashMap();
+            columnValueMap.put("is_deleted", "1");
+            result.add(FixData.builder().id(id).table("gvp_workbench.task_info").columnValueMap(columnValueMap).build());
+        });
+        System.out.println();
     }
 
 }
